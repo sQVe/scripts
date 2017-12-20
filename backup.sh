@@ -26,6 +26,8 @@ sudo rsync "$1" --delete --delete-excluded \
   --exclude="/mnt/*" \
   --exclude="/proc/*" \
   --exclude="/run/*" \
+  --exclude="/srv/*" \
+  --exclude="/swapfile" \
   --exclude="/sys/*" \
   --exclude="/tmp/*" \
   / "$2"
