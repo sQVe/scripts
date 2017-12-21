@@ -5,17 +5,12 @@ CYAN='\033[0;36m'
 NC='\033[0m' 
 
 sudo mkdir -p /mnt/kamajii
-sudo mkdir -p /mnt/kamajii/backup
 sudo mkdir -p /mnt/kamajii/complete
 sudo mkdir -p /mnt/kamajii/incomplete
 sudo mkdir -p /mnt/kamajii/nzb
 
 
 echo -e "${CYAN}Mounting kamajii...${NC}"
-
-echo -n 'backup: '
-sudo mount -t nfs -o vers=4 kamajii:/srv/nfs/backup /mnt/kamajii/backup
-echo -e "${GREEN}OK${NC}"
 
 echo -n 'complete: '
 sudo mount -t nfs -o vers=4 kamajii:/srv/nfs/complete /mnt/kamajii/complete
