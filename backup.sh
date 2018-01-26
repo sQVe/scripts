@@ -14,9 +14,11 @@ sudo rsync "$1" --delete --delete-excluded \
   --exclude="/dev/*" \
   --exclude="/home/*/.builds/*" \
   --exclude="/home/*/.cache/*" \
+  --exclude="/home/*/.config/chromium-back*" \
   --exclude="/home/*/.local/share/Trash/*" \
   --exclude="/home/*/.npm/*" \
   --exclude="/home/*/.nvm/*" \
+  --exclude="/home/*/.vscode/*" \
   --exclude="/home/*/.yarn/*" \
   --exclude="/home/*/code/*" \
   --exclude="/home/*/download/*" \
