@@ -22,6 +22,7 @@ sudo rsync "$1" --delete --delete-excluded \
   --exclude="/home/*/.npm/" \
   --exclude="/home/*/.nvm/" \
   --exclude="/home/*/.ohoy/" \
+  --exclude="/home/*/.stack/" \
   --exclude="/home/*/.yarn/" \
   --exclude="/home/*/code/*" \
   --exclude="/home/*/download/*" \
