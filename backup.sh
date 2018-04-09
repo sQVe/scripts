@@ -15,10 +15,13 @@ sudo rsync "$1" --delete --delete-excluded \
   --exclude="/home/*/.builds/*" \
   --exclude="/home/*/.cache/*" \
   --exclude="/home/*/.config/chromium-back*" \
+  --exclude="/home/*/.ghc/" \
+  --exclude="/home/*/.gitkraken/" \
   --exclude="/home/*/.local/share/Trash/*" \
-  --exclude="/home/*/.local/share/nvm/" \
+  --exclude="/home/*/.local/share/nvim/" \
   --exclude="/home/*/.local/share/qutebrowser-back*" \
   --exclude="/home/*/.node-gyp/" \
+  --exclude="/home/*/.nodian/" \
   --exclude="/home/*/.npm/" \
   --exclude="/home/*/.nvm/" \
   --exclude="/home/*/.ohoy/" \
