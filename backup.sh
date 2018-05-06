@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-if [ -z "$1" ]; then
+if [[ -z "$1" ]]; then
     echo "No backup options supplied"
     exit 1
-fi
+  fi
 
-if [ -z "$2" ]; then
+if [[ -z "$2" ]]; then
     echo "No backup target supplied"
     exit 1
 fi
