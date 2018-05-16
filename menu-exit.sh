@@ -27,11 +27,14 @@ case "$run" in
   lock )
     lock
     ;;
+  shutdown )
+    systemctl poweroff
+    ;;
   * )
     if [[ "$run" =~ shutdown\ [0-9]+ ]]; then
       "${run% *}" "${run#* }"
     else
-     systemctl "$run"
+      systemctl "$run"
     fi
     ;;
 esac
