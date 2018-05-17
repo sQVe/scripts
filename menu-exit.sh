@@ -10,7 +10,6 @@ exits=(
   "lock"
   "reboot"
   "shutdown"
-  "shutdown 1"
   "shutdown 15"
   "shutdown 30"
   "shutdown 45"
