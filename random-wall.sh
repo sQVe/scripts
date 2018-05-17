@@ -4,4 +4,4 @@
 #  ┣┳┛┣━┫┃┗┫ ┃┃┃ ┃┃┃┃   ┃╻┃┣━┫┃  ┃
 #  ╹┗╸╹ ╹╹ ╹╺┻┛┗━┛╹ ╹   ┗┻┛╹ ╹┗━╸┗━╸
 
-feh --randomize --bg-fill ~sqve/pictures/simon-stålenhag/*
+feh --randomize --bg-fill ~sqve/pictures/wallpapers/*
