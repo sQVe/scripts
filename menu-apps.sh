@@ -21,10 +21,10 @@ run="$(printf '%s\n' "${apps[@]}" | rofi -kb-accept-entry "Return,space" -dmenu 
 
 case "$run" in
   bc )
-    term --title bc bc -l -q
+    term --name bc bc -l -q
     ;;
   weechat )
-    term --title weechat weechat
+    term --name weechat weechat
     ;;
   htop | nvim | ranger )
     term "$run"
