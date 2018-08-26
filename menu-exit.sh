@@ -8,6 +8,7 @@ exits=(
   "exit"
   "hibernate"
   "lock"
+  "poweroff"
   "reboot"
   "shutdown"
   "shutdown 15"
