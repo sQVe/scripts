@@ -15,6 +15,8 @@ exits=(
   "shutdown 30"
   "shutdown 45"
   "shutdown 60"
+  "shutdown 75"
+  "shutdown 90"
   "suspend"
 )
 
