@@ -14,20 +14,24 @@ apps=(
   "qutebrowser"
   "ranger"
   "spotify"
+  "twitch"
   "weechat"
 )
 
 run="$(printf '%s\n' "${apps[@]}" | rofi -kb-accept-entry "Return" -dmenu -p 'run')"
 
 case "$run" in
-  weechat )
-    term --name weechat weechat
-    ;;
   htop | node | nvim | ranger )
     term "$run"
     ;;
   spotify | qutebrowser )
     "scaled-$run"
+    ;;
+  twitch )
+    streamlink-twitch-gui
+    ;;
+  weechat )
+    term --name weechat weechat
     ;;
   * )
     "$run"
