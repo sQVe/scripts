@@ -20,7 +20,7 @@ exits=(
   "suspend"
 )
 
-run="$(printf '%s\n' "${exits[@]}" | rofi -kb-accept-entry "Return,space" -dmenu -p 'run')"
+run="$(printf '%s\n' "${exits[@]}" | rofi -kb-accept-entry "Return" -dmenu -p 'run')"
 
 case "$run" in
   exit )

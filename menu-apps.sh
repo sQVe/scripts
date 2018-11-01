@@ -17,7 +17,7 @@ apps=(
   "weechat"
 )
 
-run="$(printf '%s\n' "${apps[@]}" | rofi -kb-accept-entry "Return,space" -dmenu -p 'run')"
+run="$(printf '%s\n' "${apps[@]}" | rofi -kb-accept-entry "Return" -dmenu -p 'run')"
 
 case "$run" in
   weechat )
