@@ -13,6 +13,7 @@ apps=(
   "nvim"
   "qutebrowser"
   "ranger"
+  "speedcrunch"
   "spotify"
   "twitch"
   "weechat"
