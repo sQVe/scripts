@@ -13,6 +13,7 @@ apps=(
   "nvim"
   "qutebrowser"
   "ranger"
+  "rtv"
   "speedcrunch"
   "spotify"
   "twitch"
@@ -22,7 +23,7 @@ apps=(
 run="$(printf '%s\n' "${apps[@]}" | rofi -kb-accept-entry "Return" -dmenu -p 'run')"
 
 case "$run" in
-  htop | node | nvim | ranger )
+  htop | node | nvim | ranger | rtv )
     term "$run"
     ;;
   spotify | qutebrowser )
