@@ -9,6 +9,7 @@ apps=(
   "gitkraken"
   "htop"
   "insomnia"
+  "mailspring"
   "node"
   "nvim"
   "qutebrowser"
@@ -20,14 +21,14 @@ apps=(
   "weechat"
 )
 
-run="$(printf '%s\n' "${apps[@]}" | rofi -kb-accept-entry "Return" -dmenu -p 'run')"
+choice="$(printf '%s\n' "${apps[@]}" | rofi -kb-accept-entry "Return" -dmenu -p 'run')"
 
-case "$run" in
+case "$choice" in
   htop | node | nvim | ranger | rtv )
-    term "$run"
+    term "$choice"
     ;;
   spotify | qutebrowser )
-    "scaled-$run"
+    "scaled-$choice"
     ;;
   twitch )
     streamlink-twitch-gui
@@ -36,6 +37,6 @@ case "$run" in
     term --name weechat weechat
     ;;
   * )
-    "$run"
+    "$choice"
     ;;
 esac

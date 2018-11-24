@@ -20,9 +20,9 @@ exits=(
   "suspend"
 )
 
-run="$(printf '%s\n' "${exits[@]}" | rofi -kb-accept-entry "Return" -dmenu -p 'run')"
+choice="$(printf '%s\n' "${exits[@]}" | rofi -kb-accept-entry "Return" -dmenu -p 'run')"
 
-case "$run" in
+case "$choice" in
   exit )
     i3-msg exit
     ;;
@@ -33,10 +33,10 @@ case "$run" in
     systemctl poweroff
     ;;
   * )
-    if [[ "$run" =~ shutdown\ [0-9]+ ]]; then
-      "${run% *}" "${run#* }"
+    if [[ "$choice" =~ shutdown\ [0-9]+ ]]; then
+      "${choice% *}" "${choice#* }"
     else
-      systemctl "$run"
+      systemctl "$choice"
     fi
     ;;
 esac
