@@ -10,6 +10,10 @@ apps=(
   "htop"
   "insomnia"
   "mailspring"
+  "menu-bluetooth"
+  "menu-exit"
+  "menu-notes"
+  "menu-projects"
   "node"
   "nvim"
   "qutebrowser"
@@ -26,6 +30,9 @@ choice="$(printf '%s\n' "${apps[@]}" | rofi -kb-accept-entry "Return" -dmenu -p 
 case "$choice" in
   htop | node | nvim | ranger | rtv )
     term "$choice"
+    ;;
+  menu-bluetooth | menu-exit | menu-notes | menu-projects )
+    "$HOME/scripts/$choice.sh"
     ;;
   spotify | qutebrowser )
     "scaled-$choice"
