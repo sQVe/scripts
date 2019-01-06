@@ -21,6 +21,7 @@ apps=(
   "rtv"
   "speedcrunch"
   "spotify"
+  "term"
   "twitch"
   "weechat"
 )
