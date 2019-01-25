@@ -33,8 +33,10 @@ fi
 if [[ "$(get_latest_commit_status)" != "$message" ]] ||
    [[ "$(get_latest_commit_date)" != "$(get_system_date)" ]]; then
   git commit --all --message "$message"
+  git push
 else
   git commit --all --amend --reuse-message HEAD
+  git push --force
 fi
 
-git push --force
+git fetch
