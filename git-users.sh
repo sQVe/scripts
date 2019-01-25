@@ -24,7 +24,7 @@
 
 gitusers="$HOME/.gitusers"
 
-getCredentials() {
+get_credentials() {
   echo "$data" | grep "$1:" | cut -d ':'  -f2- | sed -e 's/^\s*//'
 }
 
@@ -46,8 +46,8 @@ for keyword in "${keywords[@]}"; do
   # Check if PWD matches one of our keywords.
   if [[ $PWD =~ /$keyword/ ]]; then
     data=$(grep -A 2 "^$keyword" "$gitusers")
-    name=$(getCredentials "name")
-    email=$(getCredentials "email")
+    name=$(get_credentials "name")
+    email=$(get_credentials "email")
 
     # Only set the user credentials if they are available.
     if [[ -n $name && -n $email ]]; then
