@@ -8,7 +8,7 @@ message="Automatic update ($(hostname))"
 
 identity_count=$(ssh-add -l | wc -l)
 status_count=$(git status --short | wc -l)
-unpushed_commit_count="$(git diff --numstat origin/master..HEAD | awk '{print $1}')"
+unpushed_commit_count="$(git diff --name-status origin/master..HEAD | wc -l)"
 
 latest_commit_date="$(git log -1 --format=%ci | awk '{print $1}')"
 latest_commit_status="$(git log -1 --format=%s)"
