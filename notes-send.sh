@@ -22,6 +22,9 @@ elif [[ status_count -eq 0 ]] && [[ unpushed_commit_count -eq 0 ]]; then
   exit
 fi
 
+# Ensure that the branch is up-to-date.
+git merge --ff-only
+
 if [[ "$latest_commit_status" != "$message" ]] ||
    [[ "$latest_commit_date" != "$system_date" ]]; then
   # New daily commit.
@@ -34,4 +37,3 @@ else
 fi
 
 git pull --rebase
-
