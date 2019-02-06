@@ -23,7 +23,7 @@ elif [[ status_count -eq 0 ]] && [[ unpushed_commit_count -eq 0 ]]; then
 fi
 
 # Ensure that the branch is up-to-date.
-git merge --ff-only
+git fetch && git merge --ff-only
 
 if [[ "$latest_commit_status" != "$message" ]] ||
    [[ "$latest_commit_date" != "$system_date" ]]; then
@@ -36,4 +36,4 @@ else
   git push --force
 fi
 
-git pull --rebase
+git merge --ff-only
