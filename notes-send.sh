@@ -32,7 +32,7 @@ if [[ "$latest_commit_status" != "$message" ]] ||
   git push
 else
   # Amend to existing daily commit.
-  git commit --all --amend --reuse-message HEAD
+  git commit --all --amend --allow-empty --reuse-message HEAD
   git push --force
 fi
 
