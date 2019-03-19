@@ -5,9 +5,9 @@
 #  ╹ ╹┗━┛┗━┛┗━┛┗━╸╹╹ ╹ ╹ ┗━╸   ╹ ╹╹╹ ╹┗━╸
 
 get_types() {
-  command mimeo -m "${files[@]}" | \
-    command sed -n 'n;p' | \
-    command sed -r s/\ +//
+  mimeo -m "${files[@]}" | \
+    sed -n 'n;p' | \
+    sed -r s/\ +//
 }
 
 open() {
@@ -16,7 +16,7 @@ open() {
   mapfile -t types < <(get_types)
 
   for type in "${types[@]}"; do
-    command mimeo --add "$type" "$desktop"
+    mimeo --add "$type" "$desktop"
   done
 }
 
