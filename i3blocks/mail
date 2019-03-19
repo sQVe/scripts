@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+#  ┏┳┓┏━┓╻╻
+#  ┃┃┃┣━┫┃┃
+#  ╹ ╹╹ ╹╹┗━╸
+
 mail_directories=("$HOME"/.mail/*/Inbox/new)
 mail_count=$(fd -t f . "${mail_directories[@]}" | wc -l)
 

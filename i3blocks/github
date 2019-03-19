@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+#  ┏━╸╻╺┳╸╻ ╻╻ ╻┏┓
+#  ┃╺┓┃ ┃ ┣━┫┃ ┃┣┻┓
+#  ┗━┛╹ ╹ ╹ ╹┗━┛┗━┛
+
 notifications=$(hub api notifications | jq '. | length')
 
 if [[ -z "$notifications" ]]; then

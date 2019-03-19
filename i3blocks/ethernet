@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+#  ┏━╸╺┳╸╻ ╻┏━╸┏━┓┏┓╻┏━╸╺┳╸
+#  ┣╸  ┃ ┣━┫┣╸ ┣┳┛┃┗┫┣╸  ┃
+#  ┗━╸ ╹ ╹ ╹┗━╸╹┗╸╹ ╹┗━╸ ╹
+
 instance="$(fd enp /sys/class/net/ | head -n 1)"
 label=""
 state="down"

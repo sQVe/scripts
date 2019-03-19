@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+#  ╻ ╻┏━┓╻  ╻ ╻┏┳┓┏━╸
+#  ┃┏┛┃ ┃┃  ┃ ┃┃┃┃┣╸
+#  ┗┛ ┗━┛┗━╸┗━┛╹ ╹┗━╸
+
 mixer="default"
 step="${1:-5%}"
 scontrol="Master"
