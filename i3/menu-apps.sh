@@ -13,7 +13,6 @@ apps=(
   "menu-clipboard"
   "menu-exit"
   "menu-notes"
-  "menu-notes"
   "menu-passwords"
   "menu-projects"
   "neomutt"
