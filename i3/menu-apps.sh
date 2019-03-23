@@ -34,7 +34,7 @@ case "$choice" in
   chromium )
     optirun "$choice"
     ;;
-  htop | neomutt | node | nvim | ranger | rtv )
+  htop | node | nvim | ranger | rtv )
     term "$choice"
     ;;
   menu-bluetooth | menu-exit | menu-notes | menu-projects )
@@ -46,8 +46,8 @@ case "$choice" in
   twitch )
     streamlink-twitch-gui
     ;;
-  weechat )
-    term --name weechat weechat
+  neomutt | weechat )
+    term --name "$choice" "$choice"
     ;;
   * )
     "$choice"
