@@ -1,10 +1,10 @@
-
+#!/usr/bin/env bash
 
 #  ╻┏┳┓┏━┓┏━┓   ┏━┓┏━┓┏━┓╺┳╸   ┏━┓╻ ╻┏┓╻┏━╸
 #  ┃┃┃┃┣━┫┣━┛   ┣━┛┃ ┃┗━┓ ┃    ┗━┓┗┳┛┃┗┫┃
 #  ╹╹ ╹╹ ╹╹     ╹  ┗━┛┗━┛ ╹    ┗━┛ ╹ ╹ ╹┗━╸
 
-timestamp="/tmp/imap-post-sync-timestamp"
+timestamp="/tmp/mail-sync-timestamp"
 mail_directory="$HOME/.mail/$1/Inbox/new"
 
 decode() {
@@ -26,7 +26,7 @@ if [[ $mail_count -gt 0 ]]; then
     from=$(ag '^From:' < "$mail" | sed -r 's/From: (.+?)\s*<.+/\1/' | sed -r 's/"//g')
     subject=$(ag '^Subject:' < "$mail" | cut -d ' ' -f 2-)
 
-    notify-send -i evolution-mail "Mail from $(decode "${from:-Unkown}")" "$subject" &
+    notify-send -i evolution-mail "Mail from $(decode "${from:-Unkown}")" "$(decode "$subject")" &
   done
 
   # Trigger i3block mail rerender.
