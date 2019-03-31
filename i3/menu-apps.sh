@@ -35,7 +35,7 @@ case "$choice" in
     optirun "$choice"
     ;;
   htop | node | nvim | ranger | rtv )
-    term "$choice"
+    term --title "$choice"
     ;;
   menu-bluetooth | menu-exit | menu-notes | menu-projects )
     "$HOME/scripts/$choice.sh"
@@ -47,7 +47,7 @@ case "$choice" in
     streamlink-twitch-gui
     ;;
   neomutt | weechat )
-    term --name "$choice" "$choice"
+    term --instance "$choice" --title "$choice" "$choice"
     ;;
   * )
     "$choice"
