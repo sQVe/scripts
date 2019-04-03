@@ -31,9 +31,6 @@ apps=(
 choice="$(printf '%s\n' "${apps[@]}" | rofi -kb-accept-entry "Return" -dmenu -p 'run')"
 
 case "$choice" in
-  chromium )
-    optirun "$choice"
-    ;;
   htop | node | nvim | ranger | rtv )
     term --title "$choice"
     ;;
