@@ -23,8 +23,8 @@ mail_count=$(echo "$mails" | wc -l)
 if [[ $mail_count -gt 0 ]]; then
   for mail in $mails; do
     echo "$mail"
-    from=$(ag '^From:' < "$mail" | sed -r 's/From: (.+?)\s*<.+/\1/' | sed -r 's/"//g')
-    subject=$(ag '^Subject:' < "$mail" | cut -d ' ' -f 2-)
+    from=$(rg '^From:' < "$mail" | sed -r 's/From: (.+?)\s*<.+/\1/' | sed -r 's/"//g')
+    subject=$(rg '^Subject:' < "$mail" | cut -d ' ' -f 2-)
 
     notify-send -i evolution-mail "Mail from $(decode "${from:-Unkown}")" "$(decode "$subject")" &
   done

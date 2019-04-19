@@ -12,7 +12,7 @@ unpushed_commit_count="$(git diff --name-status origin/master..HEAD | wc -l)"
 
 latest_commit_date="$(git log -1 --format=%ci | awk '{print $1}')"
 latest_commit_status="$(git log -1 --format=%s)"
-system_date="$(timedatectl | ag 'Universal time' | awk '{print $4}')"
+system_date="$(timedatectl | rg 'Universal time' | awk '{print $4}')"
 
 if [[ identity_count -eq 0 ]]; then
   echo "No SSH identities found. Exiting."

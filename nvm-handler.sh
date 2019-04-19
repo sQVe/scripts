@@ -14,12 +14,12 @@ c='\033[0m'
 gist_id="69cc6046233317c6199cca35a41dee1e"
 
 get_installed_versions() {
-  [[ -z $versions ]] && versions=$(nvm ls | ag -v 'N/A' | ag -o 'v[0-9\.]*' | sort -uV)
-  ag "v$1" <<< "$versions"
+  [[ -z $versions ]] && versions=$(nvm ls | rg -v 'N/A' | rg -o 'v[0-9\.]*' | sort -uV)
+  rg "v$1" <<< "$versions"
 }
 
 get_latest_installed_version() {
-  get_installed_versions "$1" | ag "$1" | tail -n 1
+  get_installed_versions "$1" | rg "$1" | tail -n 1
 }
 
 get_major_version() {
@@ -49,7 +49,7 @@ help() {
 
 backup() {
   nvm use "$major_version"
-  npm list -g --depth=0 | ag -o '\S+@\S+$' | sort | gist -f global-npm-packages.txt -u "$gist_id"
+  npm list -g --depth=0 | rg -o '\S+@\S+$' | sort | gist -f global-npm-packages.txt -u "$gist_id"
 }
 
 install() {
