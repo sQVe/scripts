@@ -9,5 +9,5 @@ choice="$(echo "$notes" | rofi -kb-accept-entry "Return" -dmenu -p 'run')"
 
 
 if [[ -n "$choice" && -f "$HOME/notes/$choice.md" ]]; then
-  term nvim-cd "$HOME/notes/$choice.md"
+  term nvim-pwd "$HOME/notes/$choice.md"
 fi
