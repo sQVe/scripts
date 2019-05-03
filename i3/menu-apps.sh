@@ -32,7 +32,7 @@ choice="$(printf '%s\n' "${apps[@]}" | rofi -kb-accept-entry "Return" -dmenu -p 
 
 case "$choice" in
   htop | node | nvim | vifm | rtv )
-    term --title "$choice"
+    term --title "$choice" "$choice"
     ;;
   menu-bluetooth | menu-exit | menu-notes | menu-projects )
     "$HOME/scripts/$choice.sh"
