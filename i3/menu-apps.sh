@@ -19,19 +19,19 @@ apps=(
   "node"
   "nvim"
   "qutebrowser"
-  "ranger"
   "rtv"
   "speedcrunch"
   "spotify"
   "term"
   "twitch"
+  "vifm"
   "weechat"
 )
 
 choice="$(printf '%s\n' "${apps[@]}" | rofi -kb-accept-entry "Return" -dmenu -p 'run')"
 
 case "$choice" in
-  htop | node | nvim | ranger | rtv )
+  htop | node | nvim | vifm | rtv )
     term --title "$choice"
     ;;
   menu-bluetooth | menu-exit | menu-notes | menu-projects )
