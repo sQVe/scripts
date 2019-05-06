@@ -4,7 +4,7 @@
 #  ┃┃┃┃ ┃ ┃  ┃    ┣━┛┣━┫┗━┓┗━┓
 #  ╹ ╹┗━┛ ╹  ╹    ╹  ╹ ╹┗━┛┗━┛
 
-password=$(pass show "$1")
+password=$(secret-tool lookup mutt "$1")
 
 echo "set smtp_pass=\"$password\""
 echo "set imap_pass=\"$password\""

@@ -4,8 +4,8 @@
 #  ┃┃┃┣━┫┃┃
 #  ╹ ╹╹ ╹╹┗━╸
 
-mail_directories=("$HOME"/.mail/*/Inbox/new)
-mail_count=$(fd -t f . "${mail_directories[@]}" | wc -l)
+new_mail_directories=("$HOME"/.local/share/mail/*/Inbox/new)
+mail_count=$(fd -t f . "${new_mail_directories[@]}" | wc -l)
 
 if [[ -z "$mail_count" ]]; then
   exit 0
