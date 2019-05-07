@@ -4,13 +4,13 @@
 #  ┣━┫┗━┓┗━┓┃ ┃┃  ┃┣━┫ ┃ ┣╸    ┃┃┃┃┃┃┃┣╸
 #  ╹ ╹┗━┛┗━┛┗━┛┗━╸╹╹ ╹ ╹ ┗━╸   ╹ ╹╹╹ ╹┗━╸
 
-get_types() {
+function get_types() {
   mimeo -m "${files[@]}" | \
     sed -n 'n;p' | \
     sed -r s/\ +//
 }
 
-open() {
+function open() {
   local type
 
   mapfile -t types < <(get_types)

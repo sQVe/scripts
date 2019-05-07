@@ -10,31 +10,31 @@ else
   icomoon_styling="$(cat "$1")"
 fi
 
-clean_icon_definitions() {
+function clean_icon_definitions() {
   sed -r 's#^\.icon-(\w+).+#\t\1: #'
 }
 
-clean_content_definitions() {
+function clean_content_definitions() {
   sed -r 's#^\s.+("\\\w+").+#\1,#'
 }
 
-header() {
+function header() {
   echo "\$icons: ("
 }
 
-find_icon_definitions() {
+function find_icon_definitions() {
   grep -E '^(\.icon)|(\s+content)'
 }
 
-footer() {
+function footer() {
   echo ");"
 }
 
-join_lines() {
+function join_lines() {
   awk '{printf (NR%2 == 0) ? $0 "\n" : $0}'
 }
 
-convert() {
+function convert() {
   echo "$icomoon_styling"     |
     find_icon_definitions     |
     clean_icon_definitions    |

@@ -4,7 +4,7 @@
 #  ┃┃┃┣╸  ┃┃┃┣━┫
 #  ╹ ╹┗━╸╺┻┛╹╹ ╹
 
-list() {
+function list() {
   mapfile -t devices < <(
     udiskie-info --all --output \
       "toplevel={is_toplevel};device={device_file};label={id_label};mount-point={mount_path}" | \
@@ -16,7 +16,7 @@ list() {
   done
 }
 
-help() {
+function help() {
   echo "Usage: media list | mount <device> | unmount <path>"
   exit 1
 }

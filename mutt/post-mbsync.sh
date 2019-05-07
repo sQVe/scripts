@@ -14,7 +14,7 @@ function find() {
   command find "$1" -type f \( ! -iname ".*" \) -newer "$timestamp" 2> /dev/null
 }
 
-decode() {
+function decode() {
   perl -C -MEncode -E 'print decode("MIME-Header", <>)' <<< "$1"
 }
 

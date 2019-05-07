@@ -13,26 +13,26 @@ c='\033[0m'
 
 gist_id="69cc6046233317c6199cca35a41dee1e"
 
-get_installed_versions() {
+function get_installed_versions() {
   [[ -z $versions ]] && versions=$(nvm ls | rg -v 'N/A' | rg -o 'v[0-9\.]*' | sort -uV)
   rg "v$1" <<< "$versions"
 }
 
-get_latest_installed_version() {
+function get_latest_installed_version() {
   get_installed_versions "$1" | rg "$1" | tail -n 1
 }
 
-get_major_version() {
+function get_major_version() {
   sed -r 's/v?([0-9]+).*/\1/' <<< "$1"
 }
 
-check_answer() {
+function check_answer() {
   if [[ -n "$1" ]] && [[ ! "$1" =~ ^[Yy](es)?$ ]]; then
     return 1;
   fi
 }
 
-help() {
+function help() {
   echo "Usage: $(basename "$0") [OPTION]... [VERSION]"
   echo "NVM handler that installs latest major VERSION and uninstalls prior versions."
   echo ""
@@ -47,12 +47,12 @@ help() {
   echo ""
 }
 
-backup() {
+function backup() {
   nvm use "$major_version"
   npm list -g --depth=0 | rg -o '\S+@\S+$' | sort | gist -f global-npm-packages.txt -u "$gist_id"
 }
 
-install() {
+function install() {
   echo -en "Installing latest major ${p}$1${c} release"
 
   if [[ -z "$2" ]]; then
@@ -64,7 +64,7 @@ install() {
   fi
 }
 
-solo() {
+function solo() {
   if [[ "$(get_installed_versions "$major_version" | wc -l )" -gt 1 ]]; then
     echo -en "Do you want to uninstall all major ${p}$major_version${c} releases, except ${g}$(get_latest_installed_version "$major_version")${c}? [Y/n] "
     read -r answer
@@ -76,7 +76,7 @@ solo() {
   fi
 }
 
-restore() {
+function restore() {
   for dependency in $(gist -r "$gist_id"); do
     echo -e "Installing dependency ${p}$dependency${c}..."
     npm install -g "$dependency" > /dev/null

@@ -23,7 +23,7 @@
 
 gitusers="$HOME/.gitusers"
 
-get_credentials() {
+function get_credentials() {
   echo "$data" | grep "$1:" | cut -d ':'  -f2- | sed -e 's/^\s*//'
 }
 
