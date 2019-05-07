@@ -10,6 +10,7 @@ apps=(
   "htop"
   "insomnia"
   "menu-bluetooth"
+  "menu-calculator"
   "menu-clipboard"
   "menu-exit"
   "menu-notes"
@@ -20,7 +21,6 @@ apps=(
   "nvim"
   "qutebrowser"
   "rtv"
-  "speedcrunch"
   "spotify"
   "term"
   "twitch"
@@ -34,8 +34,8 @@ case "$choice" in
   htop | node | nvim | vifm | rtv )
     term --title "$choice" "$choice"
     ;;
-  menu-bluetooth | menu-exit | menu-notes | menu-projects )
-    "$HOME/scripts/$choice.sh"
+  menu-bluetooth | menu-calculator | menu-clipboard | menu-exit | menu-notes | menu-passwords | menu-projects )
+    "$HOME/scripts/i3/$choice.sh"
     ;;
   spotify | qutebrowser )
     "scaled-$choice"
