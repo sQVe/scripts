@@ -11,7 +11,7 @@ new_mailboxes=("$mail_directory"/*/Inbox/new)
 timestamp="$mail_directory/sync-timestamp"
 
 function find() {
-  command find "$1" -type f \( ! -iname ".*" \) -newer "$timestamp" 2> /dev/null
+  command find "$@" -type f \( ! -iname ".*" \) -newer "$timestamp" 2> /dev/null
 }
 
 function decode() {
