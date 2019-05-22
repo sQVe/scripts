@@ -5,13 +5,13 @@
 #  ┗━┛╹ ╹┗━╸╹ ╹┗━┛╹
 
 if [[ -z "$1" ]]; then
-    echo "No backup options supplied"
-    exit 1
-  fi
+  echo "No backup options supplied"
+  exit 1
+fi
 
 if [[ -z "$2" ]]; then
-    echo "No backup target supplied"
-    exit 1
+  echo "No backup target supplied"
+  exit 1
 fi
 
 sudo rsync "$1" --delete --delete-excluded \
