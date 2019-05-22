@@ -28,11 +28,11 @@ git fetch && git merge --ff-only
 if [[ "$latest_commit_status" != "$message" ]] ||
    [[ "$latest_commit_date" != "$system_date" ]]; then
   # New daily commit.
-  git commit --all --message "$message"
+  git commit --no-gpg-sign --all --message "$message"
   git push
 else
   # Amend to existing daily commit.
-  git commit --all --amend --allow-empty --reuse-message HEAD
+  git commit --no-gpg-sign --all --amend --allow-empty --reuse-message HEAD
   git push --force
 fi
 
