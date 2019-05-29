@@ -6,7 +6,6 @@
 
 apps=(
   "chromium"
-  "gitkraken"
   "htop"
   "insomnia"
   "menu-bluetooth"

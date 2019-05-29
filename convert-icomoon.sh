@@ -21,20 +21,8 @@ function clean_content_definitions() {
   sed -r 's/^\s.+("\\\w+").+/\1,/'
 }
 
-function replace_underscores() {
-  sed -r 's/_/-/'
-}
-
-function header() {
-  echo "\$icons: ("
-}
-
 function find_icon_definitions() {
   grep -E '^(\.icon)|(\s+content)'
-}
-
-function footer() {
-  echo ");"
 }
 
 function join_lines() {
@@ -46,11 +34,10 @@ function convert_definitions() {
     find_icon_definitions     |
     clean_icon_definitions    |
     clean_content_definitions |
-    replace_underscores       |
     join_lines                |
     sort -u
 }
 
-echo -n "$(header)
+echo -n "\$icons: (
 $(convert_definitions)
-$(footer)"
+);"
