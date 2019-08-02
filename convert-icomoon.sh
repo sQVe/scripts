@@ -30,11 +30,11 @@ function join_lines() {
 }
 
 function convert_definitions() {
-  echo "$icomoon_styling"     |
-    find_icon_definitions     |
-    clean_icon_definitions    |
+  echo "$icomoon_styling" |
+    find_icon_definitions |
+    clean_icon_definitions |
     clean_content_definitions |
-    join_lines                |
+    join_lines |
     sort -u
 }
 

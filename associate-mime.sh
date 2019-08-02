@@ -5,8 +5,8 @@
 #  ╹ ╹┗━┛┗━┛┗━┛┗━╸╹╹ ╹ ╹ ┗━╸   ╹ ╹╹╹ ╹┗━╸
 
 function get_types() {
-  mimeo -m "${files[@]}" | \
-    sed -n 'n;p' | \
+  mimeo -m "${files[@]}" |
+    sed -n 'n;p' |
     sed -r s/\ +//
 }
 
@@ -20,8 +20,9 @@ function open() {
   done
 }
 
-while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do case $1 in
-  -h | --help )
+while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do
+  case $1 in
+  -h | --help)
     echo "Usage: $(basename "$0") [DESKTOP-FILE] [FILE]..."
     echo "Associate files mime-type with a set desktop-file via mimeo."
     echo ""
@@ -32,18 +33,21 @@ while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do case $1 in
     echo ""
     exit
     ;;
-esac; shift; done
+  esac
+  shift
+done
 if [[ "$1" == '--' ]]; then shift; fi
 
-desktop="$1"; shift;
+desktop="$1"
+shift
 files=("$@")
 
 if [[ -z "$desktop" ]]; then
   echo "Missing a desktop file."
-  exit 1;
+  exit 1
 elif [[ -z "${files[*]}" ]]; then
   echo "Missing file/files."
-  exit 1;
+  exit 1
 fi
 
 open

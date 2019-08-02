@@ -23,20 +23,20 @@ exits=(
 choice="$(printf '%s\n' "${exits[@]}" | rofi -kb-accept-entry "Return" -dmenu -p 'run')"
 
 case "$choice" in
-  exit )
-    i3-msg exit
-    ;;
-  lock )
-    lock
-    ;;
-  shutdown )
-    systemctl poweroff
-    ;;
-  * )
-    if [[ "$choice" =~ shutdown\ [0-9]+ ]]; then
-      "${choice% *}" "${choice#* }"
-    else
-      systemctl "$choice"
-    fi
-    ;;
+exit)
+  i3-msg exit
+  ;;
+lock)
+  lock
+  ;;
+shutdown)
+  systemctl poweroff
+  ;;
+*)
+  if [[ "$choice" =~ shutdown\ [0-9]+ ]]; then
+    "${choice% *}" "${choice#* }"
+  else
+    systemctl "$choice"
+  fi
+  ;;
 esac

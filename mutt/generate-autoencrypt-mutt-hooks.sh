@@ -56,8 +56,8 @@ n
 /^pub:/ b START
 b IGNORE
 
-' | \
-    egrep -v 'WhatYouDontWantInThisList@example\\\\\.org' | \
-    tr '[:upper:]' '[:lower:]' | \
-    sort -u
+' |
+  egrep -v 'WhatYouDontWantInThisList@example\\\\\.org' |
+  tr '[:upper:]' '[:lower:]' |
+  sort -u
 # Note the triple escaped backslash!

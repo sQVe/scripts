@@ -16,7 +16,7 @@
 #  To automatically run the script on PWD change add the following to
 #  your bashrc/zshrc:
 #
-#  function chpwd() {
+#  function chpwd {
 #    emulate -L zsh
 #    $HOME/gitusers.sh
 #  }
@@ -24,7 +24,7 @@
 gitusers="$HOME/.gitusers"
 
 function get_credentials() {
-  echo "$data" | grep "$1:" | cut -d ':'  -f2- | sed -e 's/^\s*//'
+  echo "$data" | grep "$1:" | cut -d ':' -f2- | sed -e 's/^\s*//'
 }
 
 # Escape if no .gitusers file found.
@@ -34,12 +34,12 @@ if [[ ! -f $gitusers ]]; then
 fi
 
 # Escape if we're not in a git repo.
-if [[ -z $(git rev-parse --git-dir 2> /dev/null) ]]; then
+if [[ -z $(git rev-parse --git-dir 2>/dev/null) ]]; then
   exit 0
 fi
 
 # Grab user keywords only.
-mapfile -t keywords < <(grep '^\w\+' "$gitusers" )
+mapfile -t keywords < <(grep '^\w\+' "$gitusers")
 
 for keyword in "${keywords[@]}"; do
   # Check if PWD matches one of our keywords.

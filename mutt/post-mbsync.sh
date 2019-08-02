@@ -11,11 +11,11 @@ new_mailboxes=("$mail_directory"/*/Inbox/new)
 timestamp="$mail_directory/sync-timestamp"
 
 function find() {
-  command find "$@" -type f \( ! -iname ".*" \) -newer "$timestamp" 2> /dev/null
+  command find "$@" -type f \( ! -iname ".*" \) -newer "$timestamp" 2>/dev/null
 }
 
 function decode() {
-  perl -C -MEncode -E 'print decode("MIME-Header", <>)' <<< "$1"
+  perl -C -MEncode -E 'print decode("MIME-Header", <>)' <<<"$1"
 }
 
 # Set initial timestamp.
@@ -38,8 +38,8 @@ touch "$timestamp"
 if [[ $new_mail_count -gt 0 ]]; then
   for mail in $new_mails; do
     if [[ -e "$mail" ]]; then
-      from=$(rg '^From:' < "$mail" | sed -r 's/From: (.+?)\s*<.+/\1/' | sed -r 's/"//g')
-      subject=$(rg '^Subject:' < "$mail" | cut -d ' ' -f 2-)
+      from=$(rg '^From:' <"$mail" | sed -r 's/From: (.+?)\s*<.+/\1/' | sed -r 's/"//g')
+      subject=$(rg '^Subject:' <"$mail" | cut -d ' ' -f 2-)
 
       notify-send -i evolution-mail "Mail from $(decode "${from:-Unknown}")" "$(decode "$subject")"
     fi
@@ -53,12 +53,12 @@ fi
 if [[ $mail_count -gt 0 ]]; then
   while read -r mail; do
     if [[ -e "$mail" ]]; then
-      lbdb-fetchaddr -d "%Y-%m-%d" < "$mail"
+      lbdb-fetchaddr -d "%Y-%m-%d" <"$mail"
     fi
-  done <<< "$mails"
+  done <<<"$mails"
 
   # Update local mail database.
-  notmuch new &> /dev/null
+  notmuch new &>/dev/null
 
   # Sort and trim contacts database.
   sort -u "$contacts_db" -o "$contacts_db"
