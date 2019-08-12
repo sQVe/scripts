@@ -32,6 +32,7 @@ sudo rsync "$1" --delete --delete-excluded \
   --exclude="/home/*/code/*" \
   --exclude="/home/*/download/*" \
   --exclude="/home/*/media/*" \
+  --exclude="/home/*/work/*" \
   --exclude="/lost+found" \
   --exclude="/media/*" \
   --exclude="/mnt/*" \
