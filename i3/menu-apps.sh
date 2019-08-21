@@ -6,6 +6,9 @@
 
 apps=(
   "chromium"
+  "flameshot full"
+  "flameshot gui"
+  "flameshot screen"
   "htop"
   "insomnia"
   "menu-bluetooth"
@@ -15,6 +18,8 @@ apps=(
   "menu-notes"
   "menu-passwords"
   "menu-projects"
+  "menu-run"
+  "menu-windows"
   "neomutt"
   "node"
   "nvim"
@@ -30,10 +35,17 @@ apps=(
 choice="$(printf '%s\n' "${apps[@]}" | rofi -kb-accept-entry "Return" -dmenu -p 'run')"
 
 case "$choice" in
+flameshot*)
+  if [[ "${choice##* }" == "gui" ]]; then
+    $choice
+  else
+    $choice -c
+  fi
+  ;;
 htop | node | nvim | vifm | rtv)
   term --title "$choice" "$choice"
   ;;
-menu-bluetooth | menu-calculator | menu-clipboard | menu-exit | menu-notes | menu-passwords | menu-projects)
+menu-*)
   "$HOME/scripts/i3/$choice.sh"
   ;;
 spotify | qutebrowser)
@@ -46,6 +58,6 @@ neomutt | weechat)
   term --instance "$choice" --title "$choice" "$choice"
   ;;
 *)
-  "$choice"
+  $choice
   ;;
 esac
