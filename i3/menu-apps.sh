@@ -25,6 +25,7 @@ apps=(
   "nvim"
   "qutebrowser"
   "rtv"
+  "scrcpy"
   "spotify"
   "term"
   "twitch"
