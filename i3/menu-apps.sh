@@ -33,7 +33,7 @@ apps=(
   "weechat"
 )
 
-choice="$(printf '%s\n' "${apps[@]}" | rofi -kb-accept-entry "Return" -dmenu -p 'run')"
+choice="$(printf '%s\n' "${apps[@]}" | rofi -kb-accept-entry "Return" -dmenu -theme-str 'inputbar { children: [prompt, entry]; }' -p 'app: ')"
 
 case "$choice" in
 flameshot*)

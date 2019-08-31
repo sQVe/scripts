@@ -20,7 +20,7 @@ exits=(
   "suspend"
 )
 
-choice="$(printf '%s\n' "${exits[@]}" | rofi -kb-accept-entry "Return" -dmenu -p 'run')"
+choice="$(printf '%s\n' "${exits[@]}" | rofi -kb-accept-entry "Return" -dmenu -theme-str 'inputbar { children: [prompt, entry]; }' -p 'exit: ')"
 
 case "$choice" in
 exit)

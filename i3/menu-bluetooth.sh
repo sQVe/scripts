@@ -5,7 +5,7 @@
 #  ╹ ╹┗━╸╹ ╹┗━┛   ┗━┛┗━╸┗━┛┗━╸ ╹ ┗━┛┗━┛ ╹ ╹ ╹
 
 devices=$(bluetoothctl paired-devices | cut -d ' ' -f 2-)
-choice="$(echo "$devices" | cut -d ' ' -f 2- | rofi -kb-accept-entry "Return" -dmenu -p 'run')"
+choice="$(echo "$devices" | cut -d ' ' -f 2- | rofi -kb-accept-entry "Return" -dmenu -theme-str 'inputbar { children: [prompt, entry]; }' -p 'device: ')"
 mac=$(echo "$devices" | rg "$choice" | awk '{print $1}')
 
 if [[ -n "$mac" ]]; then
