@@ -8,10 +8,10 @@ label=""
 ssid="$(iwgetid -r)"
 
 if [[ -z "$ssid" ]]; then
-	echo "$label"
-	echo "$label"
-	echo "#FF5555"
-	exit 0
+  echo "$label"
+  echo "$label"
+  echo "#FF5555"
+  exit 0
 fi
 
 quality="$(grep "$BLOCK_INSTANCE" /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')"
@@ -20,9 +20,9 @@ echo "$label $ssid @ $quality%"
 echo "$label $ssid @ $quality%"
 
 if [[ $quality -gt 50 ]]; then
-    echo "#8BE9FD"
+  echo "#8BE9FD"
 elif [[ $quality -gt 24 ]] && [[ $quality -lt 51 ]]; then
-    echo "#E6DB74"
+  echo "#E6DB74"
 elif [[ $quality -lt 25 ]]; then
-    echo "#FF5555"
+  echo "#FF5555"
 fi

@@ -11,10 +11,9 @@ if [[ -z "$mail_count" ]]; then
   exit 0
 fi
 
-echo "$mail_count"
-echo "$mail_count"
+echo " $mail_count"
+echo " $mail_count"
 
 if [[ $mail_count -gt 0 ]]; then
   echo "#E6DB74"
 fi
-

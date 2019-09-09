@@ -10,10 +10,9 @@ if [[ -z "$notifications" ]]; then
   exit 0
 fi
 
-echo "$notifications"
-echo "$notifications"
+echo " $notifications"
+echo " $notifications"
 
 if [[ $notifications -gt 0 ]]; then
   echo "#E6DB74"
 fi
-

@@ -5,14 +5,14 @@
 #  ┗━┛╹┗╸╹┗━┛╹ ╹ ╹ ╹ ╹┗━╸┗━┛┗━┛
 
 case "$BLOCK_BUTTON" in
-  1) light -S 10;;
-  2) light -S 80;;
-  3) light -S 40;;
-  4) light -A 5;;
-  5) light -U 5;;
+1) light -S 10 ;;
+2) light -S 80 ;;
+3) light -S 40 ;;
+4) light -A 5 ;;
+5) light -U 5 ;;
 esac
 
-light="$(light -G)"
+light=$(printf %.0f "$(light -G)")
 
-printf %.0f "$light" && echo ""
-printf %.0f "$light" && echo ""
+echo " $light"
+echo " $light"
