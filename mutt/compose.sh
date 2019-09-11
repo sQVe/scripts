@@ -4,7 +4,7 @@
 #  ┃  ┃ ┃┃┃┃┣━┛┃ ┃┗━┓┣╸
 #  ┗━╸┗━┛╹ ╹╹  ┗━┛┗━┛┗━╸
 
-is_reply_included=$(rg '^On' <"$1" | wc -l)
+is_reply_included=$(rg '^On\s+' | rg 'wrote:$' <"$1" | wc -l)
 
 if [[ $is_reply_included -gt 0 ]]; then
   nvim "+norm /OnOO" "+StripWhitespace" "$1"
