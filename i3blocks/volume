@@ -4,9 +4,10 @@
 #  ┃┏┛┃ ┃┃  ┃ ┃┃┃┃┣╸
 #  ┗┛ ┗━┛┗━╸┗━┛╹ ╹┗━╸
 
+color=""
 mixer="default"
-step="${1:-5%}"
 scontrol="Master"
+step="${1:-5%}"
 
 case $BLOCK_BUTTON in
 1) amixer -q -D "$mixer" sset "$scontrol" toggle ;;
@@ -17,8 +18,7 @@ esac
 
 volume="$(amixer -D "$mixer" get "$scontrol")"
 
-if [[ "$volume" =~ \[on\] ]]; then
-  [[ "$volume" =~ [0-9]*% ]]
+if [[ "$volume" =~ \[on\] ]] && [[ "$volume" =~ [0-9]*% ]]; then
   print=" ${BASH_REMATCH[*]}"
 else
   print=" muted"
