@@ -10,7 +10,7 @@ status = check_output(['acpi'], universal_newlines=True)
 
 if not status:
     # stands for no battery found
-    fulltext = "<span color='red'><span font='Iosevka Nerd Font'>\uf00d \uf240</span></span>"
+    fulltext = "NO BATTERY FOUND"
     percentleft = 100
 else:
     # if there is more than one battery in one laptop, the percentage left is
@@ -31,9 +31,6 @@ else:
     commasplitstatus = commasplitstatus_batteries[0]
     percentleft = int(sum(percentleft_batteries)/len(percentleft_batteries))
 
-    # stands for plugged in
-    FA_PLUG = "<span font='Iosevka Nerd Font'>\uf240</span>"
-
     if state == "Discharging":
         if percentleft < 10:
             fulltext = "<span font='Iosevka Nerd Font'>\uf244</span> "
@@ -45,12 +42,8 @@ else:
             fulltext = "<span font='Iosevka Nerd Font'>\uf241</span> "
         else:
             fulltext = "<span font='Iosevka Nerd Font'>\uf240</span> "
-    elif state == "Full":
-        fulltext = FA_PLUG + " "
-    elif state == "Unknown":
-        fulltext =  "<span font='Iosevka Nerd Font'>\uf377</span> "
     else:
-        fulltext = "<span color='#E6DB74'><span font='Iosevka Nerd Font'>\uf376</span></span> "
+        fulltext = "<span font='Iosevka Nerd Font'>\uf1e6</span> "
 
     def color(percent):
         if percent < 10:
