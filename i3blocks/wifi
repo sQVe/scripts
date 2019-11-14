@@ -10,7 +10,7 @@ ssid="$(iwgetid -r)"
 if [[ -z "$ssid" ]]; then
   echo "$label"
   echo "$label"
-  echo "#FF5555"
+  echo "#fb4934"
   exit 0
 fi
 
@@ -20,9 +20,9 @@ echo "$label $ssid @ $quality%"
 echo "$label $ssid @ $quality%"
 
 if [[ $quality -gt 50 ]]; then
-  echo "#8BE9FD"
+  echo "#8ec07c"
 elif [[ $quality -gt 24 ]] && [[ $quality -lt 51 ]]; then
-  echo "#E6DB74"
+  echo "#fabd2f"
 elif [[ $quality -lt 25 ]]; then
-  echo "#FF5555"
+  echo "#fb4934"
 fi

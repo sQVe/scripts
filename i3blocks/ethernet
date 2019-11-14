@@ -15,10 +15,10 @@ fi
 if [[ "$state" == "down" ]]; then
   echo "$label"
   echo "$label"
-  echo "#FF5555"
+  echo "#fb4934"
   exit 0
 fi
 
 echo "$label"
 echo "$label"
-echo "#8BE9FD"
+echo "#8ec07c"

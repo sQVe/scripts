@@ -5,15 +5,15 @@
 #  ╺┻┛╹┗━┛╹  ┗━╸╹ ╹ ╹    ╹ ╹┗━┛╺┻┛┗━╸
 
 temperature="$(redshift -p | grep -P -o '[0-9]+K')"
-color="#FF5555"
+color="#d3869b"
 
 if [[ "$(pidof redshift | wc -w)" == 0 ]]; then
   temperature="optimal"
-  color="#8BE9FD"
+  color="#8ec07c"
 fi
 
 if [[ ${temperature::-1} -gt "4999" ]]; then
-  color="#E6DB74"
+  color="#fabd2f"
 fi
 
 echo " $temperature"

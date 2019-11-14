@@ -5,5 +5,5 @@
 #  ┗━┛╹ ╹╹  ┗━╸   ┗━╸┗━┛╹ ╹╺┻┛   ╹┗╸┗━╸╺┻┛┗━┛╹ ╹╹╹   ╹
 
 if [[ $(pidof redshift | wc -w) == 0 ]]; then
-  redshift -m randr:preserve=1 && pkill -RTMIN+2 i3blocks
+  redshift -m randr && pkill -RTMIN+2 i3blocks
 fi

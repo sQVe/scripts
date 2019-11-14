@@ -15,5 +15,5 @@ echo " $mail_count"
 echo " $mail_count"
 
 if [[ $mail_count -gt 0 ]]; then
-  echo "#E6DB74"
+  echo "#fabd2f"
 fi

@@ -14,5 +14,5 @@ echo " $notifications"
 echo " $notifications"
 
 if [[ $notifications -gt 0 ]]; then
-  echo "#E6DB74"
+  echo "#fabd2f"
 fi
