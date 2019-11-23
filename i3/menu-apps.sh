@@ -28,6 +28,7 @@ apps=(
   "scrcpy"
   "spotify"
   "term"
+  "twitch"
   "vifm"
   "weechat"
 )
@@ -50,6 +51,9 @@ menu-*)
   ;;
 spotify | qutebrowser)
   "scaled-$choice"
+  ;;
+twitch)
+  streamlink-twitch-gui
   ;;
 neomutt | weechat)
   term --instance "$choice" --title "$choice" "$choice"
