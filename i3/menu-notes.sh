@@ -8,5 +8,5 @@ notes="$(command fd --extension md --max-depth 1 . "$HOME/notes" | sed -r -e 's/
 choice="$(echo "$notes" | rofi -kb-accept-entry "Return" -dmenu -theme-str 'inputbar { children: [prompt, entry]; }' -p 'note: ')"
 
 if [[ -n "$choice" && -f "$HOME/notes/$choice.md" ]]; then
-  term nvim-pwd "$HOME/notes/$choice.md"
+  term nvim "$HOME/notes/$choice.md"
 fi
