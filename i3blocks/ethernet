@@ -4,7 +4,7 @@
 #  ┣╸  ┃ ┣━┫┣╸ ┣┳┛┃┗┫┣╸  ┃
 #  ┗━╸ ╹ ╹ ╹┗━╸╹┗╸╹ ╹┗━╸ ╹
 
-instance="$(fd enp /sys/class/net/ | head -n 1)"
+instance="$(fd -d 1 enp /sys/class/net/ | head -n 1)"
 label=""
 state="down"
 
