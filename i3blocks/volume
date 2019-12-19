@@ -16,7 +16,7 @@ case $BLOCK_BUTTON in
 5) amixer -q -D "$mixer" sset "$scontrol" "${step}-" unmute ;;
 esac
 
-volume="$(amixer -D "$mixer" get "$scontrol")"
+volume=$(amixer -D "$mixer" get "$scontrol")
 
 if [[ "$volume" =~ \[on\] ]] && [[ "$volume" =~ [0-9]*% ]]; then
   print=" ${BASH_REMATCH[*]}"

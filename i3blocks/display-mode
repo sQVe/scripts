@@ -4,7 +4,7 @@
 #   ┃┃┃┗━┓┣━┛┃  ┣━┫┗┳┛   ┃┃┃┃ ┃ ┃┃┣╸
 #  ╺┻┛╹┗━┛╹  ┗━╸╹ ╹ ╹    ╹ ╹┗━┛╺┻┛┗━╸
 
-temperature="$(redshift -p | grep -P -o '[0-9]+K')"
+temperature=$(redshift -p | grep -P -o '[0-9]+K')
 color="#d3869b"
 
 if [[ "$(pidof redshift | wc -w)" == 0 ]]; then
