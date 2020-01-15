@@ -11,6 +11,7 @@ apps=(
   "flameshot screen"
   "htop"
   "insomnia"
+  "krita"
   "menu-bluetooth"
   "menu-calculator"
   "menu-clipboard"
