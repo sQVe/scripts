@@ -4,7 +4,7 @@
 #  ┃╻┃┃┣╸ ┃
 #  ┗┻┛╹╹  ╹
 
-label=""
+label="直 "
 ssid=$(iwgetid -r)
 
 if [[ -z "$ssid" ]]; then
@@ -16,8 +16,8 @@ fi
 
 quality=$(grep "$BLOCK_INSTANCE" /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
 
-echo "$label $ssid @ $quality%"
-echo "$label $ssid @ $quality%"
+echo "$label $ssid"
+echo "$label $ssid"
 
 if [[ $quality -gt 50 ]]; then
   echo "#8ec07c"

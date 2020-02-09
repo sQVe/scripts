@@ -6,7 +6,7 @@
 
 instance_path=$(fd -d 1 enp /sys/class/net/ | head -n 1)
 instance=$(rg -o '\w+$' <<<"$instance_path")
-label=""
+label=" "
 state="down"
 
 if [[ -f "$instance_path/operstate" ]]; then

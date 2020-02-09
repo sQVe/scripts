@@ -19,9 +19,9 @@ esac
 volume=$(amixer -D "$mixer" get "$scontrol")
 
 if [[ "$volume" =~ \[on\] ]] && [[ "$volume" =~ [0-9]*% ]]; then
-  print=" ${BASH_REMATCH[*]}"
+  print="墳 ${BASH_REMATCH[*]}"
 else
-  print=" muted"
+  print="  muted"
   color="#fabd2f"
 fi
 

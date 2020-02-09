@@ -33,17 +33,27 @@ else:
 
     if state == "Discharging":
         if percentleft < 10:
-            fulltext = "<span font='Iosevka Nerd Font'>\uf244</span> "
+            fulltext = "<span font='Iosevka Nerd Font'>\uf579</span>"
         elif percentleft < 20:
-            fulltext = "<span font='Iosevka Nerd Font'>\uf243</span> "
+            fulltext = "<span font='Iosevka Nerd Font'>\uf57a</span>"
+        elif percentleft < 30:
+            fulltext = "<span font='Iosevka Nerd Font'>\uf57b</span>"
         elif percentleft < 40:
-            fulltext = "<span font='Iosevka Nerd Font'>\uf242</span> "
+            fulltext = "<span font='Iosevka Nerd Font'>\uf57c</span>"
+        elif percentleft < 50:
+            fulltext = "<span font='Iosevka Nerd Font'>\uf57d</span>"
+        elif percentleft < 60:
+            fulltext = "<span font='Iosevka Nerd Font'>\uf57e</span>"
+        elif percentleft < 70:
+            fulltext = "<span font='Iosevka Nerd Font'>\uf57f</span>"
         elif percentleft < 80:
-            fulltext = "<span font='Iosevka Nerd Font'>\uf241</span> "
+            fulltext = "<span font='Iosevka Nerd Font'>\uf580</span>"
+        elif percentleft < 90:
+            fulltext = "<span font='Iosevka Nerd Font'>\uf581</span>"
         else:
-            fulltext = "<span font='Iosevka Nerd Font'>\uf240</span> "
+            fulltext = "<span font='Iosevka Nerd Font'>\uf578</span>"
     else:
-        fulltext = "<span font='Iosevka Nerd Font'>\uf1e6</span> "
+        fulltext = "<span font='Iosevka Nerd Font'>\uf583</span>"
 
     def color(percent):
         if percent < 10:
@@ -54,7 +64,7 @@ else:
             return "#83a598"
         return "#8ec07c"
 
-    form =  '<span color="{}">{}%</span>'
+    form =  '<span color="{}"> {}%</span>'
     fulltext += form.format(color(percentleft), percentleft)
 
 print(fulltext)
