@@ -21,6 +21,7 @@ sudo rsync "$1" --delete --delete-excluded \
   --exclude="/home/*/.config/chromium-back*" \
   --exclude="/home/*/.ghc/" \
   --exclude="/home/*/.local/share/Trash/*" \
+  --exclude="/home/*/.local/share/mail/" \
   --exclude="/home/*/.local/share/nvim/" \
   --exclude="/home/*/.local/share/qutebrowser-back*" \
   --exclude="/home/*/.node-gyp/" \
