@@ -13,7 +13,7 @@ binmode(STDOUT, ":utf8");
 
 # default values
 my $t_warn = 85;
-my $t_crit = 90;
+my $t_crit = 95;
 my $chip = "coretemp-isa-0000";
 my $temperature = -9999;
 
