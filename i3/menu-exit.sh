@@ -6,7 +6,6 @@
 
 exits=(
   "exit"
-  "hibernate"
   "lock"
   "poweroff"
   "reboot"
@@ -20,6 +19,19 @@ exits=(
   "suspend"
 )
 
+if [[ -x "$(command -v optimus-manager)" ]]; then
+  gpu=$(optimus-manager --print-mode | rg -o "intel|nvidia")
+
+  case "$gpu" in
+  intel)
+    exits+=("gpu nvidia")
+    ;;
+  nvidia)
+    exits+=("gpu intel")
+    ;;
+  esac
+fi
+
 choice="$(printf '%s\n' "${exits[@]}" | rofi -kb-accept-entry "Return" -dmenu -theme-str 'inputbar { children: [prompt, entry]; }' -p 'exit: ')"
 
 case "$choice" in
@@ -31,6 +43,10 @@ lock)
   ;;
 shutdown)
   systemctl poweroff
+  ;;
+gpu*)
+  optimus-manager --set-startup "$(rg -o "intel|nvidia" <<<"$choice")"
+  systemctl reboot
   ;;
 *)
   if [[ "$choice" =~ shutdown\ [0-9]+ ]]; then
