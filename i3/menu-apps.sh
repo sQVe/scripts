@@ -28,6 +28,7 @@ apps=(
   "rtv"
   "scrcpy"
   "spotify"
+  "slack"
   "term"
   "twitch"
   "vifm"
