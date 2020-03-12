@@ -4,6 +4,8 @@
 #  ┃╻┃┃┣╸ ┃
 #  ┗┻┛╹╹  ╹
 
+instance_path=$(fd -d 1 wlp /sys/class/net/ | head -n 1)
+instance=$(rg -o '\w+$' <<<"$instance_path")
 label="直 "
 ssid=$(iwgetid -r)
 
@@ -14,7 +16,7 @@ if [[ -z "$ssid" ]]; then
   exit 0
 fi
 
-quality=$(grep "$BLOCK_INSTANCE" /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
+quality=$(grep "$instance" /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
 
 echo "$label $ssid"
 echo "$label $ssid"
