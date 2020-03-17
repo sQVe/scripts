@@ -6,6 +6,7 @@
 
 apps=(
   "chromium"
+  "ctop"
   "flameshot full"
   "flameshot gui"
   "flameshot screen"
@@ -38,6 +39,9 @@ apps=(
 choice="$(printf '%s\n' "${apps[@]}" | rofi -kb-accept-entry "Return" -dmenu -theme-str 'inputbar { children: [prompt, entry]; }' -p 'app: ')"
 
 case "$choice" in
+ctop)
+  term sudo ctop
+  ;;
 flameshot*)
   if [[ "${choice##* }" == "gui" ]]; then
     $choice
