@@ -14,6 +14,8 @@ if [[ -z "$2" ]]; then
   exit 1
 fi
 
+sudo mkdir -p "$2"
+
 sudo rsync "$1" --delete --delete-excluded \
   --exclude="/dev/*" \
   --exclude="/home/*/.builds/*" \
@@ -45,4 +47,5 @@ sudo rsync "$1" --delete --delete-excluded \
   --exclude="/swapfile" \
   --exclude="/sys/*" \
   --exclude="/tmp/*" \
+  --exclude="/var/lib/docker/overlay2/*" \
   / "$2"
