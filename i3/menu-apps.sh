@@ -5,7 +5,7 @@
 #  ╹ ╹┗━╸╹ ╹┗━┛   ╹ ╹╹  ╹  ┗━┛
 
 apps=(
-  "chromium"
+  "chrome"
   "ctop"
   "flameshot full"
   "flameshot gui"
@@ -39,6 +39,9 @@ apps=(
 choice="$(printf '%s\n' "${apps[@]}" | rofi -kb-accept-entry "Return" -dmenu -theme-str 'inputbar { children: [prompt, entry]; }' -p 'app: ')"
 
 case "$choice" in
+chrome)
+  google-chrome-stable
+  ;;
 ctop)
   term sudo ctop
   ;;
