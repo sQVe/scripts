@@ -5,7 +5,7 @@
 #  ╹  ┗━┛╹  ┗━┛╹  ┗━╸╹ ╹ ╹ ┗━╸   ┗━╸┗━┛╺┻┛┗━┛
 
 contacts_db="$HOME/.lbdb/m_inmail.utf-8"
-mail_directory="$HOME/.local/share/mail"
+mail_directory="$XDG_DATA_HOME/mail"
 mails=$(fd --type f --changed-within "3 months" . "$mail_directory")
 
 while read -r mail; do

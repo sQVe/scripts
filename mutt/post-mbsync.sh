@@ -5,7 +5,7 @@
 #  ╹  ┗━┛┗━┛ ╹    ╹ ╹┗━┛┗━┛ ╹ ╹ ╹┗━╸
 
 contacts_db="$HOME/.lbdb/m_inmail.utf-8"
-mail_directory="$HOME/.local/share/mail"
+mail_directory="$XDG_DATA_HOME/mail"
 mailboxes=("$mail_directory"/*)
 new_mailboxes=("$mail_directory"/*/Inbox/new)
 timestamp="$mail_directory/sync-timestamp"
