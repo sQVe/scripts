@@ -28,11 +28,12 @@ apps=(
   "qutebrowser"
   "rtv"
   "scrcpy"
-  "spotify"
   "slack"
+  "spotify"
   "term"
   "twitch"
   "vifm"
+  "virt-manager"
   "weechat"
 )
 
@@ -49,7 +50,7 @@ flameshot*)
   if [[ "${choice##* }" == "gui" ]]; then
     $choice
   else
-    $choice -c
+    $choice --path "$DOWNLOAD"
   fi
   ;;
 htop | node | nvim | vifm | rtv)
