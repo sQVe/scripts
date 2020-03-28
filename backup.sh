@@ -47,5 +47,6 @@ sudo rsync "$1" --delete --delete-excluded \
   --exclude="/swapfile" \
   --exclude="/sys/*" \
   --exclude="/tmp/*" \
-  --exclude="/var/lib/docker/overlay2/*" \
+  --exclude="/var/lib/docker/*" \
+  --exclude="/var/lib/libvirt/*" \
   / "$2"
