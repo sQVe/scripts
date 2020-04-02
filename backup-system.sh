@@ -1,39 +1,31 @@
 #!/usr/bin/env bash
 
-#  ┏┓ ┏━┓┏━╸╻┏ ╻ ╻┏━┓
-#  ┣┻┓┣━┫┃  ┣┻┓┃ ┃┣━┛
-#  ┗━┛╹ ╹┗━╸╹ ╹┗━┛╹
+#  ┏┓ ┏━┓┏━╸╻┏ ╻ ╻┏━┓   ┏━┓╻ ╻┏━┓╺┳╸┏━╸┏┳┓
+#  ┣┻┓┣━┫┃  ┣┻┓┃ ┃┣━┛   ┗━┓┗┳┛┗━┓ ┃ ┣╸ ┃┃┃
+#  ┗━┛╹ ╹┗━╸╹ ╹┗━┛╹     ┗━┛ ╹ ┗━┛ ╹ ┗━╸╹ ╹
 
 if [[ -z "$1" ]]; then
-  echo "No backup options supplied"
+  echo "No drive specified. Exiting."
   exit 1
 fi
 
-if [[ -z "$2" ]]; then
-  echo "No backup target supplied"
-  exit 1
-fi
+current_date=$(timedatectl | head -n 1 | rg -o '\d+-\d+-\d+')
+path="$1/systems/$(hostname)/$current_date"
 
-sudo mkdir -p "$2"
-
-sudo rsync "$1" --delete --delete-excluded \
+sudo mkdir -p "$path"
+sudo rsync -aAXv --delete --delete-excluded \
   --exclude="/dev/*" \
   --exclude="/home/*/.builds/*" \
   --exclude="/home/*/.cache/*" \
-  --exclude="/home/*/.config/chromium-back*" \
-  --exclude="/home/*/.ghc/" \
+  --exclude="/home/*/.config/google-chrome-back*" \
   --exclude="/home/*/.local/share/Steam" \
   --exclude="/home/*/.local/share/TabNine" \
   --exclude="/home/*/.local/share/Trash/*" \
   --exclude="/home/*/.local/share/mail/" \
   --exclude="/home/*/.local/share/nvim/" \
+  --exclude="/home/*/.local/share/nvm/" \
   --exclude="/home/*/.local/share/qutebrowser-back*" \
   --exclude="/home/*/.node-gyp/" \
-  --exclude="/home/*/.npm/" \
-  --exclude="/home/*/.nvm/" \
-  --exclude="/home/*/.stack/" \
-  --exclude="/home/*/.virtualbox/" \
-  --exclude="/home/*/.yarn/" \
   --exclude="/home/*/code/*" \
   --exclude="/home/*/download/*" \
   --exclude="/home/*/media/*" \
@@ -49,4 +41,6 @@ sudo rsync "$1" --delete --delete-excluded \
   --exclude="/tmp/*" \
   --exclude="/var/lib/docker/*" \
   --exclude="/var/lib/libvirt/*" \
-  / "$2"
+  / "$path"
+
+echo "Successfully created system backup at: $path."
