@@ -4,10 +4,14 @@
 #  ┗━┓┣━┫┃┃┃┣╸  ┃┃┃┣┳┛
 #  ┗━┛╹ ╹╹ ╹┗━╸╺┻┛╹╹┗╸
 
-PID=$(xprop -id "$(xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print $NF}')" |
+pid=$(xprop -id "$(xprop -root | awk '/_NET_ACTIVE_WINDOW\(WINDOW\)/{print $NF}')" |
   grep -m 1 PID |
   cut -d " " -f 3)
-PID=$(pstree -pAT "$PID" | rg -o '\d+' | tail -n 1)
+pid=$(pstree -pAT "$pid" | rg -o '\d+' | tail -n 1)
+cwd=$(readlink "/proc/$pid/cwd")
 
-cd "$(readlink /proc/"$PID"/cwd)" || exit
+if [[ $cwd != "/" ]]; then
+  cd "$(readlink /proc/"$pid"/cwd)" || exit
+fi
+
 term
