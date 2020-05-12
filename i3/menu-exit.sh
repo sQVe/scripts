@@ -45,8 +45,7 @@ shutdown)
   systemctl poweroff
   ;;
 gpu*)
-  optimus-manager --set-startup "$(rg -o "intel|nvidia" <<<"$choice")"
-  systemctl reboot
+  optimus-manager --no-confirm --switch "$(rg -o "intel|nvidia" <<<"$choice")"
   ;;
 *)
   if [[ "$choice" =~ shutdown\ [0-9]+ ]]; then
