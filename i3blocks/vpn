@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+#  ╻ ╻┏━┓┏┓╻
+#  ┃┏┛┣━┛┃┗┫
+#  ┗┛ ╹  ╹ ╹
+
+case "$BLOCK_BUTTON" in
+1) mullvad connect ;;
+3) mullvad disconnect ;;
+esac
+
+if mullvad status | rg --quiet 'Connected'; then
+  echo " "
+  echo " "
+  echo "#8ec07c"
+else
+  echo " "
+  echo " "
+  echo "#fb4934"
+fi

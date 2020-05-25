@@ -32,6 +32,12 @@ if [[ -x "$(command -v optimus-manager)" ]]; then
   esac
 fi
 
+if mullvad status | rg --quiet 'Connected'; then
+  exits+=("vpn disconnect")
+else
+  exits+=("vpn connect")
+fi
+
 choice="$(printf '%s\n' "${exits[@]}" | rofi -kb-accept-entry "Return" -dmenu -theme-str 'inputbar { children: [prompt, entry]; }' -p 'exit: ')"
 
 case "$choice" in
@@ -46,6 +52,9 @@ shutdown)
   ;;
 gpu*)
   optimus-manager --no-confirm --switch "$(rg -o "intel|nvidia" <<<"$choice")"
+  ;;
+vpn*)
+  mullvad "$(rg -o "connect|disconnect" <<<"$choice")"
   ;;
 *)
   if [[ "$choice" =~ shutdown\ [0-9]+ ]]; then
