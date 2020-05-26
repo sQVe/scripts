@@ -4,14 +4,36 @@
 #  ┃┃┃┣╸ ┃┗┫┃ ┃   ┣━┫┣━┛┣━┛┗━┓
 #  ╹ ╹┗━╸╹ ╹┗━┛   ╹ ╹╹  ╹  ┗━┛
 
+# High priority.
 apps=(
   "chrome"
+  "htop"
+  "neomutt"
+  "nvim"
+  "qutebrowser"
+  "slack"
+  "spotify"
+  "term"
+  "vifm"
+  "weechat"
+)
+
+# Medium priority.
+apps+=(
   "ctop"
   "flameshot full"
   "flameshot gui"
   "flameshot screen"
-  "htop"
   "krita"
+  "rtv"
+  "scrcpy"
+  "twitch"
+  "virt-manager"
+)
+
+# Low priority.
+apps+=(
+  "calibre"
   "menu-bluetooth"
   "menu-calculator"
   "menu-clipboard"
@@ -21,19 +43,7 @@ apps=(
   "menu-projects"
   "menu-run"
   "menu-windows"
-  "neomutt"
-  "node"
-  "nvim"
-  "qutebrowser"
-  "rtv"
-  "scrcpy"
-  "slack"
-  "spotify"
-  "term"
-  "twitch"
-  "vifm"
-  "virt-manager"
-  "weechat"
+  "qbittorrent"
 )
 
 choice="$(printf '%s\n' "${apps[@]}" | rofi -kb-accept-entry "Return" -dmenu -theme-str 'inputbar { children: [prompt, entry]; }' -p 'app: ')"
@@ -66,6 +76,10 @@ twitch)
   ;;
 neomutt | weechat)
   term --instance "$choice" --title "$choice" "$choice"
+  ;;
+qbittorrent)
+  mullvad connect
+  qbittorrent
   ;;
 *)
   $choice
