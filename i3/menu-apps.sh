@@ -37,6 +37,7 @@ apps+=(
   "menu-bluetooth"
   "menu-calculator"
   "menu-clipboard"
+  "menu-emoji"
   "menu-exit"
   "menu-notes"
   "menu-passwords"
