@@ -70,7 +70,7 @@ menu-*)
   "$HOME/scripts/i3/$choice.sh"
   ;;
 spotify | qutebrowser)
-  "scaled-$choice"
+  "open-$choice"
   ;;
 twitch)
   streamlink-twitch-gui
