@@ -4,7 +4,7 @@
 #  ┃╺┓┃ ┃ ┣━┫┃ ┃┣┻┓
 #  ┗━┛╹ ╹ ╹ ╹┗━┛┗━┛
 
-notifications=$(hub api notifications | jq '. | length')
+notifications=$(gh api notifications | jq '. | length')
 
 if [[ -z "$notifications" ]]; then
   exit 0
