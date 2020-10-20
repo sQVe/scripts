@@ -33,6 +33,7 @@ apps+=(
 
 # Low priority.
 apps+=(
+  "arandr"
   "calibre"
   "menu-bluetooth"
   "menu-calculator"
@@ -44,6 +45,7 @@ apps+=(
   "menu-projects"
   "menu-run"
   "menu-windows"
+  "pavucontrol"
   "qbittorrent"
 )
 
