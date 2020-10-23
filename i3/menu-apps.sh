@@ -25,7 +25,6 @@ apps+=(
   "flameshot gui"
   "flameshot screen"
   "krita"
-  "rtv"
   "scrcpy"
   "twitch"
   "virt-manager"
