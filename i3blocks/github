@@ -4,15 +4,20 @@
 #  ┃╺┓┃ ┃ ┣━┫┃ ┃┣┻┓
 #  ┗━┛╹ ╹ ╹ ╹┗━┛┗━┛
 
-notifications=$(gh api notifications | jq '. | length')
+paginated_notifications=$(gh api notifications --paginate | jq '. | length')
+notification_sum=0
 
-if [[ -z "$notifications" ]]; then
+for count in $paginated_notifications; do
+  notification_sum=$((notification_sum + count))
+done
+
+if [[ -z "$notification_sum" ]]; then
   exit 0
 fi
 
-echo " $notifications"
-echo " $notifications"
+echo " $notification_sum"
+echo " $notification_sum"
 
-if [[ $notifications -gt 0 ]]; then
+if [[ $notification_sum -gt 0 ]]; then
   echo "#fabd2f"
 fi
