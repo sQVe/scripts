@@ -25,6 +25,7 @@ apps+=(
   "flameshot gui"
   "flameshot screen"
   "krita"
+  "mullvad"
   "scrcpy"
   "twitch"
   "virt-manager"
@@ -69,6 +70,9 @@ htop | node | nvim | vifm | rtv)
   ;;
 menu-*)
   "$HOME/scripts/i3/$choice.sh"
+  ;;
+mullvad)
+  mullvad-vpn
   ;;
 spotify | qutebrowser)
   "open-$choice"
