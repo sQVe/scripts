@@ -7,6 +7,11 @@
 paginated_notifications=$(gh api notifications --paginate | jq '. | length')
 notification_sum=0
 
+case $BLOCK_BUTTON in
+1) $BROWSER 'https://github.com/notifications' ;;
+
+esac
+
 for count in $paginated_notifications; do
   notification_sum=$((notification_sum + count))
 done
