@@ -27,6 +27,7 @@ apps+=(
   "krita"
   "mullvad"
   "scrcpy"
+  "telegram"
   "twitch"
   "virt-manager"
 )
@@ -52,42 +53,45 @@ apps+=(
 choice="$(printf '%s\n' "${apps[@]}" | rofi -kb-accept-entry "Return" -dmenu -theme-str 'inputbar { children: [prompt, entry]; }' -p 'app: ')"
 
 case "$choice" in
-chrome)
-  google-chrome-stable
-  ;;
-ctop)
-  term sudo ctop
-  ;;
-flameshot*)
-  if [[ "${choice##* }" == "gui" ]]; then
+  chrome)
+    google-chrome-stable
+    ;;
+  ctop)
+    term sudo ctop
+    ;;
+  flameshot*)
+    if [[ "${choice##* }" == "gui" ]]; then
+      $choice
+    else
+      $choice --path "$DOWNLOAD"
+    fi
+    ;;
+  htop | node | nvim | vifm | rtv)
+    term --title "$choice" "$choice"
+    ;;
+  menu-*)
+    "$HOME/scripts/i3/$choice.sh"
+    ;;
+  mullvad)
+    mullvad-vpn
+    ;;
+  spotify | qutebrowser)
+    "open-$choice"
+    ;;
+  telegram)
+    telegram-desktop
+    ;;
+  twitch)
+    streamlink-twitch-gui
+    ;;
+  neomutt | weechat)
+    term --instance "$choice" --title "$choice" "$choice"
+    ;;
+  qbittorrent)
+    mullvad connect
+    qbittorrent
+    ;;
+  *)
     $choice
-  else
-    $choice --path "$DOWNLOAD"
-  fi
-  ;;
-htop | node | nvim | vifm | rtv)
-  term --title "$choice" "$choice"
-  ;;
-menu-*)
-  "$HOME/scripts/i3/$choice.sh"
-  ;;
-mullvad)
-  mullvad-vpn
-  ;;
-spotify | qutebrowser)
-  "open-$choice"
-  ;;
-twitch)
-  streamlink-twitch-gui
-  ;;
-neomutt | weechat)
-  term --instance "$choice" --title "$choice" "$choice"
-  ;;
-qbittorrent)
-  mullvad connect
-  qbittorrent
-  ;;
-*)
-  $choice
-  ;;
+    ;;
 esac
