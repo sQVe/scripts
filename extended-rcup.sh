@@ -12,4 +12,5 @@ rcup "$@"
 if [[ $# -eq 0 ]]; then
   ln -s "$DOTFILES/config/zsh/zimrc" "$XDG_CONFIG_HOME/zsh/.zimrc"
   ln -s "$DOTFILES/config/zsh/zshenv" "$XDG_CONFIG_HOME/zsh/.zshenv"
+  ln -s "$DOTFILES/config/zsh/zshrc" "$XDG_CONFIG_HOME/zsh/.zshrc"
 fi
