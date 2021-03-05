@@ -4,11 +4,10 @@
 #  ┃┃┃┣╸ ┃┗┫┃ ┃   ┣━┫┣━┛┣━┛┗━┓
 #  ╹ ╹┗━╸╹ ╹┗━┛   ╹ ╹╹  ╹  ┗━┛
 
-# High priority.
+# High priority apps.
 apps=(
   "chrome"
   "htop"
-  "neomutt"
   "nvim"
   "qutebrowser"
   "slack"
@@ -18,9 +17,8 @@ apps=(
   "weechat"
 )
 
-# Medium priority.
+# Medium priority apps.
 apps+=(
-  "ctop"
   "flameshot full"
   "flameshot gui"
   "flameshot screen"
@@ -28,17 +26,12 @@ apps+=(
   "mullvad"
   "scrcpy"
   "telegram"
-  "twitch"
-  "virt-manager"
 )
 
-# Low priority.
+# Low priority apps.
 apps+=(
   "arandr"
-  "calibre"
-  "menu-bluetooth"
   "menu-calculator"
-  "menu-clipboard"
   "menu-emoji"
   "menu-exit"
   "menu-notes"
@@ -50,14 +43,19 @@ apps+=(
   "qbittorrent"
 )
 
+# Work apps.
+if [[ $HOSTNAME == 'calcifer' ]]; then
+  apps+=(
+    "pritunl"
+    "zoom"
+  )
+fi
+
 choice="$(printf '%s\n' "${apps[@]}" | rofi -kb-accept-entry "Return" -dmenu -theme-str 'inputbar { children: [prompt, entry]; }' -p 'app: ')"
 
 case "$choice" in
   chrome)
     google-chrome-stable
-    ;;
-  ctop)
-    term sudo ctop
     ;;
   flameshot*)
     if [[ "${choice##* }" == "gui" ]]; then
@@ -66,7 +64,7 @@ case "$choice" in
       $choice --path "$DOWNLOAD"
     fi
     ;;
-  htop | node | nvim | vifm | rtv)
+  htop | node | nvim | vifm)
     term --title "$choice" "$choice"
     ;;
   menu-*)
@@ -78,13 +76,13 @@ case "$choice" in
   spotify | qutebrowser)
     "open-$choice"
     ;;
+  pritunl)
+    pritunl-client-electron
+    ;;
   telegram)
     telegram-desktop
     ;;
-  twitch)
-    streamlink-twitch-gui
-    ;;
-  neomutt | weechat)
+  weechat)
     term --instance "$choice" --title "$choice" "$choice"
     ;;
   qbittorrent)
