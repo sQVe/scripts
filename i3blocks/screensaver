@@ -16,11 +16,11 @@ case "$BLOCK_BUTTON" in
 esac
 
 if xset q | rg --quiet 'DPMS is Disabled'; then
-  echo "鈴 "
-  echo "鈴 "
-  echo "#8ec07c"
-else
   echo "零 "
   echo "零 "
   echo "#fb4934"
+else
+  echo "鈴 "
+  echo "鈴 "
+  echo "#8ec07c"
 fi
