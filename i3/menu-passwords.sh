@@ -9,8 +9,8 @@ choice="$(echo "$passwords" | rg "$1" | rofi -kb-accept-entry "Return" -dmenu -t
 
 if [[ -n "$choice" ]]; then
   if pass show --clip "$choice"; then
-    notify-send -t 1000 -i password "Password copied" "$choice"
+    dunstify -t 1000 -i password "Password copied" "$choice"
   else
-    notify-send -t 1000 -i password "Failed to copy password" "$choice"
+    dunstify -t 1000 -i password "Failed to copy password" "$choice"
   fi
 fi
