@@ -5,8 +5,8 @@
 #  ┗┛ ╹  ╹ ╹
 
 case "$BLOCK_BUTTON" in
-1) mullvad connect ;;
-3) mullvad disconnect ;;
+  1) mullvad connect ;;
+  3) mullvad disconnect ;;
 esac
 
 if mullvad status | rg --quiet 'Connected'; then

@@ -51,9 +51,9 @@ else:
         elif percentleft < 90:
             fulltext = "<span font='Iosevka Nerd Font'>\uf581</span>"
         else:
-            fulltext = "<span font='Iosevka Nerd Font'>\uf578</span>"
+            fulltext = "<span font='Iosevka Nerd Font'>\uf581</span>"
     else:
-        fulltext = "<span font='Iosevka Nerd Font'>\uf583</span>"
+        fulltext = "<span font='Iosevka Nerd Font'>\uf492</span>"
 
     def color(percent):
         if percent < 10:

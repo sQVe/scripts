@@ -5,7 +5,7 @@
 #  ┗┻┛╹╹  ╹
 
 instance_path=$(fd -d 1 wlp /sys/class/net/ | head -n 1)
-instance=$(rg -o '\w+$' <<<"$instance_path")
+instance=$(rg -o '\w+$' <<< "$instance_path")
 label="直 "
 ssid=$(iwgetid -r)
 

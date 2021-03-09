@@ -10,10 +10,10 @@ scontrol="Master"
 step="${1:-5%}"
 
 case $BLOCK_BUTTON in
-1) amixer -q -D "$mixer" sset "$scontrol" toggle ;;
-3) amixer -q -D "$mixer" sset "$scontrol" toggle ;;
-4) amixer -q -D "$mixer" sset "$scontrol" "${step}+" unmute ;;
-5) amixer -q -D "$mixer" sset "$scontrol" "${step}-" unmute ;;
+  1) amixer -q -D "$mixer" sset "$scontrol" toggle ;;
+  3) amixer -q -D "$mixer" sset "$scontrol" toggle ;;
+  4) amixer -q -D "$mixer" sset "$scontrol" "${step}+" unmute ;;
+  5) amixer -q -D "$mixer" sset "$scontrol" "${step}-" unmute ;;
 esac
 
 volume=$(amixer -D "$mixer" get "$scontrol")
