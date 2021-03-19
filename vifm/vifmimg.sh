@@ -1,64 +1,57 @@
 #!/usr/bin/env bash
-readonly ID_PREVIEW="preview"
 
-#PLAY_GIF="yes"
-# By enabling this option the GIF will be animated, by leaving it commented like it
-# is now will make the gif preview behave the same was a video preview.
+CACHE="$HOME/.cache/vifm/thumbnail.$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$(readlink -f "$PWD/$6")" | sha256sum | awk '{print $1}'))"
 
-#AUTO_REMOVE="yes"
-# By enabling this option the script will remove the preview file after it is drawn
-# and by doing so the preview will always be up-to-date with the file.
-# This however, requires more CPU and therefore affects the overall performance.
+pclear() {
+  declare -p -A cmd=([action]=remove [identifier]="vifm-preview") \
+    > "$FIFO_UEBERZUG"
+}
 
-if [ -e "$FIFO_UEBERZUG" ]; then
-  if [[ "$1" == "draw" ]]; then
-    declare -p -A cmd=([action]=add [identifier]="$ID_PREVIEW"
-      [x]="$2" [y]="$3" [width]="$4" [height]="$5"
-      [path]="$PWD/$6") \
-      >"$FIFO_UEBERZUG"
-  elif [[ "$1" == "videopreview" ]]; then
-    [[ ! -d "/tmp$PWD/$6/" ]] && mkdir -p "/tmp$PWD/$6/"
-    [[ ! -f "/tmp$PWD/$6.png" ]] && ffmpegthumbnailer -i "$PWD/$6" -o "/tmp$PWD/$6.png" -s 0 -q 10
-    declare -p -A cmd=([action]=add [identifier]="$ID_PREVIEW"
-      [x]="$2" [y]="$3" [width]="$4" [height]="$5"
-      [path]="/tmp$PWD/$6.png") \
-      >"$FIFO_UEBERZUG"
-  elif [[ "$1" == "gifpreview" ]]; then
-    [[ ! -d "/tmp$PWD/$6/" ]] && mkdir -p "/tmp$PWD/$6/" && convert -coalesce "$PWD/$6" "/tmp$PWD/$6/$6.png"
-    if [[ ! -z "$PLAY_GIF" ]]; then
-      for frame in $(ls -1 /tmp$PWD/$6/$6*.png | sort -V); do
-        declare -p -A cmd=([action]=add [identifier]="$ID_PREVIEW"
-          [x]="$2" [y]="$3" [width]="$4" [height]="$5"
-          [path]="$frame") \
-          >"$FIFO_UEBERZUG"
-        # Sleep between frames to make the animation smooth.
-        sleep .07
-      done
-    else
-      declare -p -A cmd=([action]=add [identifier]="$ID_PREVIEW"
-        [x]="$2" [y]="$3" [width]="$4" [height]="$5"
-        [path]="/tmp$PWD/$6/$6-0.png") \
-        >"$FIFO_UEBERZUG"
-    fi
-  elif [[ "$1" == "epubpreview" ]]; then
-    [[ ! -d "/tmp$PWD/$6/" ]] && mkdir -p "/tmp$PWD/$6/"
-    [[ ! -f "/tmp$PWD/$6.png" ]] && epub-thumbnailer "$6" "/tmp$PWD/$6.png" 512
-    declare -p -A cmd=([action]=add [identifier]="$ID_PREVIEW"
-      [x]="$2" [y]="$3" [width]="$4" [height]="$5"
-      [path]="/tmp$PWD/$6.png") \
-      >"$FIFO_UEBERZUG"
-  elif [[ "$1" == "pdfpreview" ]]; then
-    [[ ! -d "/tmp$PWD/$6/" ]] && mkdir -p "/tmp$PWD/$6/"
-    [[ ! -f "/tmp$PWD/$6.png" ]] && pdftoppm -png -singlefile "$6" "/tmp$PWD/$6"
-    declare -p -A cmd=([action]=add [identifier]="$ID_PREVIEW"
-      [x]="$2" [y]="$3" [width]="$4" [height]="$5"
-      [path]="/tmp$PWD/$6.png") \
-      >"$FIFO_UEBERZUG"
-  elif [[ "$1" == "clear" ]]; then
-    declare -p -A cmd=([action]=remove [identifier]="$ID_PREVIEW") \
-      >"$FIFO_UEBERZUG"
-    [[ ! -z $AUTO_REMOVE ]] && [[ -f "/tmp$PWD/$6.png" ]] && rm -f "/tmp$PWD/$6.png"
-    [[ ! -z $AUTO_REMOVE ]] && [[ -d "/tmp$PWD/$6/" ]] && rm -rf "/tmp$PWD/$6/"
+image() {
+  declare -p -A cmd=([action]=add [identifier]="vifm-preview"
+    [x]="$2" [y]="$3" [width]="$4" [height]="$5"
+    [path]="$6") \
+    > "$FIFO_UEBERZUG"
+}
 
-  fi
-fi
+main() {
+  case "$1" in
+    "clear")
+      pclear "$@"
+      ;;
+    "draw")
+      FILE="$PWD/$6"
+      image "$1" "$2" "$3" "$4" "$5" "$FILE"
+      ;;
+    "video")
+      [ ! -f "$CACHE" ] \
+        && ffmpegthumbnailer -i "$6" -o "${CACHE}.jpg" -s 0 -q 5
+      image "$1" "$2" "$3" "$4" "$5" "${CACHE}.jpg"
+      ;;
+    "epub")
+      [ ! -f "$CACHE" ] \
+        && epub-thumbnailer "$6" "$CACHE" 1024
+      image "$1" "$2" "$3" "$4" "$5" "$CACHE"
+      ;;
+    "pdf")
+      [ ! -f "${CACHE}.jpg" ] \
+        && pdftoppm -jpeg -f 1 -singlefile "$6" "$CACHE"
+      image "$1" "$2" "$3" "$4" "$5" "${CACHE}.jpg"
+      ;;
+    "audio")
+      [ ! -f "${CACHE}.jpg" ] \
+        && ffmpeg -i "$6" "${CACHE}.jpg" -y &> /dev/null
+      image "$1" "$2" "$3" "$4" "$5" "${CACHE}.jpg"
+      ;;
+    "font")
+      [ ! -f "${CACHE}.jpg" ] \
+        && fontpreview -i "$6" -o "${CACHE}.jpg"
+      image "$1" "$2" "$3" "$4" "$5" "${CACHE}.jpg"
+      ;;
+    *)
+      echo "Unknown command: '$@'"
+      ;;
+  esac
+}
+
+main "$@"
