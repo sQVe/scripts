@@ -22,7 +22,7 @@ if [[ "$volume" =~ \[on\] ]] && [[ "$volume" =~ [0-9]*% ]]; then
   print=" ${BASH_REMATCH[*]}"
 else
   print=" muted"
-  color="#fabd2f"
+  color="#fb4934"
 fi
 
 echo "$print"
