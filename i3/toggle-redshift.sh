@@ -5,7 +5,7 @@
 #   ╹ ┗━┛┗━┛┗━┛┗━╸┗━╸   ╹┗╸┗━╸╺┻┛┗━┛╹ ╹╹╹   ╹
 
 if [[ $(pidof redshift | wc -w) == 0 ]]; then
-  redshift -m randr
+  redshift -m randr &
 else
   pkill redshift
 fi
