@@ -4,25 +4,30 @@
 #  ┃┏┛┃ ┃┃  ┃ ┃┃┃┃┣╸
 #  ┗┛ ┗━┛┗━╸┗━┛╹ ╹┗━╸
 
-color=""
-mixer="default"
-scontrol="Master"
-step="${1:-5%}"
+# https://github.com/cdemoulins/pamixer/issues/23
+# % pamixer --default-source
+# % pamixer --default-source -t
+# % pamixer --default-source --get-volume
+# 63
+# % pamixer --get-volume
+# 77
+# % pamixer --default-source -i 5
 
 case $BLOCK_BUTTON in
-  1) amixer -q -D "$mixer" sset "$scontrol" toggle ;;
-  3) amixer -q -D "$mixer" sset "$scontrol" toggle ;;
-  4) amixer -q -D "$mixer" sset "$scontrol" "${step}+" unmute ;;
-  5) amixer -q -D "$mixer" sset "$scontrol" "${step}-" unmute ;;
+  1) pamixer -t ;;
+  3) pamixer -t ;;
+  4) pamixer --unmute --increase 5 ;;
+  5) pamixer --unmute --decrease 5 ;;
 esac
 
-volume=$(amixer -D "$mixer" get "$scontrol")
+volume=$(pamixer --get-volume-human)
 
-if [[ "$volume" =~ \[on\] ]] && [[ "$volume" =~ [0-9]*% ]]; then
-  print="墳 ${BASH_REMATCH[*]}"
-else
-  print="  muted"
+if [[ "$volume" == 'muted' ]]; then
+  print="  $volume"
   color="#fb4934"
+else
+  print="墳 $volume"
+  color=""
 fi
 
 echo "$print"

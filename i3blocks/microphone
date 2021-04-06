@@ -4,25 +4,28 @@
 #  ┃┃┃┃┃  ┣┳┛┃ ┃┣━┛┣━┫┃ ┃┃┗┫┣╸
 #  ╹ ╹╹┗━╸╹┗╸┗━┛╹  ╹ ╹┗━┛╹ ╹┗━╸
 
-color=""
-mixer="default"
-scontrol="Capture"
-step="${1:-5%}"
-
 case $BLOCK_BUTTON in
-  1) amixer -q -D "$mixer" sset "$scontrol" toggle ;;
-  3) amixer -q -D "$mixer" sset "$scontrol" toggle ;;
-  4) amixer -q -D "$mixer" sset "$scontrol" "${step}+" unmute ;;
-  5) amixer -q -D "$mixer" sset "$scontrol" "${step}-" unmute ;;
+  1) pamixer --default-source -t ;;
+  3) pamixer --default-source -t ;;
+  4) pamixer --default-source --unmute --increase 5 ;;
+  5) pamixer --default-source --unmute --decrease 5 ;;
 esac
 
-volume=$(amixer -D "$mixer" get "$scontrol")
+volume=$(pamixer --default --get-volume-human)
 
 if [[ "$volume" =~ \[on\] ]] && [[ "$volume" =~ [0-9]*% ]]; then
   print=" ${BASH_REMATCH[*]}"
 else
   print=" muted"
   color="#fb4934"
+fi
+
+if [[ "$volume" == 'muted' ]]; then
+  print=" $volume"
+  color="#fb4934"
+else
+  print=" $volume"
+  color=""
 fi
 
 echo "$print"
