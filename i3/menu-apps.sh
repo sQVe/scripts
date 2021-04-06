@@ -40,6 +40,7 @@ apps+=(
   "menu-run"
   "menu-windows"
   "pavucontrol"
+  "pulseeffects"
   "qbittorrent"
 )
 
