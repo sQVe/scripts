@@ -90,6 +90,10 @@ case "$choice" in
     mullvad connect
     qbittorrent
     ;;
+  zoom)
+    pkill zoom
+    zoom
+    ;;
   *)
     $choice
     ;;
