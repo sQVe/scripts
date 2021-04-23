@@ -12,6 +12,6 @@ fi
 path="$1/systems/$(hostname)"
 
 sudo mkdir -p "$path"
-sudo rsync -avh --delete --delete-excluded /timeshift "$path"
+sudo rsync -AHPXa --delete --delete-excluded /timeshift "$path"
 
 echo "Successfully created timeshift backup at: $path."
