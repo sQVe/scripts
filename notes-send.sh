@@ -25,8 +25,8 @@ fi
 # Ensure that the branch is up-to-date.
 git fetch && git merge --ff-only
 
-if [[ "$latest_commit_status" != "$message" ]] ||
-  [[ "$latest_commit_date" != "$system_date" ]]; then
+if [[ "$latest_commit_status" != "$message" ]] \
+  || [[ "$latest_commit_date" != "$system_date" ]]; then
   # New daily commit.
   git commit --no-gpg-sign --all --message "$message"
   git push
