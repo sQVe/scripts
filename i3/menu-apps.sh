@@ -19,6 +19,7 @@ apps=(
 
 # Medium priority apps.
 apps+=(
+  "discord"
   "flameshot full"
   "flameshot gui"
   "flameshot screen"
