@@ -54,4 +54,7 @@ main() {
   esac
 }
 
+# Exit if ueberzug isn't found.
+[[ -z "$FIFO_UEBERZUG" ]] && exit 1
+
 main "$@"
