@@ -36,7 +36,7 @@ else
   exits+=("vpn connect")
 fi
 
-choice="$(printf '%s\n' "${exits[@]}" | rofi -kb-accept-entry "Return" -dmenu -theme-str 'inputbar { children: [prompt, entry]; }' -p 'exit: ')"
+choice="$(printf '%s\n' "${exits[@]}" | rofi -dmenu -p 'exit')"
 
 case "$choice" in
   exit | lock | shutdown | poweroff | suspend | reboot)

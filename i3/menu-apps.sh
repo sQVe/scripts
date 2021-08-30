@@ -53,7 +53,7 @@ if [[ $HOSTNAME == 'calcifer' ]]; then
   )
 fi
 
-choice="$(printf '%s\n' "${apps[@]}" | rofi -kb-accept-entry "Return" -dmenu -theme-str 'inputbar { children: [prompt, entry]; }' -p 'app: ')"
+choice="$(printf '%s\n' "${apps[@]}" | rofi -dmenu -p 'app')"
 
 case "$choice" in
   chrome)

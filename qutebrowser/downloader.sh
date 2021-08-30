@@ -10,8 +10,7 @@ svtplay-dl
 youtube-dl"
 
 downloader_choice="$(
-  echo "$downloader_selection" |
-    rofi -kb-accept-entry "Return" -dmenu -theme-str 'inputbar { children: [prompt, entry]; }' -p 'downloader: '
+  echo "$downloader_selection" | rofi -dmenu -p 'downloader'
 )"
 
 if [[ -n "$downloader_choice" ]]; then

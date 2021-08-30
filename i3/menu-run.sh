@@ -4,4 +4,4 @@
 # ┃┃┃┣╸ ┃┗┫┃ ┃╺━╸┣┳┛┃ ┃┃┗┫
 # ╹ ╹┗━╸╹ ╹┗━┛   ╹┗╸┗━┛╹ ╹
 
-rofi -kb-accept-entry 'Return' -show run
+rofi -show run
