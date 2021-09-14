@@ -10,7 +10,7 @@ is_efm_running() {
 
 stop_daemons() {
   pkill eslint_d
-  pkill prettier_d_slim
+  pkill prettierd
 }
 
 # Exit if efm is running.
