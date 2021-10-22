@@ -43,6 +43,7 @@ apps+=(
   "pavucontrol"
   "pulseeffects"
   "qbittorrent"
+  "simplescreenrecorder"
 )
 
 # Work apps.
