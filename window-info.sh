@@ -13,7 +13,7 @@ PROGNAME=$(basename "$0")
 
 # Check for xwininfo and xprop
 for cmd in xwininfo xprop; do
-  if ! which $cmd >/dev/null 2>&1; then
+  if ! which $cmd > /dev/null 2>&1; then
     echo "$PROGNAME: $cmd: command not found" >&2
     exit 1
   fi
@@ -30,8 +30,8 @@ match_qstring='"[^"\\]*(\\.[^"\\]*)*"' # NOTE: Adds 1 backreference
 
   # Run xprop, transform its output into i3 criteria. Handle fallback to
   # WM_NAME when _NET_WM_NAME isn't set
-  xprop -id $window_id |
-    sed -nr \
+  xprop -id $window_id \
+    | sed -nr \
       -e "s/^WM_CLASS\(STRING\) = ($match_qstring), ($match_qstring)$/instance=\1\nclass=\3/p" \
       -e "s/^WM_WINDOW_ROLE\(STRING\) = ($match_qstring)$/window_role=\1/p" \
       -e "/^WM_NAME\(STRING\) = ($match_string)$/{s//title=\1/; h}" \

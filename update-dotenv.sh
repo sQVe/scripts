@@ -25,20 +25,20 @@ for file in $env_files; do
 
   while read -r line; do
     # Ensure that line has KEY= or KEY=VALUE format.
-    if grep -Eq '\w+=' <<<"$line"; then
-      IFS='=' read -ra key_value <<<"$line"
+    if grep -Eq '\w+=' <<< "$line"; then
+      IFS='=' read -ra key_value <<< "$line"
       key=${key_value[0]}
 
       if system_env=$(command printenv "${key_value[0]}"); then
         # Use the system environment value.
-        echo "$key=$system_env" >>"$tmp"
+        echo "$key=$system_env" >> "$tmp"
         continue
       fi
     fi
 
     # Use the existing environment value.
-    echo "$line" >>"$tmp"
-  done <"$file"
+    echo "$line" >> "$tmp"
+  done < "$file"
 
   if [[ "$1" == '-w' || "$1" == '--write' ]]; then
     cp -f "$tmp" "$file"

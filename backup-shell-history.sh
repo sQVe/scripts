@@ -7,8 +7,8 @@
 function find_backup_files() {
   command find "$(command dirname "$HISTFILE")" \
     -type f \
-    -name "${HISTFILE##*/}.backup.[0-3]" |
-    command sort -n
+    -name "${HISTFILE##*/}.backup.[0-3]" \
+    | command sort -n
 }
 
 # Exit without HISTFILE.
@@ -18,7 +18,7 @@ function find_backup_files() {
 command cp -f "$HISTFILE" "$HISTFILE.backup.0"
 
 # Iterate over all files and sort them by index.
-readarray -t files <<<"$(find_backup_files)"
+readarray -t files <<< "$(find_backup_files)"
 
 for ((idx = 3; idx >= 0; idx--)); do
   file="${files[$idx]}"

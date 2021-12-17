@@ -5,9 +5,9 @@
 #  ╹ ╹┗━┛┗━┛┗━┛┗━╸╹╹ ╹ ╹ ┗━╸   ╹ ╹╹╹ ╹┗━╸
 
 function get_types() {
-  mimeo -m "${files[@]}" |
-    sed -n 'n;p' |
-    sed -r s/\ +//
+  mimeo -m "${files[@]}" \
+    | sed -n 'n;p' \
+    | sed -r s/\ +//
 }
 
 function open() {
@@ -22,17 +22,17 @@ function open() {
 
 while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do
   case $1 in
-  -h | --help)
-    echo "Usage: $(basename "$0") [DESKTOP-FILE] [FILE]..."
-    echo "Associate files mime-type with a set desktop-file via mimeo."
-    echo ""
-    echo "  -h, --help          Display this help"
-    echo ""
-    echo "Example:"
-    echo "  $(basename "$0") feh.desktop example.gif          Associate gif mime-type to feh.desktop"
-    echo ""
-    exit
-    ;;
+    -h | --help)
+      echo "Usage: $(basename "$0") [DESKTOP-FILE] [FILE]..."
+      echo "Associate files mime-type with a set desktop-file via mimeo."
+      echo ""
+      echo "  -h, --help          Display this help"
+      echo ""
+      echo "Example:"
+      echo "  $(basename "$0") feh.desktop example.gif          Associate gif mime-type to feh.desktop"
+      echo ""
+      exit
+      ;;
   esac
   shift
 done

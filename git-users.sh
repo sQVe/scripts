@@ -34,7 +34,7 @@ if [[ ! -f $gitusers ]]; then
 fi
 
 # Escape if we're not in a git repo.
-if [[ -z $(git rev-parse --git-dir 2>/dev/null) ]]; then
+if [[ -z $(git rev-parse --git-dir 2> /dev/null) ]]; then
   exit 0
 fi
 

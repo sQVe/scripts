@@ -15,7 +15,7 @@ gist_id="69cc6046233317c6199cca35a41dee1e"
 
 function get_installed_versions() {
   [[ -z $versions ]] && versions=$(nvm ls | rg -v 'N/A' | rg -o 'v[0-9\.]*' | sort -uV)
-  rg "v$1" <<<"$versions"
+  rg "v$1" <<< "$versions"
 }
 
 function get_latest_installed_version() {
@@ -23,7 +23,7 @@ function get_latest_installed_version() {
 }
 
 function get_major_version() {
-  sed -r 's/v?([0-9]+).*/\1/' <<<"$1"
+  sed -r 's/v?([0-9]+).*/\1/' <<< "$1"
 }
 
 function check_answer() {
@@ -60,7 +60,7 @@ function install() {
     nvm install "$1"
   else
     echo -e ", reinstalling packages from ${g}$2${c}"
-    nvm install "$1" --reinstall-packages-from="$2" 2>/dev/null || echo -e "Skipping: ${g}$2${c} is the latest major ${p}$1${c} release"
+    nvm install "$1" --reinstall-packages-from="$2" 2> /dev/null || echo -e "Skipping: ${g}$2${c} is the latest major ${p}$1${c} release"
   fi
 }
 
@@ -70,7 +70,7 @@ function solo() {
     read -r answer
 
     if check_answer "$answer"; then
-      nvm use "$major_version" &>/dev/null
+      nvm use "$major_version" &> /dev/null
       for installation in $(get_installed_versions "$major_version" | head -n -1); do nvm uninstall "$installation"; done
     fi
   fi
@@ -79,25 +79,25 @@ function solo() {
 function restore() {
   for dependency in $(gist -r "$gist_id"); do
     echo -e "Installing dependency ${p}$dependency${c}..."
-    npm install -g "$dependency" >/dev/null
+    npm install -g "$dependency" > /dev/null
   done
 }
 
 # Read options.
 while [[ "$#" -gt 0 ]]; do
   case $1 in
-  -b | --backup) option="backup" ;;
-  -c | --clean) option="clean" ;;
-  -h | --help)
-    help
-    exit
-    ;;
-  -s | --solo) option="solo" ;;
-  -r | --restore) option="restore" ;;
-  *)
-    version="$1"
-    break
-    ;;
+    -b | --backup) option="backup" ;;
+    -c | --clean) option="clean" ;;
+    -h | --help)
+      help
+      exit
+      ;;
+    -s | --solo) option="solo" ;;
+    -r | --restore) option="restore" ;;
+    *)
+      version="$1"
+      break
+      ;;
   esac
   shift
 done
@@ -107,7 +107,7 @@ major_version=$(get_major_version "$version")
 latest_installed_version=$(get_latest_installed_version "$major_version")
 
 # Run option command and exit if successful.
-[[ -n "$option" ]] && eval "$option" 2>/dev/null && exit
+[[ -n "$option" ]] && eval "$option" 2> /dev/null && exit
 
 # Install new major version.
 if [[ "$major_version" != "$latest_installed_version" ]]; then
