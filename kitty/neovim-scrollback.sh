@@ -17,7 +17,9 @@ fi
 
 exec nvim \
   -u NONE \
-  -c "map <silent> q :qa!<CR>" \
+  -c "noremap q ZZ" \
+  -c "noremap ö :" \
+  -c "noremap Ö :" \
   -c "set shell=bash scrollback=100000 termguicolors laststatus=0 clipboard+=unnamedplus" \
   -c "autocmd TermEnter * stopinsert" \
   -c "autocmd TermClose * ${AUTOCMD_TERMCLOSE_CMD}" \
