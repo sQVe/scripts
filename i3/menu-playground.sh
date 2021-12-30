@@ -12,5 +12,5 @@ playground=(
 choice="$(printf '%s\n' "${playground[@]}" | rofi -dmenu -p 'playground')"
 
 if [[ -n "$choice" ]]; then
-  term "cd ~/code/playground && nvim +vsplit +\"terminal npm run $choice\" +'wincmd h' +'norm G$' \"boxes/$choice\""
+  term "cd $CODE/playground && nvim +vsplit +\"terminal npm run $choice\" +'wincmd h' +'norm G$' \"boxes/$choice\""
 fi
