@@ -32,6 +32,7 @@ apps+=(
 # Low priority apps.
 apps+=(
   "arandr"
+  "easyeffects"
   "menu-calculator"
   "menu-emoji"
   "menu-exit"
@@ -41,7 +42,6 @@ apps+=(
   "menu-run"
   "menu-windows"
   "pavucontrol"
-  "pulseeffects"
   "qbittorrent"
   "simplescreenrecorder"
 )
