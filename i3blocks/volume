@@ -5,13 +5,6 @@
 #  ┗┛ ┗━┛┗━╸┗━┛╹ ╹┗━╸
 
 # https://github.com/cdemoulins/pamixer/issues/23
-# % pamixer --default-source
-# % pamixer --default-source -t
-# % pamixer --default-source --get-volume
-# 63
-# % pamixer --get-volume
-# 77
-# % pamixer --default-source -i 5
 
 case $BLOCK_BUTTON in
   1) pamixer -t ;;
