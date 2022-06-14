@@ -11,7 +11,7 @@ case $BLOCK_BUTTON in
   5) pamixer --default-source --unmute --decrease 5 ;;
 esac
 
-volume=$(pamixer --default --get-volume-human)
+volume=$(pamixer --default-source --get-volume-human)
 
 if [[ "$volume" =~ \[on\] ]] && [[ "$volume" =~ [0-9]*% ]]; then
   print=" ${BASH_REMATCH[*]}"
