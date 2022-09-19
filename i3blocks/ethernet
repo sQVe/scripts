@@ -4,22 +4,15 @@
 #  ┣╸  ┃ ┣━┫┣╸ ┣┳┛┃┗┫┣╸  ┃
 #  ┗━╸ ╹ ╹ ╹┗━╸╹┗╸╹ ╹┗━╸ ╹
 
-instance_path=$(fd -d 1 enp /sys/class/net/ | head -n 1)
-instance=$(rg -o '\w+$' <<< "$instance_path")
 label=" "
-state="down"
 
-if [[ -f "$instance_path/operstate" ]]; then
-  state=$(cat "$instance_path/operstate")
-fi
-
-if [[ "$state" == "down" ]] || ! ip addr show "$instance" | rg -q 'inet'; then
-  echo "$label"
-  echo "$label"
-  echo "#fb4934"
+if nmcli --fields type connection show --active | rg --quiet 'ethernet'; then
+  echo "${label}"
+  echo "${label}"
+  echo "#8ec07c"
   exit 0
 fi
 
-echo "$label"
-echo "$label"
-echo "#8ec07c"
+echo "${label}"
+echo "${label}"
+echo "#fb4934"

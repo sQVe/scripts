@@ -4,27 +4,26 @@
 #  ┃╻┃┃┣╸ ┃
 #  ┗┻┛╹╹  ╹
 
-instance_path=$(fd -d 1 wlp /sys/class/net/ | head -n 1)
-instance=$(rg -o '\w+$' <<< "$instance_path")
+active_connection=$(nmcli -f IN-USE,SSID,SIGNAL device wifi | rg '^\*')
 label="直 "
-ssid=$(iwgetid -r)
 
-if [[ -z "$ssid" ]]; then
-  echo "$label"
-  echo "$label"
+if [[ -z "${active_connection}" ]]; then
+  echo "${label}"
+  echo "${label}"
   echo "#fb4934"
   exit 0
 fi
 
-quality=$(grep "$instance" /proc/net/wireless | awk '{ print int($3 * 100 / 70) }')
+ssid=$(echo "${active_connection}" | awk '{ print $2 }')
+signal_strength=$(echo "${active_connection}" | awk '{ print $3 }')
 
-echo "$label $ssid"
-echo "$label $ssid"
+echo "${label} ${ssid}"
+echo "${label} ${ssid}"
 
-if [[ $quality -gt 50 ]]; then
+if [[ "${signal_strength}" -gt 50 ]]; then
   echo "#8ec07c"
-elif [[ $quality -gt 24 ]] && [[ $quality -lt 51 ]]; then
+elif [[ "${signal_strength}" -gt 24 ]] && [[ "${signal_strength}" -lt 51 ]]; then
   echo "#fabd2f"
-elif [[ $quality -lt 25 ]]; then
+elif [[ "${signal_strength}" -lt 25 ]]; then
   echo "#fb4934"
 fi
