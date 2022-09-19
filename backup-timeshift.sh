@@ -9,7 +9,7 @@ if [[ -z "$1" ]]; then
   exit 1
 fi
 
-path="$1/systems/$(hostname)"
+path="$1/systems/$(nmcli general hostname)"
 
 sudo mkdir -p "$path"
 sudo rsync -AHPXa --delete --delete-excluded /timeshift "$path"
