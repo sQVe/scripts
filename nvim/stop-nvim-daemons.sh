@@ -22,9 +22,9 @@ fi
 current_pids=$(pgrep -f 'stop-nvim-daemons.sh')
 
 # Clear previous ongoing checks.
-echo "$current_pids" | while read -r pid; do
-  if [[ $pid -ne $$ ]]; then
-    kill "$pid"
+echo "${current_pids}" | while read -r pid; do
+  if [[ "${pid}" -ne $$ ]]; then
+    kill "${pid}"
   fi
 done
 
