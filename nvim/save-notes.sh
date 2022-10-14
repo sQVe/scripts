@@ -39,3 +39,5 @@ else
 fi
 
 git merge --ff-only
+
+notify-send 'Notes saved'
