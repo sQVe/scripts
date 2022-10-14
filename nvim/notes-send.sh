@@ -4,7 +4,7 @@
 #  ┃┗┫┃ ┃ ┃ ┣╸ ┗━┓   ┗━┓┣╸ ┃┗┫ ┃┃
 #  ╹ ╹┗━┛ ╹ ┗━╸┗━┛   ┗━┛┗━╸╹ ╹╺┻┛
 
-message="Automatic update ($(hostname))"
+message="Automatic update ($(nmcli general hostname))"
 
 identity_count=$(ssh-add -l | wc -l)
 status_count=$(git status --short | wc -l)
@@ -25,10 +25,10 @@ fi
 # Ensure that the branch is up-to-date.
 git fetch && git merge --ff-only
 
-if [[ "$latest_commit_status" != "$message" ]] \
-  || [[ "$latest_commit_date" != "$system_date" ]]; then
+if [[ "${latest_commit_status}" != "${message}" ]] \
+  || [[ "${latest_commit_date}" != "${system_date}" ]]; then
   # New daily commit.
-  git commit --no-gpg-sign --all --message "$message"
+  git commit --no-gpg-sign --all --message "${message}"
   git push
 else
   # Amend to existing daily commit.
