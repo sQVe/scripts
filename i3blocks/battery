@@ -33,27 +33,27 @@ else:
 
     if state == "Discharging":
         if percentleft < 10:
-            fulltext = "<span font='Iosevka Nerd Font'>\uf579</span>"
+            fulltext = "<span font='monospace'>\uf579</span>"
         elif percentleft < 20:
-            fulltext = "<span font='Iosevka Nerd Font'>\uf57a</span>"
+            fulltext = "<span font='monospace'>\uf57a</span>"
         elif percentleft < 30:
-            fulltext = "<span font='Iosevka Nerd Font'>\uf57b</span>"
+            fulltext = "<span font='monospace'>\uf57b</span>"
         elif percentleft < 40:
-            fulltext = "<span font='Iosevka Nerd Font'>\uf57c</span>"
+            fulltext = "<span font='monospace'>\uf57c</span>"
         elif percentleft < 50:
-            fulltext = "<span font='Iosevka Nerd Font'>\uf57d</span>"
+            fulltext = "<span font='monospace'>\uf57d</span>"
         elif percentleft < 60:
-            fulltext = "<span font='Iosevka Nerd Font'>\uf57e</span>"
+            fulltext = "<span font='monospace'>\uf57e</span>"
         elif percentleft < 70:
-            fulltext = "<span font='Iosevka Nerd Font'>\uf57f</span>"
+            fulltext = "<span font='monospace'>\uf57f</span>"
         elif percentleft < 80:
-            fulltext = "<span font='Iosevka Nerd Font'>\uf580</span>"
+            fulltext = "<span font='monospace'>\uf580</span>"
         elif percentleft < 90:
-            fulltext = "<span font='Iosevka Nerd Font'>\uf581</span>"
+            fulltext = "<span font='monospace'>\uf581</span>"
         else:
-            fulltext = "<span font='Iosevka Nerd Font'>\uf581</span>"
+            fulltext = "<span font='monospace'>\uf581</span>"
     else:
-        fulltext = "<span font='Iosevka Nerd Font'>\uf492</span>"
+        fulltext = "<span font='monospace'>\uf492</span>"
 
     def color(percent):
         if percent < 10:

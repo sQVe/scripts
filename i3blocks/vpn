@@ -4,12 +4,7 @@
 #  ┃┏┛┣━┛┃┗┫
 #  ┗┛ ╹  ╹ ╹
 
-case "$BLOCK_BUTTON" in
-  1) mullvad connect ;;
-  3) mullvad disconnect ;;
-esac
-
-if mullvad status | rg --quiet 'Connected'; then
+if ip link show wg-mullvad &> /dev/null || ip link show tun0 &> /dev/null; then
   echo " "
   echo " "
   echo "#8ec07c"
