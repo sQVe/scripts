@@ -9,5 +9,3 @@ if [[ $(pidof redshift | wc -w) == 0 ]]; then
 else
   pkill redshift
 fi
-
-pkill -RTMIN+2 i3blocks

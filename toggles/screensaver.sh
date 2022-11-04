@@ -4,23 +4,10 @@
 #  ┗━┓┃  ┣┳┛┣╸ ┣╸ ┃┗┫┗━┓┣━┫┃┏┛┣╸ ┣┳┛
 #  ┗━┛┗━╸╹┗╸┗━╸┗━╸╹ ╹┗━┛╹ ╹┗┛ ┗━╸╹┗╸
 
-case "$BLOCK_BUTTON" in
-  1)
-    xset s off
-    xset -dpms
-    ;;
-  3)
-    xset s 230 210
-    xset dpms 240 240 240
-    ;;
-esac
-
 if xset q | rg --quiet 'DPMS is Disabled'; then
-  echo "零 "
-  echo "零 "
-  echo "#fb4934"
+  xset s 230 210
+  xset dpms 240 240 240
 else
-  echo "鈴 "
-  echo "鈴 "
-  echo "#8ec07c"
+  xset s off
+  xset -dpms
 fi

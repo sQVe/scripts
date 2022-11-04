@@ -5,11 +5,7 @@
 #  ┗┛ ╹  ╹ ╹
 
 if ip link show wg-mullvad &> /dev/null || ip link show tun0 &> /dev/null; then
-  echo " "
-  echo " "
-  echo "#8ec07c"
+  echo "{\"state\":\"Good\",\"text\":\"\"}"
 else
-  echo " "
-  echo " "
-  echo "#fb4934"
+  echo "{\"state\":\"Idle\",\"text\":\"\"}"
 fi

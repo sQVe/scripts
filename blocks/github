@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+#  ┏━╸╻╺┳╸╻ ╻╻ ╻┏┓
+#  ┃╺┓┃ ┃ ┣━┫┃ ┃┣┻┓
+#  ┗━┛╹ ╹ ╹ ╹┗━┛┗━┛
+
+paginated_notification_sums=$(gh api notifications --paginate --jq '. | length')
+notification_sum=0
+
+for count in ${paginated_notification_sums}; do
+  notification_sum=$((notification_sum + count))
+done
+
+if [[ ${notification_sum} -eq 0 ]]; then
+  echo "{\"state\":\"Idle\",\"text\":\"\"}"
+elif [[ ${notification_sum} -lt 10 ]]; then
+  echo "{\"state\":\"Warning\",\"text\":\" ${notification_sum}\"}"
+elif [[ ${notification_sum} -ge 10 ]]; then
+  echo "{\"state\":\"Critical\",\"text\":\" ${notification_sum}\"}"
+fi

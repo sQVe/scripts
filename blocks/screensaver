@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+#  ┏━┓┏━╸┏━┓┏━╸┏━╸┏┓╻┏━┓┏━┓╻ ╻┏━╸┏━┓
+#  ┗━┓┃  ┣┳┛┣╸ ┣╸ ┃┗┫┗━┓┣━┫┃┏┛┣╸ ┣┳┛
+#  ┗━┛┗━╸╹┗╸┗━╸┗━╸╹ ╹┗━┛╹ ╹┗┛ ┗━╸╹┗╸
+
+if xset q | rg --quiet 'DPMS is Disabled'; then
+  echo "{\"state\":\"Warning\",\"text\":\"零\"}"
+else
+  echo "{\"state\":\"Good\",\"text\":\"鈴\"}"
+fi
