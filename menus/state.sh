@@ -17,19 +17,6 @@ exits=(
   "suspend"
 )
 
-if [[ -x "$(command -v optimus-manager)" ]]; then
-  gpu=$(optimus-manager --print-mode | rg -o "intel|nvidia")
-
-  case "$gpu" in
-    intel)
-      exits+=("gpu nvidia")
-      ;;
-    nvidia)
-      exits+=("gpu intel")
-      ;;
-  esac
-fi
-
 if mullvad status | rg --quiet 'Connected'; then
   exits+=("vpn disconnect")
 else
@@ -38,18 +25,15 @@ fi
 
 choice="$(printf '%s\n' "${exits[@]}" | rofi -dmenu -p 'exit')"
 
-case "$choice" in
+case "${choice}" in
   exit | lock | shutdown | poweroff | suspend | reboot)
-    state "$choice"
-    ;;
-  gpu*)
-    optimus-manager --no-confirm --switch "$(rg -o "intel|nvidia" <<< "$choice")"
+    state "${choice}"
     ;;
   vpn*)
-    mullvad "$(rg -o "connect|disconnect" <<< "$choice")"
+    mullvad "$(rg -o "connect|disconnect" <<< "${choice}")"
     ;;
   *)
-    if [[ "$choice" =~ shutdown\ [0-9]+ ]]; then
+    if [[ "${choice}" =~ shutdown\ [0-9]+ ]]; then
       "${choice% *}" "${choice#* }"
     fi
     ;;

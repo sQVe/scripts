@@ -33,21 +33,21 @@ apps+=(
 apps+=(
   "arandr"
   "easyeffects"
-  "menu-calculator"
-  "menu-emoji"
-  "menu-exit"
-  "menu-notes"
-  "menu-passwords"
-  "menu-projects"
-  "menu-run"
-  "menu-windows"
+  "menu calculator"
+  "menu emoji"
+  "menu exit"
+  "menu notes"
+  "menu passwords"
+  "menu projects"
+  "menu run"
+  "menu windows"
   "pavucontrol"
   "qbittorrent"
   "simplescreenrecorder"
 )
 
 # Work apps.
-if [[ $HOSTNAME == 'calcifer' ]]; then
+if [[ ${HOST} == 'calcifer' ]]; then
   apps+=(
     "pritunl"
     "zoom"
@@ -56,28 +56,28 @@ fi
 
 choice="$(printf '%s\n' "${apps[@]}" | rofi -dmenu -p 'app')"
 
-case "$choice" in
+case "${choice}" in
   chrome)
     google-chrome-stable
     ;;
   flameshot*)
     if [[ "${choice##* }" == "gui" ]]; then
-      $choice
+      ${choice}
     else
-      $choice --path "$DOWNLOAD"
+      ${choice} --path "${DOWNLOAD}"
     fi
     ;;
   htop | node | nvim | vifm)
-    term --title "$choice" "$choice"
+    term --title "${choice}" "${choice}"
     ;;
-  menu-*)
-    "$HOME/scripts/i3/$choice.sh"
+  menu*)
+    "${HOME}/scripts/menus/${choice/#menu /}.sh"
     ;;
   mullvad)
     mullvad-vpn
     ;;
   spotify | qutebrowser)
-    "open-$choice"
+    "open-${choice}"
     ;;
   pritunl)
     pritunl-client-electron
@@ -86,7 +86,7 @@ case "$choice" in
     telegram-desktop
     ;;
   weechat)
-    term --instance "$choice" --title "$choice" "$choice"
+    term --instance "${choice}" --title "${choice}" "${choice}"
     ;;
   qbittorrent)
     mullvad connect
@@ -97,6 +97,6 @@ case "$choice" in
     zoom
     ;;
   *)
-    $choice
+    ${choice}
     ;;
 esac

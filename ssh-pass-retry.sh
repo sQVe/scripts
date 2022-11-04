@@ -5,6 +5,6 @@
 #  ┗━┛┗━┛╹ ╹   ╹  ╹ ╹┗━┛┗━┛   ╹┗╸┗━╸ ╹ ╹┗╸ ╹
 
 if ! ssh "$@" 2> /dev/null; then
-  "$SCRIPTS/i3/menu-passwords.sh" ssh &> /dev/null
+  "${SCRIPTS}/menus/passwords.sh" ssh &> /dev/null
   ssh "$@"
 fi
