@@ -47,7 +47,7 @@ apps+=(
 )
 
 # Work apps.
-if [[ ${HOST} == 'calcifer' ]]; then
+if [[ ${HOSTNAME} == 'calcifer' ]]; then
   apps+=(
     "pritunl"
     "zoom"
