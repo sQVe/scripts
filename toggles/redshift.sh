@@ -9,3 +9,5 @@ if [[ $(pidof redshift | wc -w) == 0 ]]; then
 else
   pkill redshift
 fi
+
+pkill -SIGRTMIN+8 i3status-rs

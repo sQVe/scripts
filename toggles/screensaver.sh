@@ -11,3 +11,5 @@ else
   xset s off
   xset -dpms
 fi
+
+pkill -SIGRTMIN+6 i3status-rs
