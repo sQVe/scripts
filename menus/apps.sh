@@ -7,7 +7,7 @@
 # High priority apps.
 apps=(
   "chrome"
-  "htop"
+  "btop"
   "nvim"
   "qutebrowser"
   "slack"
@@ -67,7 +67,7 @@ case "${choice}" in
       ${choice} --path "${DOWNLOAD}"
     fi
     ;;
-  htop | node | nvim | vifm)
+  btop | node | nvim | vifm)
     term --title "${choice}" "${choice}"
     ;;
   menu*)
