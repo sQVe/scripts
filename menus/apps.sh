@@ -19,11 +19,12 @@ apps=(
 
 # Medium priority apps.
 apps+=(
+  "art"
   "discord"
   "flameshot full"
   "flameshot gui"
   "flameshot screen"
-  "krita"
+  "gimp"
   "mullvad"
   "scrcpy"
   "telegram"
