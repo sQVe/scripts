@@ -12,9 +12,9 @@ for count in ${paginated_notification_sums}; do
 done
 
 if [[ ${notification_sum} -eq 0 ]]; then
-  echo "{\"state\":\"Idle\",\"text\":\"\"}"
+  echo "{\"state\":\"Idle\",\"text\":\"\"}"
 elif [[ ${notification_sum} -lt 10 ]]; then
-  echo "{\"state\":\"Warning\",\"text\":\" ${notification_sum}\"}"
+  echo "{\"state\":\"Warning\",\"text\":\" ${notification_sum}\"}"
 elif [[ ${notification_sum} -ge 10 ]]; then
-  echo "{\"state\":\"Critical\",\"text\":\" ${notification_sum}\"}"
+  echo "{\"state\":\"Critical\",\"text\":\" ${notification_sum}\"}"
 fi
