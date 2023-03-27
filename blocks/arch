@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+#  ┏━╸╻╺┳╸╻ ╻╻ ╻┏┓
+#  ┃╺┓┃ ┃ ┣━┫┃ ┃┣┻┓
+#  ┗━┛╹ ╹ ╹ ╹┗━┛┗━┛
+
+available_updates=$(checkupdates | wc -l)
+
+if [[ ${available_updates} -eq 0 ]]; then
+  echo "{\"state\":\"Idle\",\"text\":\"\"}"
+elif [[ ${available_updates} -lt 10 ]]; then
+  echo "{\"state\":\"Warning\",\"text\":\" ${available_updates}\"}"
+elif [[ ${available_updates} -ge 10 ]]; then
+  echo "{\"state\":\"Critical\",\"text\":\" ${available_updates}\"}"
+fi
