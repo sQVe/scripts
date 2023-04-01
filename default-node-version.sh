@@ -4,17 +4,19 @@
 #   ┃┃┣╸ ┣╸ ┣━┫┃ ┃┃   ┃    ┃┗┫┃ ┃ ┃┃┣╸    ┃┏┛┣╸ ┣┳┛┗━┓┃┃ ┃┃┗┫
 #  ╺┻┛┗━╸╹  ╹ ╹┗━┛┗━╸ ╹    ╹ ╹┗━┛╺┻┛┗━╸   ┗┛ ┗━╸╹┗╸┗━┛╹┗━┛╹ ╹
 
-base_path=$NVM_DIR/versions/node
-default_version=$(cat "$NVM_DIR/alias/default")
-available_versions=$(ls -1 "$base_path")
+base_path="${NVM_DIR}/versions/node"
+default_version=$(< "${NVM_DIR}/alias/default")
+versions=("${base_path}"/v*)
 
-function get_default_version() {
-  rg "^v$default_version" <<< "$available_versions" | sort -V | tail -n 1
-}
+if [[ -n "${default_version}" ]]; then
+  default_version_path="${base_path}/${default_version}"
+  if [[ -d "${default_version_path}" ]]; then
+    version="${default_version}"
+  fi
+fi
 
-function get_latest_version() {
-  echo "$available_versions" | sort -V | tail -n 1
-}
+if [[ -z "${version}" ]]; then
+  version=$(basename "${versions[-1]}")
+fi
 
-version=$(get_default_version || get_latest_version)
-echo "$base_path/$version/bin"
+printf "%s/%s/bin\n" "${base_path}" "${version}"

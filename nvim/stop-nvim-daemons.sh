@@ -5,12 +5,11 @@
 # ┗━┛ ╹ ┗━┛╹     ╹ ╹┗┛ ╹╹ ╹   ╺┻┛╹ ╹┗━╸╹ ╹┗━┛╹ ╹┗━┛
 
 is_nvim_running() {
-  pgrep nvim &> /dev/null
+  pgrep -x nvim &> /dev/null
 }
 
 stop_daemons() {
-  pkill eslint_d
-  pkill prettierd
+  killall -q eslint_d prettierd
 }
 
 # Exit if nvim still is running after waiting for one second.
@@ -19,14 +18,16 @@ if is_nvim_running; then
   exit 0
 fi
 
-current_pids=$(pgrep -f 'stop-nvim-daemons.sh')
-
-# Clear previous ongoing checks.
+# Kill any previous ongoing checks.
+current_pids=$(pgrep -f "$(basename "$0")")
 echo "${current_pids}" | while read -r pid; do
-  if [[ "${pid}" -ne $$ ]]; then
-    kill "${pid}"
+  if [[ ${pid} -ne $$ ]]; then
+    kill -TERM "${pid}"
+    wait "${pid}"
   fi
 done
 
 sleep 1m
-! is_nvim_running && stop_daemons
+if ! is_nvim_running; then
+  stop_daemons
+fi

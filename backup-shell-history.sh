@@ -4,27 +4,35 @@
 #  ┣┻┓┣━┫┃  ┣┻┓┃ ┃┣━┛   ┗━┓┣━┫┣╸ ┃  ┃     ┣━┫┃┗━┓ ┃ ┃ ┃┣┳┛┗┳┛
 #  ┗━┛╹ ╹┗━╸╹ ╹┗━┛╹     ┗━┛╹ ╹┗━╸┗━╸┗━╸   ╹ ╹╹┗━┛ ╹ ┗━┛╹┗╸ ╹
 
+readonly backup_name="${HISTFILE}.backup"
+readonly max_backup_count=9
+
 function find_backup_files() {
   command find "$(command dirname "${HISTFILE}")" \
     -type f \
-    -name "${HISTFILE##*/}.backup.[0-9]" \
+    -name "${backup_name}.[0-${max_backup_count}]" \
     | command sort -n
 }
 
-# Exit without HISTFILE.
-[[ ! -e "${HISTFILE}" ]] && exit 0
+# Exit if HISTFILE does not exist.
+if [[ ! -e "${HISTFILE}" ]]; then
+  printf "No history file found at %s\n" "${HISTFILE}" >&2
+  exit 1
+fi
 
 # Backup HISTFILE.
-command cp -f "${HISTFILE}" "${HISTFILE}.backup.0"
+command cp -f "${HISTFILE}" "${backup_name}.0"
 
 # Iterate over all files and sort them by index.
 readarray -t files <<< "$(find_backup_files)"
 
-for ((idx = 9; idx >= 0; idx--)); do
+for ((idx = max_backup_count; idx >= 0; idx--)); do
   file="${files[${idx}]}"
 
-  [[ -e "${file}" ]] && mv -f "${file}" "${HISTFILE}.backup.$((idx + 1))"
+  if [[ -e "${file}" ]]; then
+    mv -f "${file}" "${backup_name}.$((idx + 1))"
+  fi
 done
 
 # Cleanup outdated backup.
-command rm -f "$HISTFILE.backup.10"
+command rm -f "${backup_name}.$((max_backup_count + 1))"
