@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
 
-#  ┏━╸╻╺┳╸╻ ╻╻ ╻┏┓
-#  ┃╺┓┃ ┃ ┣━┫┃ ┃┣┻┓
-#  ┗━┛╹ ╹ ╹ ╹┗━┛┗━┛
+# ┏━┓┏━┓┏━╸╻ ╻
+# ┣━┫┣┳┛┃  ┣━┫
+# ╹ ╹╹┗╸┗━╸╹ ╹
 
-available_updates=$(checkupdates | wc -l)
+commands=("checkupdates" "paru -Qua")
+available_updates=0
+
+for command in "${commands[@]}"; do
+  updates=$(${command} | wc -l)
+  available_updates=$((available_updates + updates))
+done
 
 if [[ ${available_updates} -eq 0 ]]; then
   echo "{\"state\":\"Idle\",\"text\":\"\"}"
