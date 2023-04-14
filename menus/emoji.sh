@@ -4,4 +4,4 @@
 #  ┃┃┃┣╸ ┃┗┫┃ ┃   ┣╸ ┃┃┃┃ ┃  ┃┃
 #  ╹ ╹┗━╸╹ ╹┗━┛   ┗━╸╹ ╹┗━┛┗━┛╹
 
-rofi -show emoji -modi emoji
+rofi -modi emoji -show emoji -emoji-format '{emoji} {name}'
