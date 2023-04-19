@@ -4,6 +4,8 @@
 # ┗━┓┣━┫┃┏┛┣╸    ┃┗┫┃ ┃ ┃ ┣╸ ┗━┓
 # ┗━┛╹ ╹┗┛ ┗━╸   ╹ ╹┗━┛ ╹ ┗━╸┗━┛
 
+set -euo pipefail
+
 cd "${NOTES}" || exit
 
 message="Automatic update ($(nmcli general hostname))"
