@@ -5,7 +5,7 @@
 #  ┗━┛┗━╸╹┗╸┗━╸┗━╸╹ ╹┗━┛╹ ╹┗┛ ┗━╸╹┗╸
 
 if xset q | rg --quiet 'DPMS is Disabled'; then
-  echo "{\"state\":\"Warning\",\"text\":\"零\"}"
+  echo "{\"state\":\"Warning\",\"text\":\"󰒳\"}"
 else
-  echo "{\"state\":\"Good\",\"text\":\"鈴\"}"
+  echo "{\"state\":\"Good\",\"text\":\"󰒲\"}"
 fi
