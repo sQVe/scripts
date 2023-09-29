@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# ┏━╸┏━┓╻ ╻   ┏┳┓┏━┓╺┳┓┏━╸
+# ┃╺┓┣━┛┃ ┃   ┃┃┃┃ ┃ ┃┃┣╸
+# ┗━┛╹  ┗━┛   ╹ ╹┗━┛╺┻┛┗━╸
+
+gpu_mode=$(envycontrol --query)
+
+case "$gpu_mode" in
+  hybrid)
+    echo "hGPU"
+    ;;
+  integrated)
+    echo "iGPU"
+    ;;
+  nvidia)
+    echo "dGPU"
+    ;;
+esac

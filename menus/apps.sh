@@ -6,34 +6,29 @@
 
 # High priority apps.
 apps=(
-  "chrome"
-  "btop"
-  "nvim"
   "qutebrowser"
-  "slack"
-  "spotify"
+  "nvim"
   "term"
   "vifm"
-  "weechat"
+  "btop"
 )
 
 # Medium priority apps.
 apps+=(
-  "art"
-  "discord"
+  "arandr"
+  "chrome"
   "flameshot full"
   "flameshot gui"
   "flameshot screen"
-  "gimp"
-  "mullvad"
-  "scrcpy"
-  "telegram"
+  "pavucontrol"
 )
 
 # Low priority apps.
 apps+=(
-  "arandr"
+  "art"
+  "discord"
   "easyeffects"
+  "gimp"
   "menu calculator"
   "menu emoji"
   "menu exit"
@@ -42,25 +37,17 @@ apps+=(
   "menu projects"
   "menu run"
   "menu windows"
-  "pavucontrol"
+  "mullvad"
   "qbittorrent"
   "simplescreenrecorder"
+  "slack"
+  "spotify"
+  "steam"
 )
-
-# Work apps.
-if [[ ${HOSTNAME} == 'calcifer' ]]; then
-  apps+=(
-    "pritunl"
-    "zoom"
-  )
-fi
 
 choice="$(printf '%s\n' "${apps[@]}" | rofi -dmenu -p 'app')"
 
 case "${choice}" in
-  chrome)
-    google-chrome-stable
-    ;;
   flameshot*)
     if [[ "${choice##* }" == "gui" ]]; then
       ${choice}
@@ -77,25 +64,12 @@ case "${choice}" in
   mullvad)
     mullvad-vpn
     ;;
-  spotify | qutebrowser)
+  chrome | spotify | steam | qutebrowser)
     "open-${choice}"
-    ;;
-  pritunl)
-    pritunl-client-electron
-    ;;
-  telegram)
-    telegram-desktop
-    ;;
-  weechat)
-    term --instance "${choice}" --title "${choice}" "${choice}"
     ;;
   qbittorrent)
     mullvad connect
     qbittorrent
-    ;;
-  zoom)
-    pkill zoom
-    zoom
     ;;
   *)
     ${choice}
