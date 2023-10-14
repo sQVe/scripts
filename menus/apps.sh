@@ -65,7 +65,7 @@ case "${choice}" in
   mullvad)
     mullvad-vpn
     ;;
-  chrome | spotify | steam | qutebrowser)
+  chrome | slack | spotify | steam | qutebrowser)
     "open-${choice}"
     ;;
   tuple)
