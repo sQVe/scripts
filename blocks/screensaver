@@ -4,7 +4,9 @@
 #  ┗━┓┃  ┣┳┛┣╸ ┣╸ ┃┗┫┗━┓┣━┫┃┏┛┣╸ ┣┳┛
 #  ┗━┛┗━╸╹┗╸┗━╸┗━╸╹ ╹┗━┛╹ ╹┗┛ ┗━╸╹┗╸
 
-if xset q | rg --quiet 'DPMS is Disabled'; then
+current_timeout_seconds=$(xset q | rg 'timeout:' | awk '{print $2}')
+
+if [[ "${current_timeout_seconds}" == '0' ]]; then
   echo "{\"state\":\"Warning\",\"text\":\"󰒳\"}"
 else
   echo "{\"state\":\"Good\",\"text\":\"󰒲\"}"

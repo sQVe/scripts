@@ -4,12 +4,12 @@
 #  ┗━┓┃  ┣┳┛┣╸ ┣╸ ┃┗┫┗━┓┣━┫┃┏┛┣╸ ┣┳┛
 #  ┗━┛┗━╸╹┗╸┗━╸┗━╸╹ ╹┗━┛╹ ╹┗┛ ┗━╸╹┗╸
 
-if xset q | rg --quiet 'DPMS is Disabled'; then
-  xset s 230 210
-  xset dpms 240 240 240
+current_timeout_seconds=$(xset q | rg 'timeout:' | awk '{print $2}')
+
+if [[ "${current_timeout_seconds}" == '0' ]]; then
+  xset s 240 0
 else
   xset s off
-  xset -dpms
 fi
 
 pkill -SIGRTMIN+6 i3status-rs

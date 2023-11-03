@@ -4,18 +4,12 @@
 #   ┃ ┃ ┃┃╺┓┃╺┓┃  ┣╸    ┣┻┓┣┳┛┃┃╺┓┣━┫ ┃ ┃┗┫┣╸ ┗━┓┗━┓
 #   ╹ ┗━┛┗━┛┗━┛┗━╸┗━╸   ┗━┛╹┗╸╹┗━┛╹ ╹ ╹ ╹ ╹┗━╸┗━┛┗━┛
 
-current_brightness=$(light | cut -d '.' -f 1)
+current_brightness=$(brightnessctl --machine-readable | cut -d ',' -f 4)
 
-if [[ current_brightness -lt 30 ]]; then
-  light -S 30
-elif [[ current_brightness -lt 50 ]]; then
-  light -S 50
-elif [[ current_brightness -lt 70 ]]; then
-  light -S 70
-elif [[ current_brightness -lt 90 ]]; then
-  light -S 90
+if [[ "${current_brightness}" == '30%' ]]; then
+  brightnessctl set 70%
 else
-  light -S 10
+  brightnessctl set 30%
 fi
 
 pkill -SIGRTMIN+10 i3blocks
