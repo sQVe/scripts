@@ -4,16 +4,15 @@
 # ┃╺┓┣━┛┃ ┃   ┃┃┃┃ ┃ ┃┃┣╸
 # ┗━┛╹  ┗━┛   ╹ ╹┗━┛╺┻┛┗━╸
 
-gpu_mode=$(envycontrol --query)
+vga_controllers=$(lspci -v | rg "VGA controller")
 
-case "$gpu_mode" in
-  hybrid)
-    echo "hGPU"
-    ;;
-  integrated)
-    echo "iGPU"
-    ;;
-  nvidia)
-    echo "dGPU"
-    ;;
-esac
+if [[ $(echo "${vga_controllers}" | wc -l) == '2' ]]; then
+  echo "hGPU"
+  exit 0
+fi
+
+if echo "${vga_controllers}" | rg 'NVIDIA' &> /dev/null; then
+  echo "dGPU"
+else
+  echo "iGPU"
+fi
