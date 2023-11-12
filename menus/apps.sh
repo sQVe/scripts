@@ -27,6 +27,7 @@ apps+=(
 # Low priority apps.
 apps+=(
   "art"
+  "bruno"
   "discord"
   "easyeffects"
   "gimp"
