@@ -20,8 +20,11 @@ if [[ -n "${download_choice}" ]]; then
   fi
 
   case "${download_choice}" in
-    "svtplay-dl" | "youtube-dl")
-      term "${download_choice} \"${*}\""
+    "svtplay-dl")
+      term "svtplay-dl \"${*}\""
+      ;;
+    "youtube-dl")
+      term "yt-dlp \"${*}\""
       ;;
     "xh")
       term "xh --download \"${*}\""
