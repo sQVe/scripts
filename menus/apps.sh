@@ -27,6 +27,7 @@ apps+=(
 # Low priority apps.
 apps+=(
   "art"
+  "aws vpn client"
   "bruno"
   "discord"
   "easyeffects"
@@ -50,6 +51,9 @@ apps+=(
 choice="$(printf '%s\n' "${apps[@]}" | rofi -dmenu -p 'app')"
 
 case "${choice}" in
+  "aws vpn client")
+    /opt/awsvpnclient/AWS\ VPN\ Client
+    ;;
   flameshot*)
     if [[ "${choice##* }" == "gui" ]]; then
       ${choice}
