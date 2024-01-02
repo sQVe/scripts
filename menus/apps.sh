@@ -20,6 +20,7 @@ apps+=(
   "flameshot full"
   "flameshot gui"
   "flameshot screen"
+  "obsidian"
   "pavucontrol"
   "tuple"
 )
