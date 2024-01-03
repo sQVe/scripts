@@ -36,6 +36,7 @@ if [[ -z "${commit_message}" ]]; then
 fi
 
 git commit --no-gpg-sign --all --message "${commit_message}"
+git push
 git merge --ff-only
 
 notify-send 'Notes saved'
