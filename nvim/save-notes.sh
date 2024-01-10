@@ -6,7 +6,7 @@
 
 set -euo pipefail
 
-cd "${NOTES}" || exit
+cd "${NOTEBOX}" || exit
 
 commit_message_prompt="Write short commit message based on given diff output. Subject line should be 50 characters or less."
 
