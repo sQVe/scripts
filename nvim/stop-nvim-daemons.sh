@@ -27,7 +27,7 @@ echo "${current_pids}" | while read -r pid; do
   fi
 done
 
-sleep 1m
+sleep 5m
 if ! is_nvim_running; then
   stop_daemons
 fi
