@@ -36,7 +36,7 @@ apps+=(
   "menu calculator"
   "menu emoji"
   "menu exit"
-  "menu notes"
+  "menu notebox"
   "menu passwords"
   "menu projects"
   "menu run"
