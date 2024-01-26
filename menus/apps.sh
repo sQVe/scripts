@@ -30,6 +30,7 @@ apps+=(
   "art"
   "aws vpn client"
   "bruno"
+  "dbeaver"
   "discord"
   "easyeffects"
   "gimp"
