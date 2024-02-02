@@ -22,7 +22,6 @@ apps+=(
   "flameshot screen"
   "obsidian"
   "pavucontrol"
-  "tuple"
 )
 
 # Low priority apps.
@@ -74,9 +73,6 @@ case "${choice}" in
     ;;
   chrome | slack | spotify | steam | qutebrowser)
     "open-${choice}"
-    ;;
-  tuple)
-    flatpak run app.tuple.app
     ;;
   qbittorrent)
     mullvad connect
