@@ -8,5 +8,5 @@ projects=$(fd --max-depth 3 --hidden --strip-cwd-prefix --exclude ".{local}" --t
 choice="$(echo "${projects}" | rofi -dmenu -p 'project')"
 
 if [[ -n "${choice}" && -d "${HOME}/${choice}" ]]; then
-  term cd "${HOME}/${choice}"
+  term builtin cd "${HOME}/${choice}"
 fi

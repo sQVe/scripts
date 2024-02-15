@@ -14,7 +14,7 @@ download_options=(
 download_choice=$(printf '%s\n' "${download_options[@]}" | rofi -dmenu -p 'download')
 
 if [[ -n "${download_choice}" ]]; then
-  if ! cd "${DOWNLOAD}"; then
+  if ! builtin cd "${DOWNLOAD}"; then
     notify-send "Could not change to download directory: ${DOWNLOAD}"
     exit 1
   fi
