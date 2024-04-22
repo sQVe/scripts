@@ -9,7 +9,7 @@ apps=(
   "qutebrowser"
   "nvim"
   "term"
-  "vifm"
+  "yazi"
   "btop"
 )
 
@@ -61,7 +61,7 @@ case "${choice}" in
       ${choice} --path "${DOWNLOAD}"
     fi
     ;;
-  btop | node | nvim | vifm)
+  btop | node | nvim | yazi)
     term --title "${choice}" "${choice}"
     ;;
   menu*)
