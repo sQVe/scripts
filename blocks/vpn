@@ -5,7 +5,7 @@
 #  ┗┛ ╹  ╹ ╹
 
 if ip link show wg-mullvad &> /dev/null || ip link show tun0 &> /dev/null; then
-  echo "{\"state\":\"Good\",\"text\":\"\"}"
+  echo "{\"state\":\"Good\",\"text\":\" \"}"
 else
-  echo "{\"state\":\"Idle\",\"text\":\"\"}"
+  echo "{\"state\":\"Idle\",\"text\":\" \"}"
 fi
