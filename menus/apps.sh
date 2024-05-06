@@ -32,6 +32,7 @@ apps+=(
   "discord"
   "easyeffects"
   "gimp"
+  "lazydocker"
   "menu calculator"
   "menu emoji"
   "menu exit"
@@ -61,7 +62,7 @@ case "${choice}" in
       ${choice} --path "${DOWNLOAD}"
     fi
     ;;
-  btop | node | nvim | yazi)
+  btop | lazydocker | node | nvim | yazi)
     term --title "${choice}" "${choice}"
     ;;
   menu*)
