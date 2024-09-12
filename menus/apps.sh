@@ -32,6 +32,7 @@ apps+=(
   "discord"
   "easyeffects"
   "gimp"
+  "kicad"
   "lazydocker"
   "menu calculator"
   "menu emoji"
@@ -55,6 +56,12 @@ case "${choice}" in
   "aws vpn client")
     /opt/awsvpnclient/AWS\ VPN\ Client
     ;;
+  btop | lazydocker | node | nvim | yazi)
+    term --title "${choice}" "${choice}"
+    ;;
+  chrome | slack | spotify | steam | qutebrowser)
+    "open-${choice}"
+    ;;
   flameshot*)
     if [[ "${choice##* }" == "gui" ]]; then
       ${choice}
@@ -62,17 +69,11 @@ case "${choice}" in
       ${choice} --path "${DOWNLOAD}"
     fi
     ;;
-  btop | lazydocker | node | nvim | yazi)
-    term --title "${choice}" "${choice}"
-    ;;
   menu*)
     "${HOME}/scripts/menus/${choice/#menu /}.sh"
     ;;
   mullvad)
     mullvad-vpn
-    ;;
-  chrome | slack | spotify | steam | qutebrowser)
-    "open-${choice}"
     ;;
   qbittorrent)
     mullvad connect
