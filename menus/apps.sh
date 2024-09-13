@@ -31,6 +31,7 @@ apps+=(
   "dbeaver"
   "discord"
   "easyeffects"
+  "freecad"
   "gimp"
   "kicad"
   "lazydocker"
