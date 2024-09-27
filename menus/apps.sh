@@ -21,6 +21,9 @@ apps+=(
   "flameshot gui"
   "flameshot screen"
   "pavucontrol"
+  "slack"
+  "spotify"
+  "lazydocker"
 )
 
 # Low priority apps.
@@ -34,7 +37,6 @@ apps+=(
   "freecad"
   "gimp"
   "kicad"
-  "lazydocker"
   "menu calculator"
   "menu emoji"
   "menu exit"
@@ -46,8 +48,6 @@ apps+=(
   "mullvad"
   "qbittorrent"
   "simplescreenrecorder"
-  "slack"
-  "spotify"
   "steam"
 )
 
