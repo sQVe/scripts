@@ -20,10 +20,11 @@ apps+=(
   "flameshot full"
   "flameshot gui"
   "flameshot screen"
+  "lazydocker"
+  "onshape"
   "pavucontrol"
   "slack"
   "spotify"
-  "lazydocker"
 )
 
 # Low priority apps.
@@ -75,6 +76,9 @@ case "${choice}" in
     ;;
   mullvad)
     mullvad-vpn
+    ;;
+  onshape)
+    open-chrome --app="https://cad.onshape.com"
     ;;
   qbittorrent)
     mullvad connect
