@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+#  ┏━┓╻  ┏━┓╻ ╻┏━╸┏━┓┏━┓╻ ╻┏┓╻╺┳┓
+#  ┣━┛┃  ┣━┫┗┳┛┃╺┓┣┳┛┃ ┃┃ ┃┃┗┫ ┃┃
+#  ╹  ┗━╸╹ ╹ ╹ ┗━┛╹┗╸┗━┛┗━┛╹ ╹╺┻┛
+
+# Enable strict mode.
+set -euo pipefail
+
+term --class "playground" \
+  "builtin cd ${CODE}/playground && \nvim +vsplit +\"terminal npm run start\" +'wincmd h' +'norm G$' \"src/index.ts\""
