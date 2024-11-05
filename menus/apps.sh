@@ -36,6 +36,7 @@ apps+=(
   "discord"
   "easyeffects"
   "gimp"
+  "inkscape"
   "kicad"
   "menu calculator"
   "menu emoji"
