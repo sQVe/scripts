@@ -9,7 +9,18 @@
 set -euo pipefail
 
 center_cursor() {
-  eval "$(xdotool getactivewindow getwindowgeometry --shell)"
+  # Get window geometry, capture any errors.
+  if ! window_info=$(
+    xdotool getactivewindow getwindowgeometry --shell 2> /dev/null
+  ); then
+    return
+  fi
+
+  # Evaluate the window info.
+  if ! eval "${window_info}"; then
+    return
+  fi
+
   focused_window_center_x=$((X + WIDTH / 2))
   focused_window_center_y=$((Y + HEIGHT / 2))
 
