@@ -8,7 +8,7 @@ commands=("checkupdates" "paru -Qua")
 available_updates=0
 
 for command in "${commands[@]}"; do
-  updates=$(${command} | wc -l)
+  updates=$(${command} | grep -vc "\[ignored\]")
   available_updates=$((available_updates + updates))
 done
 
