@@ -51,6 +51,7 @@ apps+=(
   "qbittorrent"
   "simplescreenrecorder"
   "steam"
+  "virt-manager"
 )
 
 choice="$(printf '%s\n' "${apps[@]}" | rofi -dmenu -p 'app')"
