@@ -16,7 +16,7 @@ apps=(
 # Medium priority apps.
 apps+=(
   "arandr"
-  "chrome"
+  "helium"
   "flameshot full"
   "flameshot gui"
   "flameshot screen"
@@ -63,7 +63,7 @@ case "${choice}" in
   btop | lazydocker | node | nvim | yazi)
     term --title "${choice}" "${choice}"
     ;;
-  chrome | slack | spotify | steam | qutebrowser)
+  helium | slack | spotify | steam | qutebrowser)
     "open-${choice}"
     ;;
   flameshot*)
@@ -80,7 +80,7 @@ case "${choice}" in
     mullvad-vpn
     ;;
   onshape)
-    open-chrome --app="https://cad.onshape.com"
+    open-helium --app="https://cad.onshape.com"
     ;;
   qbittorrent)
     mullvad connect
