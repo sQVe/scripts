@@ -31,8 +31,8 @@ apps+=(
 apps+=(
   "art"
   "aws vpn client"
+  "beekeeper"
   "bruno"
-  "dbeaver"
   "discord"
   "easyeffects"
   "gimp"
@@ -72,6 +72,9 @@ case "${choice}" in
     else
       ${choice} --path "${DOWNLOAD}"
     fi
+    ;;
+  beekeeper)
+    /opt/Beekeeper\ Studio/beekeeper-studio
     ;;
   menu*)
     "${HOME}/scripts/menus/${choice/#menu /}.sh"
