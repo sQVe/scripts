@@ -18,7 +18,6 @@ apps=(
 # Medium priority apps.
 apps+=(
   "chrome"
-  "flameshot screen"
   "lazydocker"
   "onshape"
   "pavucontrol"
