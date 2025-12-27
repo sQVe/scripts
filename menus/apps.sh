@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 #  ┏┳┓┏━╸┏┓╻╻ ╻   ┏━┓┏━┓┏━┓┏━┓
 #  ┃┃┃┣╸ ┃┗┫┃ ┃   ┣━┫┣━┛┣━┛┗━┓
 #  ╹ ╹┗━╸╹ ╹┗━┛   ╹ ╹╹  ╹  ┗━┛
@@ -16,7 +18,7 @@ apps=(
 # Medium priority apps.
 apps+=(
   "arandr"
-  "helium"
+  "chrome"
   "flameshot full"
   "flameshot gui"
   "flameshot screen"
@@ -57,20 +59,17 @@ apps+=(
 choice="$(printf '%s\n' "${apps[@]}" | rofi -dmenu -p 'app')"
 
 case "${choice}" in
-  "aws vpn client")
-    /opt/awsvpnclient/AWS\ VPN\ Client
-    ;;
   btop | lazydocker | node | nvim | yazi)
     term --title "${choice}" "${choice}"
     ;;
-  helium | slack | spotify | steam | qutebrowser)
+  chrome | slack | spotify | steam | qutebrowser)
     "open-${choice}"
     ;;
   flameshot*)
     if [[ "${choice##* }" == "gui" ]]; then
-      ${choice}
+      "${choice}"
     else
-      ${choice} --path "${DOWNLOAD}"
+      "${choice}" --path "${DOWNLOAD}"
     fi
     ;;
   beekeeper)
@@ -90,6 +89,6 @@ case "${choice}" in
     qbittorrent
     ;;
   *)
-    ${choice}
+    "${choice}"
     ;;
 esac
