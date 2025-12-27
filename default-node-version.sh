@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 #  ╺┳┓┏━╸┏━╸┏━┓╻ ╻╻  ╺┳╸   ┏┓╻┏━┓╺┳┓┏━╸   ╻ ╻┏━╸┏━┓┏━┓╻┏━┓┏┓╻
 #   ┃┃┣╸ ┣╸ ┣━┫┃ ┃┃   ┃    ┃┗┫┃ ┃ ┃┃┣╸    ┃┏┛┣╸ ┣┳┛┗━┓┃┃ ┃┃┗┫
 #  ╺┻┛┗━╸╹  ╹ ╹┗━┛┗━╸ ╹    ╹ ╹┗━┛╺┻┛┗━╸   ┗┛ ┗━╸╹┗╸┗━┛╹┗━┛╹ ╹
 
+shopt -s nullglob
+
 base_path="${NVM_DIR}/versions/node"
 default_version=$(< "${NVM_DIR}/alias/default")
 versions=("${base_path}"/v*)
+version=""
 
 if [[ -n "${default_version}" ]]; then
   default_version_path="${base_path}/${default_version}"
