@@ -11,8 +11,8 @@ choice="$(echo "${passwords}" | rg "$1" | rofi -dmenu -p 'password')"
 
 if [[ -n "${choice}" ]]; then
   if pass show --clip "${choice}"; then
-    notify-send -t 1000 -i password "Password copied" "${choice}"
+    notify-send -t 1000 -i dialog-password "Password copied" "${choice}"
   else
-    notify-send -t 1000 -i password "Failed to copy password" "${choice}"
+    notify-send -t 1000 -i dialog-password "Failed to copy password" "${choice}"
   fi
 fi
