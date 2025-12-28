@@ -52,6 +52,9 @@ case "${choice}" in
   beekeeper)
     /opt/Beekeeper\ Studio/beekeeper-studio
     ;;
+  chrome)
+    google-chrome-stable
+    ;;
   mullvad)
     mullvad-vpn
     ;;
