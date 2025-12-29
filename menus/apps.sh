@@ -9,27 +9,34 @@ set -euo pipefail
 # High priority apps.
 apps=(
   "qutebrowser"
-  "nvim"
-  "term"
   "yazi"
-  "btop"
+  "term"
+  "nvim"
 )
 
 # Medium priority apps.
 apps+=(
+  "btop"
   "chrome"
   "lazydocker"
   "onshape"
   "pavucontrol"
   "slack"
   "spotify"
+  "steam"
   "wdisplays"
+
+  # Ordered by frequency of use.
+  "screenshot selection"
+  "screenshot window"
+  "screenshot screen"
 )
 
 # Low priority apps.
 apps+=(
   "art"
   "aws vpn client"
+  "bc"
   "beekeeper"
   "bruno"
   "discord"
@@ -40,12 +47,15 @@ apps+=(
   "meshlab"
   "mullvad"
   "qbittorrent"
-  "steam"
+
 )
 
 choice="$(printf '%s\n' "${apps[@]}" | rofi -dmenu -p 'app')"
 
 case "${choice}" in
+  bc)
+    term --class bc --detach bc
+    ;;
   btop | lazydocker | node | nvim | yazi)
     term --title "${choice}" "${choice}"
     ;;
@@ -60,6 +70,15 @@ case "${choice}" in
     ;;
   onshape)
     google-chrome-stable --app="https://cad.onshape.com"
+    ;;
+  screenshot\ screen)
+    niri msg action screenshot-screen
+    ;;
+  screenshot\ selection)
+    niri msg action screenshot
+    ;;
+  screenshot\ window)
+    niri msg action screenshot-window
     ;;
   qbittorrent)
     mullvad connect
