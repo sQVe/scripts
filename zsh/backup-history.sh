@@ -26,7 +26,7 @@ command cp -f "${HISTFILE}" "${HISTFILE}.backup.0"
 readarray -t files <<< "$(find_backup_files)"
 
 for ((idx = max_backup_count; idx >= 0; idx--)); do
-  file="${files[${idx}]}"
+  file="${files[${idx}]:-}"
 
   if [[ -e "${file}" ]]; then
     mv -f "${file}" "${HISTFILE}.backup.$((idx + 1))"
