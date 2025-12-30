@@ -21,6 +21,11 @@ if [[ -n "${default_version}" ]]; then
 fi
 
 if [[ -z "${version}" ]]; then
+  if [[ ${#versions[@]} -eq 0 ]]; then
+    printf "No node versions found in %s\n" "${base_path}" >&2
+    exit 1
+  fi
+
   version=$(basename "${versions[-1]}")
 fi
 
