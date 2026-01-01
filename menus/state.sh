@@ -12,10 +12,6 @@ exits=(
   "poweroff"
   "reboot"
   "shutdown"
-  "shutdown 15"
-  "shutdown 30"
-  "shutdown 45"
-  "shutdown 60"
   "suspend"
 )
 
@@ -33,10 +29,5 @@ case "${choice}" in
     ;;
   vpn*)
     mullvad "$(rg -o "connect|disconnect" <<< "${choice}")"
-    ;;
-  *)
-    if [[ "${choice}" =~ shutdown\ [0-9]+ ]]; then
-      "${choice% *}" "${choice#* }"
-    fi
     ;;
 esac
