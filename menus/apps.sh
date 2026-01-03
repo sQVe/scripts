@@ -25,9 +25,10 @@ apps+=(
   "spotify"
   "steam"
   "wdisplays"
+  "zathura"
 
   # Ordered by frequency of use.
-  "screenshot selection"
+  "screenshot gui"
   "screenshot window"
   "screenshot screen"
 )
@@ -74,7 +75,7 @@ case "${choice}" in
   screenshot\ screen)
     niri msg action screenshot-screen
     ;;
-  screenshot\ selection)
+  screenshot\ gui)
     niri msg action screenshot
     ;;
   screenshot\ window)
