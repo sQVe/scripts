@@ -17,7 +17,7 @@ open_choice=$(printf '%s\n' "${open_options[@]}" | rofi -dmenu -p 'open')
 if [[ -n "${open_choice}" ]]; then
   case "${open_choice}" in
     "chrome")
-      google-chrome-stable "${*}" &
+      google-chrome-stable --app="${*}" &
       ;;
     "mimeo")
       mimeo -q "${*}"
