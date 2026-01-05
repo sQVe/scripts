@@ -18,13 +18,12 @@ apps=(
 apps+=(
   "btop"
   "chrome"
+  "chrome-float"
   "lazydocker"
   "onshape"
-  "pavucontrol"
   "slack"
   "spotify"
   "steam"
-  "wdisplays"
   "zathura"
 
   # Ordered by frequency of use.
@@ -47,8 +46,9 @@ apps+=(
   "kicad"
   "meshlab"
   "mullvad"
+  "pavucontrol"
   "qbittorrent"
-
+  "wdisplays"
 )
 
 choice="$(printf '%s\n' "${apps[@]}" | rofi -dmenu -p 'app')"
@@ -65,6 +65,17 @@ case "${choice}" in
     ;;
   chrome)
     google-chrome-stable
+    ;;
+  chrome-float)
+    quickmarks_file="${XDG_CONFIG_HOME:-$HOME/.config}/qutebrowser/quickmarks"
+    name=$(cut -d' ' -f1 "${quickmarks_file}" | rofi -dmenu -p 'quickmark')
+
+    if [[ -n "${name}" ]]; then
+      url=$(grep "^${name} " "${quickmarks_file}" | cut -d' ' -f2-)
+      if [[ -n "${url}" ]]; then
+        "${SCRIPTS}/qutebrowser/chrome-float.sh" "${url}"
+      fi
+    fi
     ;;
   mullvad)
     mullvad-vpn
