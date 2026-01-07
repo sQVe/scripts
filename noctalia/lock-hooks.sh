@@ -14,6 +14,9 @@ lock() {
   (sleep 1m && sudo -K) &
   echo $! > "${PID_FILE}"
 
+  (sleep 5m && niri msg action power-off-monitors) &
+  echo $! >> "${PID_FILE}"
+
   (sleep 15m && gpg-connect-agent reloadagent /bye) &
   echo $! >> "${PID_FILE}"
 }
