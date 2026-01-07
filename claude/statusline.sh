@@ -23,7 +23,7 @@ if [[ $(git -C "${cwd}" rev-parse --is-inside-work-tree 2> /dev/null) == "true" 
   [[ -z "${branch}" ]] && branch="detached"
 
   # shellcheck disable=SC1083
-  read -r behind ahead < <(git -C "${cwd}" rev-list --left-right --count @{u}...HEAD 2> /dev/null) || {
+  read -r behind ahead < <(GIT_TERMINAL_PROMPT=0 git -C "${cwd}" rev-list --left-right --count @{u}...HEAD 2> /dev/null) || {
     behind=0
     ahead=0
   }
