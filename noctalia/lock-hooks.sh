@@ -3,30 +3,36 @@
 #  ╻  ┏━┓┏━╸╻┏   ╻ ╻┏━┓┏━┓╻┏ ┏━┓
 #  ┃  ┃ ┃┃  ┣┻┓  ┣━┫┃ ┃┃ ┃┣┻┓┗━┓
 #  ┗━╸┗━┛┗━╸╹ ╹  ╹ ╹┗━┛┗━┛╹ ╹┗━┛
+# Screen lock/unlock hooks - pauses media, clears credentials after timeout,
+# powers off monitors.
 
 set -euo pipefail
 
-PID_FILE="${XDG_RUNTIME_DIR}/lock-hooks-pids"
+pid_file="${XDG_RUNTIME_DIR}/lock-hooks-pids"
 
 lock() {
   qs msg -c noctalia-shell media pause &
 
-  (sleep 1m && sudo -K) &
-  echo $! > "${PID_FILE}"
+  : > "${pid_file}"
+
+  if [[ ! -f "${XDG_RUNTIME_DIR}/keep-creds" ]]; then
+    (sleep 1m && sudo -K) &
+    echo $! >> "${pid_file}"
+
+    (sleep 15m && gpg-connect-agent reloadagent /bye) &
+    echo $! >> "${pid_file}"
+  fi
 
   (sleep 5m && niri msg action power-off-monitors) &
-  echo $! >> "${PID_FILE}"
-
-  (sleep 15m && gpg-connect-agent reloadagent /bye) &
-  echo $! >> "${PID_FILE}"
+  echo $! >> "${pid_file}"
 }
 
 unlock() {
-  if [[ -f "${PID_FILE}" ]]; then
+  if [[ -f "${pid_file}" ]]; then
     while read -r pid; do
       kill "${pid}" 2> /dev/null
-    done < "${PID_FILE}"
-    rm "${PID_FILE}"
+    done < "${pid_file}"
+    rm "${pid_file}"
   fi
 }
 
