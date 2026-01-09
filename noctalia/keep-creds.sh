@@ -17,13 +17,13 @@ case "${1:-}" in
     ln -sf "${DOTFILES}/gnupg/gpg-agent-extended.conf" "${gpg_agent_conf}"
     touch "${flag}"
     gpg-connect-agent reloadagent /bye > /dev/null
-    notify-send -i shield "Creds extended" "24h cache, survives lock"
+    notify-send -i /usr/share/icons/Papirus/48x48/status/changes-allow.svg "Creds extended" "24h cache, survives lock"
     ;;
   off)
     ln -sf "${DOTFILES}/gnupg/gpg-agent.conf" "${gpg_agent_conf}"
     rm -f "${flag}"
     gpg-connect-agent reloadagent /bye > /dev/null
-    notify-send -i shield-off "Creds normal" "Lock clears cache again"
+    notify-send -i /usr/share/icons/Papirus/48x48/status/changes-prevent.svg "Creds normal" "Lock clears cache again"
     ;;
   toggle)
     if [[ -f "${flag}" ]]; then
