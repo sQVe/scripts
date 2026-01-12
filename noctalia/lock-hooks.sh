@@ -11,6 +11,8 @@ set -euo pipefail
 pid_file="${XDG_RUNTIME_DIR}/lock-hooks-pids"
 
 lock() {
+  unlock
+
   qs msg -c noctalia-shell media pause &
 
   : > "${pid_file}"
@@ -30,7 +32,7 @@ lock() {
 unlock() {
   if [[ -f "${pid_file}" ]]; then
     while read -r pid; do
-      kill "${pid}" 2> /dev/null
+      kill "${pid}" 2> /dev/null || :
     done < "${pid_file}"
     rm "${pid_file}"
   fi
