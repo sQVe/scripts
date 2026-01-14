@@ -37,10 +37,15 @@ case "${1:-}" in
     gpg_key="$(git config --get user.signingkey 2>/dev/null || true)"
     if [[ -n "${gpg_key}" ]]; then
       if ! echo "test" | gpg --sign -u "${gpg_key}" > /dev/null 2>&1; then
-        failures+=("GPG")
+        failures+=("GPG sign")
       fi
     else
       failures+=("GPG (no key configured)")
+    fi
+
+    # GPG encryption subkey (encrypt-then-decrypt to trigger cache)
+    if ! { echo "test" | gpg -e --default-recipient-self | gpg -d; } >/dev/null 2>&1; then
+      failures+=("GPG encrypt")
     fi
 
     # SSH authentication key (check output, not exit code - GitHub exits 1 on success)
