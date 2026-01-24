@@ -23,7 +23,7 @@ if [[ -n "${open_choice}" ]]; then
       mimeo -q "${*}"
       ;;
     "mpv")
-      if ! "mpv" "${*}"; then
+      if ! mpv "${*}"; then
         notify-send "Error running command: ${open_choice}"
         exit 1
       fi
