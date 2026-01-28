@@ -10,13 +10,14 @@ set -euo pipefail
 cwd=$(jq -r '.workspace.current_dir // empty') || exit 1
 [[ -z "${cwd}" ]] && exit 1
 
-cyan='\033[36m'
-yellow='\033[33m'
-magenta='\033[35m'
-green='\033[32m'
+blue='\033[38;2;40;80;168m'
+green='\033[38;2;40;112;40m'
+yellow='\033[38;2;128;96;16m'
+peach='\033[38;2;168;88;32m'
+mauve='\033[38;2;124;50;168m'
 reset='\033[0m'
 
-output="${cyan}${cwd}${reset}"
+output="${blue}${cwd}${reset}"
 
 if [[ $(git -C "${cwd}" rev-parse --is-inside-work-tree 2> /dev/null) == "true" ]]; then
   branch=$(git -C "${cwd}" branch --show-current 2> /dev/null)
@@ -37,8 +38,8 @@ if [[ $(git -C "${cwd}" rev-parse --is-inside-work-tree 2> /dev/null) == "true" 
   ((ahead)) && output+=" ${green}>${ahead}${reset}"
   ((behind)) && output+=" ${green}<${behind}${reset}"
   ((staged)) && output+=" ${yellow}+${staged}${reset}"
-  ((unstaged)) && output+=" ${yellow}!${unstaged}${reset}"
-  ((untracked)) && output+=" ${magenta}?${untracked}${reset}"
+  ((unstaged)) && output+=" ${peach}!${unstaged}${reset}"
+  ((untracked)) && output+=" ${mauve}?${untracked}${reset}"
 fi
 
 printf "%b" "${output}"
