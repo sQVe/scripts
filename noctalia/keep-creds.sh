@@ -15,56 +15,56 @@ icon_ok="/usr/share/icons/Papirus/48x48/status/changes-allow.svg"
 icon_warn="/usr/share/icons/Papirus/48x48/status/dialog-warning.svg"
 icon_off="/usr/share/icons/Papirus/48x48/status/changes-prevent.svg"
 
+revert() {
+  ln -sf "${DOTFILES}/gnupg/gpg-agent.conf" "${gpg_agent_conf}"
+  gpg-connect-agent reloadagent /bye > /dev/null 2>&1 || true
+}
+
+fail() {
+  revert
+  notify-send -a "Credentials" -i "${icon_warn}" "Credential caching failed" "$1"
+  exit 1
+}
+
 case "${1:-}" in
   on)
     extended_conf="${DOTFILES}/gnupg/gpg-agent-extended.conf"
     if [[ ! -f "${extended_conf}" ]]; then
-      notify-send -i "${icon_warn}" "Credential caching failed" "Config not found: ${extended_conf}"
+      notify-send -a "Credentials" -i "${icon_warn}" "Credential caching failed" "Config not found: ${extended_conf}"
       exit 1
     fi
 
     ln -sf "${extended_conf}" "${gpg_agent_conf}"
     if ! gpg-connect-agent reloadagent /bye > /dev/null 2>&1; then
-      notify-send -i "${icon_warn}" "Credential caching failed" "GPG agent reload failed"
-      exit 1
+      fail "GPG agent reload failed"
     fi
-    touch "${flag}"
 
-    # Cache credentials (track failures)
-    failures=()
-
-    # GPG signing key from git config
     gpg_key="$(git config --get user.signingkey 2>/dev/null || true)"
-    if [[ -n "${gpg_key}" ]]; then
-      if ! echo "test" | gpg --sign -u "${gpg_key}" > /dev/null 2>&1; then
-        failures+=("GPG sign")
-      fi
-    else
-      failures+=("GPG (no key configured)")
+    if [[ -z "${gpg_key}" ]]; then
+      fail "GPG signing key not configured"
     fi
 
-    # GPG encryption subkey (encrypt-then-decrypt to trigger cache)
+    if ! echo "test" | gpg --sign -u "${gpg_key}" > /dev/null 2>&1; then
+      fail "GPG signing failed"
+    fi
+
     if ! { echo "test" | gpg -e --default-recipient-self | gpg -d; } >/dev/null 2>&1; then
-      failures+=("GPG encrypt")
+      fail "GPG encryption failed"
     fi
 
-    # SSH authentication key (check output, not exit code - GitHub exits 1 on success)
     ssh_output=$("${SCRIPTS}/ssh-pass-retry.sh" -T git@github.com 2>&1 || true)
     if [[ ! "${ssh_output}" =~ "successfully authenticated" ]]; then
-      failures+=("SSH")
+      fail "SSH authentication failed"
     fi
 
-    if [[ ${#failures[@]} -eq 0 ]]; then
-      notify-send -i "${icon_ok}" "Credentials extended" "24h cache, survives lock"
-    else
-      notify-send -i "${icon_warn}" "Credentials partially extended" "Failed: ${failures[*]}"
-    fi
+    touch "${flag}"
+    notify-send -a "Credentials" -i "${icon_ok}" "Credentials extended" "24h cache, survives lock"
     ;;
   off)
     ln -sf "${DOTFILES}/gnupg/gpg-agent.conf" "${gpg_agent_conf}"
     rm -f "${flag}"
     gpg-connect-agent reloadagent /bye > /dev/null
-    notify-send -i "${icon_off}" "Credentials reset" "Lock clears cache again"
+    notify-send -a "Credentials" -i "${icon_off}" "Credentials reset" "Lock clears cache again"
     ;;
   toggle)
     if [[ -f "${flag}" ]]; then
