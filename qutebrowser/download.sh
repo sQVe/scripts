@@ -15,7 +15,7 @@ download_choice=$(printf '%s\n' "${download_options[@]}" | rofi -dmenu -p 'downl
 
 if [[ -n "${download_choice}" ]]; then
   if ! builtin cd "${DOWNLOAD}"; then
-    notify-send "Could not change to download directory: ${DOWNLOAD}"
+    notify-send -a "Qutebrowser" "Could not change to download directory: ${DOWNLOAD}"
     exit 1
   fi
 
