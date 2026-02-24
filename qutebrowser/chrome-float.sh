@@ -4,11 +4,11 @@
 # ┃  ┣━┫┣┳┛┃ ┃┃┃┃┣╸    ┣╸ ┃  ┃ ┃┣━┫ ┃
 # ┗━╸╹ ╹╹┗╸┗━┛╹ ╹┗━╸   ╹  ┗━╸┗━┛╹ ╹ ╹
 # Opens Chrome in app mode and positions it as a floating window in the
-# bottom-right corner of the screen.
+# top-right corner of the screen.
 
 set -euo pipefail
 
-position_floating_bottom_right() {
+position_floating_top_right() {
   local window_id="${1}"
   local size_percent="${2:-30}"
   local margin="${3:-8}"
@@ -28,11 +28,9 @@ position_floating_bottom_right() {
   niri msg action set-window-width --id "${window_id}" "${window_width}"
   niri msg action set-window-height --id "${window_id}" "${window_height}"
 
-  # The 25px offset is empirical - tested to align correctly with niri's
-  # floating window coordinate system. Origin unknown.
   local position_x position_y
   position_x=$((screen_width - window_width - margin))
-  position_y=$((screen_height - window_height - margin - 25))
+  position_y="${margin}"
 
   niri msg action move-floating-window --id "${window_id}" --x "${position_x}" --y "${position_y}"
 }
@@ -61,5 +59,5 @@ if [[ -z "${chrome_id}" ]]; then
   exit 1
 fi
 
-position_floating_bottom_right "${chrome_id}"
+position_floating_top_right "${chrome_id}"
 niri msg action toggle-windowed-fullscreen --id "${chrome_id}"
