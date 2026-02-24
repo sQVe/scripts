@@ -170,9 +170,15 @@ format_output() {
 }
 
 main() {
+  local json
+  json=$(cat)
+
   local cwd
-  cwd=$(jq -r '.workspace.current_dir // empty') || exit 1
+  cwd=$(printf '%s' "${json}" | jq -r '.workspace.current_dir // empty') || exit 1
   [[ -z "${cwd}" ]] && exit 1
+
+  local model
+  model=$(printf '%s' "${json}" | jq -r '.model.display_name // empty')
 
   local terminal_width max_width
   terminal_width=$(get_terminal_width)
@@ -188,6 +194,10 @@ main() {
   get_git_info "${cwd}"
 
   choose_display_path "${full_path}" "${fish_path_str}" "${max_width}" "${#branch}" "${#git_indicators}"
+
+  if [[ -n "${model}" ]]; then
+    printf '%b' "${MAUVE}${model}${RESET} "
+  fi
 
   format_output "${display_path}" "${show_branch}"
 }
