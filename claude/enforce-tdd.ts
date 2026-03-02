@@ -1,6 +1,5 @@
 #!/usr/bin/env bun
 
-export {};
 
 const actionVerbs = [
   "add",
@@ -90,3 +89,5 @@ try {
 } catch {
   process.stdout.write("{}");
 }
+
+export { };
