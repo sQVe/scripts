@@ -25,6 +25,7 @@ apps+=(
   "spotify"
   "steam"
   "zathura"
+  "weekly pdf"
 
   # Ordered by frequency of use.
   "screenshot gui"
@@ -94,6 +95,9 @@ case "${choice}" in
   qbittorrent)
     mullvad connect
     qbittorrent
+    ;;
+  weekly\ pdf)
+    zathura "${HOME}/notebox/pdf/weekly/$(date +%Y-W%V).pdf"
     ;;
   *)
     "${choice}"
