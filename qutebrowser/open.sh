@@ -17,7 +17,7 @@ open_choice=$(printf '%s\n' "${open_options[@]}" | rofi -dmenu -p 'open')
 if [[ -n "${open_choice}" ]]; then
   case "${open_choice}" in
     "chrome")
-      "${SCRIPTS}/qutebrowser/chrome-float.sh" "${*}"
+      "${SCRIPTS}/qutebrowser/float.sh" "${*}"
       ;;
     "mimeo")
       mimeo -q "${*}"
