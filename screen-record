@@ -1,0 +1,183 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+audio="default_input"
+cursor="yes"
+
+while getopts "a:ch" opt; do
+  case "${opt}" in
+    a) audio="${OPTARG}" ;;
+    c) cursor="no" ;;
+    h)
+      echo "Usage: screen-record [-a audio] [-c] [output_dir]" >&2
+      echo "  -a INPUT  Audio source (default: default_input, \"none\" to disable)" >&2
+      echo "  -c        Hide cursor" >&2
+      exit 0
+      ;;
+    *) exit 1 ;;
+  esac
+done
+shift $((OPTIND - 1))
+
+readonly output_dir="${1:-${DOWNLOAD:-.}}"
+timestamp="$(date '+%Y%m%d_%H%M%S')"
+readonly timestamp
+readonly raw="${output_dir}/.recording_raw_${timestamp}.mp4"
+readonly final="${output_dir}/${timestamp}.mp4"
+
+[[ -d "${output_dir}" ]] || {
+  echo "Not a directory: ${output_dir}" >&2
+  exit 1
+}
+
+for cmd in rofi slurp gpu-screen-recorder ffmpeg ffprobe wlr-randr; do
+  if ! command -v "${cmd}" &> /dev/null; then
+    echo "Missing: ${cmd}" >&2
+    exit 1
+  fi
+done
+
+trap 'rm -f "${raw}"' EXIT
+
+select_options() {
+  local choice
+  while true; do
+    choice="$(printf '%s\n' \
+      "audio: ${audio}" \
+      "cursor: ${cursor}" \
+      "record" \
+      | rofi -dmenu -p "screen-record" -no-custom)" || return 1
+
+    case "${choice}" in
+      audio:*)
+        if [[ "${audio}" == "none" ]]; then
+          audio="default_input"
+        else
+          audio="none"
+        fi
+        ;;
+      cursor:*)
+        if [[ "${cursor}" == "yes" ]]; then
+          cursor="no"
+        else
+          cursor="yes"
+        fi
+        ;;
+      record) return 0 ;;
+    esac
+  done
+}
+
+detect_output() {
+  local sel_x="${1}" sel_y="${2}" sel_w="${3}" sel_h="${4}"
+
+  wlr-randr | awk \
+    -v sx="${sel_x}" -v sy="${sel_y}" -v sw="${sel_w}" -v sh="${sel_h}" '
+    BEGIN { cx = sx + sw/2; cy = sy + sh/2 }
+    /^[^ ]/      { name = $1; mw = ""; mh = ""; px = ""; py = ""; sc = "" }
+    /\(current\)/ { split($1, a, "x"); mw = a[1]; mh = a[2] }
+    /Position:/  { split($2, p, ","); px = p[1]; py = p[2] }
+    /Scale:/ {
+      sc = $2
+      if (mw != "" && sc != "" && px != "") {
+        lw = mw / sc; lh = mh / sc
+        if (cx >= px && cx < px + lw && cy >= py && cy < py + lh) {
+          printf "%s %g %s %s\n", name, lw, px, py
+          exit
+        }
+      }
+    }
+  '
+}
+
+compute_crop() {
+  local sel_x="${1}" sel_y="${2}" sel_w="${3}" sel_h="${4}"
+  local output_x="${5}" output_y="${6}"
+  local logical_w="${7}" video_w="${8}" video_h="${9}"
+
+  awk \
+    -v sx="${sel_x}" -v sy="${sel_y}" -v sw="${sel_w}" -v sh="${sel_h}" \
+    -v ox="${output_x}" -v oy="${output_y}" \
+    -v lw="${logical_w}" -v vw="${video_w}" -v vh="${video_h}" \
+    'BEGIN {
+      ratio = vw / lw
+      x = (sx - ox) * ratio
+      y = (sy - oy) * ratio
+      w = sw * ratio
+      h = sh * ratio
+
+      clamped = 0
+      if (x < 0)      { w += x; x = 0; clamped = 1 }
+      if (y < 0)      { h += y; y = 0; clamped = 1 }
+      if (x + w > vw) { w = vw - x;    clamped = 1 }
+      if (y + h > vh) { h = vh - y;    clamped = 1 }
+
+      printf "%.0f %.0f %.0f %.0f %d\n", x, y, w, h, clamped
+    }'
+}
+
+select_options || exit 0
+
+echo "Select the region to record..." >&2
+if ! region="$(slurp -f '%x %y %w %h')"; then
+  echo "Selection cancelled." >&2
+  exit 0
+fi
+read -r sel_x sel_y sel_w sel_h <<< "${region}"
+
+if [[ ! "${sel_x}" =~ ^-?[0-9]+$ || ! "${sel_y}" =~ ^-?[0-9]+$ ||
+  ! "${sel_w}" =~ ^[0-9]+$ || ! "${sel_h}" =~ ^[0-9]+$ ]]; then
+  echo "Invalid selection: ${region}" >&2
+  exit 1
+fi
+
+read -r output_name logical_w output_x output_y < <(
+  detect_output "${sel_x}" "${sel_y}" "${sel_w}" "${sel_h}"
+)
+[[ -n "${output_name}" ]] || {
+  echo "Failed to detect output for selected region." >&2
+  exit 1
+}
+
+echo "Recording ${output_name}... Ctrl+C to stop." >&2
+
+gsr_args=(-cursor "${cursor}" -w "${output_name}" -o "${raw}")
+[[ "${audio}" != "none" ]] && gsr_args+=(-a "${audio}")
+
+trap 'true' INT
+gpu-screen-recorder "${gsr_args[@]}" || true
+trap - INT
+
+if [[ ! -s "${raw}" ]]; then
+  echo "Recording failed." >&2
+  exit 1
+fi
+
+video_dims="$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 "${raw}")"
+video_w="${video_dims%%,*}"
+video_h="${video_dims##*,}"
+[[ "${video_w}" =~ ^[0-9]+$ && "${video_h}" =~ ^[0-9]+$ ]] || {
+  echo "Failed to read video dimensions." >&2
+  exit 1
+}
+
+read -r crop_x crop_y crop_w crop_h clamped < <(
+  compute_crop \
+    "${sel_x}" "${sel_y}" "${sel_w}" "${sel_h}" \
+    "${output_x}" "${output_y}" \
+    "${logical_w}" "${video_w}" "${video_h}"
+)
+
+[[ "${crop_w}" -gt 0 && "${crop_h}" -gt 0 ]] || {
+  echo "Selected region is outside the recorded output." >&2
+  exit 1
+}
+
+if [[ "${clamped}" -eq 1 ]]; then
+  echo "Warning: selection extends beyond monitor boundary, cropping to fit." >&2
+fi
+
+echo "Cropping to ${crop_w}x${crop_h}+${crop_x}+${crop_y}..." >&2
+ffmpeg -y -loglevel warning -i "${raw}" -vf "crop=${crop_w}:${crop_h}:${crop_x}:${crop_y}" -c:a copy "${final}"
+echo "Saved: ${final}"
