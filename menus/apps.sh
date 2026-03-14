@@ -28,6 +28,7 @@ apps+=(
   "weekly pdf"
 
   # Ordered by frequency of use.
+  "screen-record"
   "screenshot gui"
   "screenshot window"
   "screenshot screen"
@@ -82,6 +83,9 @@ case "${choice}" in
     ;;
   onshape)
     google-chrome-stable --app="https://cad.onshape.com"
+    ;;
+  screen-record)
+    "${SCRIPTS}/screen-record"
     ;;
   screenshot\ screen)
     niri msg action screenshot-screen
