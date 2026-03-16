@@ -20,6 +20,20 @@ while getopts "a:ch" opt; do
 done
 shift $((OPTIND - 1))
 
+readonly pid_file="${XDG_RUNTIME_DIR}/screen-record.pid"
+
+if [[ -f "${pid_file}" ]]; then
+  pid="$(cat "${pid_file}")"
+  if kill -0 "${pid}" 2>/dev/null; then
+    kill -INT "${pid}"
+    notify-send -a "Screen record" "Stopping recording..."
+  else
+    rm -f "${pid_file}"
+    notify-send -a "Screen record" "Cleaned up stale recording"
+  fi
+  exit 0
+fi
+
 readonly output_dir="${1:-${DOWNLOAD:-.}}"
 timestamp="$(date '+%Y%m%d_%H%M%S')"
 readonly timestamp
@@ -37,8 +51,6 @@ for cmd in rofi slurp gpu-screen-recorder ffmpeg ffprobe wlr-randr; do
     exit 1
   fi
 done
-
-trap 'rm -f "${raw}"' EXIT
 
 select_options() {
   local choice
@@ -140,44 +152,49 @@ read -r output_name logical_w output_x output_y < <(
   exit 1
 }
 
-echo "Recording ${output_name}... Ctrl+C to stop." >&2
-
 gsr_args=(-cursor "${cursor}" -w "${output_name}" -o "${raw}")
 [[ "${audio}" != "none" ]] && gsr_args+=(-a "${audio}")
 
-trap 'true' INT
-gpu-screen-recorder "${gsr_args[@]}" || true
-trap - INT
+(
+  trap 'rm -f "${raw}"' EXIT
 
-if [[ ! -s "${raw}" ]]; then
-  echo "Recording failed." >&2
-  exit 1
-fi
+  gpu-screen-recorder "${gsr_args[@]}" &
+  echo $! > "${pid_file}"
+  wait $! || true
+  rm -f "${pid_file}"
 
-video_dims="$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 "${raw}")"
-video_w="${video_dims%%,*}"
-video_h="${video_dims##*,}"
-[[ "${video_w}" =~ ^[0-9]+$ && "${video_h}" =~ ^[0-9]+$ ]] || {
-  echo "Failed to read video dimensions." >&2
-  exit 1
-}
+  if [[ ! -s "${raw}" ]]; then
+    notify-send -a "Screen record" "Recording failed"
+    exit 1
+  fi
 
-read -r crop_x crop_y crop_w crop_h clamped < <(
-  compute_crop \
-    "${sel_x}" "${sel_y}" "${sel_w}" "${sel_h}" \
-    "${output_x}" "${output_y}" \
-    "${logical_w}" "${video_w}" "${video_h}"
-)
+  video_dims="$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 "${raw}")"
+  video_w="${video_dims%%,*}"
+  video_h="${video_dims##*,}"
+  if [[ ! "${video_w}" =~ ^[0-9]+$ || ! "${video_h}" =~ ^[0-9]+$ ]]; then
+    notify-send -a "Screen record" "Failed to read video dimensions"
+    exit 1
+  fi
 
-[[ "${crop_w}" -gt 0 && "${crop_h}" -gt 0 ]] || {
-  echo "Selected region is outside the recorded output." >&2
-  exit 1
-}
+  read -r crop_x crop_y crop_w crop_h _ < <(
+    compute_crop \
+      "${sel_x}" "${sel_y}" "${sel_w}" "${sel_h}" \
+      "${output_x}" "${output_y}" \
+      "${logical_w}" "${video_w}" "${video_h}"
+  )
 
-if [[ "${clamped}" -eq 1 ]]; then
-  echo "Warning: selection extends beyond monitor boundary, cropping to fit." >&2
-fi
+  if [[ "${crop_w}" -le 0 || "${crop_h}" -le 0 ]]; then
+    notify-send -a "Screen record" "Selected region is outside the recorded output"
+    exit 1
+  fi
 
-echo "Cropping to ${crop_w}x${crop_h}+${crop_x}+${crop_y}..." >&2
-ffmpeg -y -loglevel warning -i "${raw}" -vf "crop=${crop_w}:${crop_h}:${crop_x}:${crop_y}" -c:a copy "${final}"
-echo "Saved: ${final}"
+  if ffmpeg -y -loglevel warning -i "${raw}" -vf "crop=${crop_w}:${crop_h}:${crop_x}:${crop_y}" -c:a copy "${final}"; then
+    notify-send -a "Screen record" "Saved" "${final}"
+  else
+    notify-send -a "Screen record" "Cropping failed"
+  fi
+) &
+disown
+
+notify-send -a "Screen record" "Recording started" \
+  "Run screen-record again to stop"

@@ -85,7 +85,7 @@ case "${choice}" in
     google-chrome-stable --app="https://cad.onshape.com"
     ;;
   screen-record)
-    "${SCRIPTS}/screen-record"
+    "${SCRIPTS}/screen-record.sh"
     ;;
   screenshot\ screen)
     niri msg action screenshot-screen
