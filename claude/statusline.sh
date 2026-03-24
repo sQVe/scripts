@@ -93,7 +93,7 @@ get_git_info() {
   ahead=0 behind=0 staged=0 unstaged=0 untracked=0
   git_indicators=""
 
-  [[ $(git -C "${dir}" rev-parse --is-inside-work-tree 2> /dev/null) == "true" ]] || return
+  [[ $(git -C "${dir}" rev-parse --is-inside-work-tree 2> /dev/null) == "true" ]] || return 0
 
   branch=$(git -C "${dir}" branch --show-current 2> /dev/null)
   [[ -z "${branch}" ]] && branch="detached"
@@ -191,13 +191,13 @@ main() {
   full_path="${cwd/#${HOME}/\~}"
   fish_path_str=$(fish_path "${cwd}")
 
-  get_git_info "${cwd}"
-
-  choose_display_path "${full_path}" "${fish_path_str}" "${max_width}" "${#branch}" "${#git_indicators}"
-
   if [[ -n "${model}" ]]; then
     printf '%b' "${MAUVE}${model}${RESET} "
   fi
+
+  get_git_info "${cwd}" || true
+
+  choose_display_path "${full_path}" "${fish_path_str}" "${max_width}" "${#branch}" "${#git_indicators}"
 
   format_output "${display_path}" "${show_branch}"
 }
