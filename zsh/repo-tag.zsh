@@ -32,21 +32,21 @@ typeset -g _REPO_HAS_CLAIM=0
 # collisions don't produce near-duplicate pairs.
 typeset -ga _REPO_SLOTS=(pink teal yellow blue green mauve peach sky maroon lavender red)
 
-# Tints blended toward base (#d4d6de). Per-slot alpha is tuned to hit a
-# uniform perceptual shift (CIE Lab ΔE ≈ 5 from base) so vivid accents like
-# red don't feel louder than muted ones like teal.
+# Barely-tinted washes of base (#d4d6de). Low chroma (ΔE ≤ 3 from base) keeps
+# the desktop feeling gray rather than rainbow; lightness ladder (L 83-88)
+# separates same-hue pairs like teal vs green without bumping saturation.
 typeset -gA _REPO_TINTS=(
-  pink      '#cfcbd7'
-  mauve     '#cfccdb'
-  red       '#d2cbd3'
-  maroon    '#d0c9d3'
-  peach     '#d0cccf'
-  yellow    '#cdcdce'
-  green     '#c7ced0'
-  teal      '#c2ccd3'
-  sky       '#c3ced9'
-  blue      '#c7cbda'
-  lavender  '#c9cbd8'
+  pink      '#dcd3dc'
+  mauve     '#d5cedc'
+  red       '#dfd2d7'
+  maroon    '#d6cdcf'
+  peach     '#dcd6cd'
+  yellow    '#dedcd0'
+  green     '#cdd3ca'
+  teal      '#d4dee0'
+  sky       '#d0dae2'
+  blue      '#d2d5e1'
+  lavender  '#d6d4e2'
 )
 
 # Shared-state paths.
@@ -313,7 +313,22 @@ function _repo_zshexit() {
   _repo_release
   _repo_can_tint && { printf '\e]111\a' >/dev/tty; } 2>/dev/null
 }
+# External programs (yazi, vim, etc.) often repaint the terminal background
+# and don't restore it on exit. Track when a command ran and re-assert our
+# tint on the next prompt.
+typeset -g _REPO_NEEDS_REASSERT=0
+function _repo_preexec() { _REPO_NEEDS_REASSERT=1 }
+function _repo_precmd() {
+  (( _REPO_NEEDS_REASSERT )) || return
+  _REPO_NEEDS_REASSERT=0
+  _repo_can_tint || return
+  (( _REPO_FADE_PID )) && kill -0 $_REPO_FADE_PID 2>/dev/null && return
+  _repo_set_bg "$_REPO_PREV_TINT"
+}
+
 autoload -Uz add-zsh-hook
 add-zsh-hook zshexit _repo_zshexit
+add-zsh-hook preexec _repo_preexec
+add-zsh-hook precmd _repo_precmd
 
 _repo_chpwd
