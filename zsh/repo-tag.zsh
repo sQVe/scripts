@@ -21,7 +21,7 @@ zmodload zsh/system 2>/dev/null   # zsystem flock (no fork, vs external flock)
 zmodload -F zsh/files b:mv b:mkdir 2>/dev/null  # builtin mv/mkdir (no fork)
 
 typeset -g _REPO_TAG=""
-typeset -g _REPO_PREV_TINT="#d4d6de"
+typeset -g _REPO_PREV_TINT="#d6d6d6"
 typeset -g _REPO_FADE_PID=0
 typeset -g _REPO_LAST_ROOT=""
 typeset -g _REPO_LAST_KEY=""
@@ -32,21 +32,25 @@ typeset -g _REPO_HAS_CLAIM=0
 # collisions don't produce near-duplicate pairs.
 typeset -ga _REPO_SLOTS=(pink teal yellow blue green mauve peach sky maroon lavender red)
 
-# Barely-tinted washes of base (#d4d6de). Low chroma (ΔE ≤ 3 from base) keeps
-# the desktop feeling gray rather than rainbow; lightness ladder (L 83-88)
-# separates same-hue pairs like teal vs green without bumping saturation.
+# Barely-there washes of base (#d6d6d6), generated in OKLCh at C=0.015,
+# L≈0.877 (matching base lightness) with ±0.012 L nudges to separate
+# hue-adjacent pairs like teal/green and sky/blue. Verified with ΔE2000
+# (not ΔE76, which is badly non-uniform near neutral): ring-adjacent min
+# ≈ 2.5 (just above JND), vs-base = 1.6-9.5 — reads as gray with only the
+# faintest hint of hue; some tints are nearly indistinguishable from base
+# in isolation, but the probe ring ensures any two adjacent windows differ.
 typeset -gA _REPO_TINTS=(
-  pink      '#dcd3dc'
-  mauve     '#d5cedc'
-  red       '#dfd2d7'
-  maroon    '#d6cdcf'
-  peach     '#dcd6cd'
-  yellow    '#dedcd0'
-  green     '#cdd3ca'
-  teal      '#d4dee0'
-  sky       '#d0dae2'
-  blue      '#d2d5e1'
-  lavender  '#d6d4e2'
+  pink      '#dfd3d6'
+  mauve     '#dad2db'
+  red       '#dfd1cf'
+  maroon    '#dccfd0'
+  peach     '#e2d7d1'
+  yellow    '#dfdcd1'
+  green     '#cdd6ce'
+  teal      '#cedbda'
+  sky       '#d0dde1'
+  blue      '#cfd5df'
+  lavender  '#d6d7e2'
 )
 
 # Shared-state paths.
@@ -273,8 +277,8 @@ function _repo_chpwd() {
     _REPO_TAG=""
     _REPO_LAST_ROOT=""
     _REPO_LAST_KEY=""
-    if _repo_can_tint && [[ "$_REPO_PREV_TINT" != "#d4d6de" ]]; then
-      _repo_start_fade "#d4d6de"
+    if _repo_can_tint && [[ "$_REPO_PREV_TINT" != "#d6d6d6" ]]; then
+      _repo_start_fade "#d6d6d6"
     fi
     return
   fi
