@@ -59,6 +59,10 @@ typeset -g _REPO_CLAIMS="$_REPO_DIR/claims"
 typeset -g _REPO_LOCK="$_REPO_DIR/claims.lock"
 typeset -g _REPO_PINS_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/repo-tag/pins"
 mkdir -p "$_REPO_DIR" 2>/dev/null
+# zsystem flock needs the lockfile to exist; it won't create one.
+# Grouped so a redirection-open failure (e.g. $_REPO_DIR missing) is suppressed;
+# `: >> file 2>/dev/null` alone lets zsh still print the open error.
+{ : >> "$_REPO_LOCK" } 2>/dev/null
 
 # Only tint when running inside a bare kitty session (not tmux-inside-kitty,
 # where KITTY_WINDOW_ID leaks into tmux panes and repaints the wrong window).
