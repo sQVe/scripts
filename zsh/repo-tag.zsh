@@ -153,7 +153,9 @@ function _repo_acquire() {
   local -A repo_by_slot
 
   if ! zsystem flock -f lock_fd -t 1 "$_REPO_LOCK" 2>/dev/null; then
-    REPLY="$hash_slot"
+    # Can't safely touch claims without the lock, but a pin is a pure
+    # function of repo_key — honor it so collisions stay resolved.
+    REPLY="${_REPO_PINS[$repo_key]:-$hash_slot}"
     return
   fi
 
