@@ -67,6 +67,9 @@ case "${choice}" in
   chrome)
     google-chrome-stable
     ;;
+  discord)
+    vesktop
+    ;;
   float)
     quickmarks_file="${XDG_CONFIG_HOME:-${HOME}/.config}/qutebrowser/quickmarks"
     name=$(cut -d' ' -f1 "${quickmarks_file}" | rofi -dmenu -p 'quickmark')
