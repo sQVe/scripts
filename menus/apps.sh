@@ -12,6 +12,7 @@ apps=(
   "yazi"
   "term"
   "nvim"
+  "orca"
 )
 
 # Medium priority apps.
@@ -86,6 +87,9 @@ case "${choice}" in
     ;;
   onshape)
     google-chrome-stable --app="https://cad.onshape.com"
+    ;;
+  orca)
+    stably-orca --ozone-platform=x11
     ;;
   screen-record)
     "${SCRIPTS}/screen-record.sh"
