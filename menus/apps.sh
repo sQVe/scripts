@@ -12,7 +12,6 @@ apps=(
   "yazi"
   "term"
   "nvim"
-  "orca"
 )
 
 # Medium priority apps.
@@ -22,11 +21,11 @@ apps+=(
   "float"
   "lazydocker"
   "onshape"
+  "orca"
   "slack"
   "spotify"
   "steam"
   "zathura"
-  "weekly pdf"
 
   # Ordered by frequency of use.
   "screen-record"
@@ -89,7 +88,7 @@ case "${choice}" in
     google-chrome-stable --app="https://cad.onshape.com"
     ;;
   orca)
-    stably-orca --ozone-platform=x11
+    stably-orca
     ;;
   screen-record)
     "${SCRIPTS}/screen-record.sh"
@@ -106,9 +105,6 @@ case "${choice}" in
   qbittorrent)
     mullvad connect
     qbittorrent
-    ;;
-  weekly\ pdf)
-    zathura "${HOME}/notebox/pdf/weekly/$(date +%Y-W%V).pdf"
     ;;
   *)
     "${choice}"
