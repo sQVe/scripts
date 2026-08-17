@@ -19,6 +19,7 @@ apps=(
 apps+=(
   "btop"
   "chrome"
+  "claude"
   "float"
   "lazydocker"
   "onshape"
@@ -67,6 +68,9 @@ case "${choice}" in
     ;;
   chrome)
     google-chrome-stable
+    ;;
+  claude)
+    claude-desktop
     ;;
   discord)
     vesktop
