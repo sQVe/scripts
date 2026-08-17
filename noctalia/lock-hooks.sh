@@ -13,7 +13,7 @@ pid_file="${XDG_RUNTIME_DIR}/lock-hooks-pids"
 lock() {
   unlock
 
-  qs msg -c noctalia-shell media pause &
+  noctalia msg media pause &
 
   : > "${pid_file}"
 
