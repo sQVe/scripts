@@ -73,11 +73,4 @@ case "${1:-}" in
       "$0" on
     fi
     ;;
-  json)
-    if [[ -f "${flag}" ]]; then
-      echo '{"icon": "shield", "tooltip": "Keep credentials: on"}'
-    else
-      echo '{"icon": "shield-off", "tooltip": "Keep credentials: off"}'
-    fi
-    ;;
 esac
