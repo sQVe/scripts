@@ -12,7 +12,6 @@ apps=(
   "yazi"
   "term"
   "nvim"
-  "orca"
 )
 
 # Medium priority apps.
