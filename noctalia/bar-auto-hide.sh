@@ -14,7 +14,12 @@ set -euo pipefail
 # the runtime mode back to the saved setting while the file would outlive it.
 state_file="${XDG_RUNTIME_DIR}/noctalia-bar-auto-hide"
 
-noctalia_pid="$(pgrep -x noctalia)"
+# The CLI runs the same binary as the daemon, so a concurrent `noctalia msg`
+# also matches; the oldest match is the daemon.
+noctalia_pid="$(pgrep -o -x noctalia)" || {
+  echo "noctalia is not running" >&2
+  exit 1
+}
 
 # The first press flips the saved setting, so it is read rather than assumed.
 # `full` earns its place: a bar that never had auto_hide written is answered by
@@ -28,7 +33,8 @@ saved_auto_hide() {
 
 current=""
 if [[ -f "${state_file}" ]]; then
-  read -r state_pid state_mode < "${state_file}"
+  # A truncated file must fall through to the saved setting, not abort.
+  read -r state_pid state_mode < "${state_file}" || true
 
   if [[ "${state_pid}" == "${noctalia_pid}" ]]; then
     current="${state_mode}"
