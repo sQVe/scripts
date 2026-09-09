@@ -17,7 +17,7 @@ lock() {
 
   : > "${pid_file}"
 
-  if [[ ! -f "${XDG_RUNTIME_DIR}/keep-creds" ]]; then
+  if [[ "$(readlink "${HOME}/.gnupg/gpg-agent.conf")" != *extended* ]]; then
     (sleep 1m && sudo -K) &
     echo $! >> "${pid_file}"
 

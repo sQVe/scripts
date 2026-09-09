@@ -8,7 +8,6 @@
 
 set -euo pipefail
 
-flag="${XDG_RUNTIME_DIR}/keep-creds"
 gpg_agent_conf="${HOME}/.gnupg/gpg-agent.conf"
 
 icon_ok="/usr/share/icons/Papirus/48x48/status/changes-allow.svg"
@@ -39,7 +38,7 @@ case "${1:-}" in
       fail "GPG agent reload failed"
     fi
 
-    gpg_key="$(git config --get user.signingkey 2>/dev/null || true)"
+    gpg_key="$(git config --get user.signingkey 2> /dev/null || true)"
     if [[ -z "${gpg_key}" ]]; then
       fail "GPG signing key not configured"
     fi
@@ -48,7 +47,7 @@ case "${1:-}" in
       fail "GPG signing failed"
     fi
 
-    if ! { echo "test" | gpg -e --default-recipient-self | gpg -d; } >/dev/null 2>&1; then
+    if ! { echo "test" | gpg -e --default-recipient-self | gpg -d; } > /dev/null 2>&1; then
       fail "GPG encryption failed"
     fi
 
@@ -57,17 +56,15 @@ case "${1:-}" in
       fail "SSH authentication failed"
     fi
 
-    touch "${flag}"
     notify-send -a "Credentials" -i "${icon_ok}" "Credentials extended" "24h cache, survives lock"
     ;;
   off)
     ln -sf "${DOTFILES}/gnupg/gpg-agent.conf" "${gpg_agent_conf}"
-    rm -f "${flag}"
     gpg-connect-agent reloadagent /bye > /dev/null
     notify-send -a "Credentials" -i "${icon_off}" "Credentials reset" "Lock clears cache again"
     ;;
   toggle)
-    if [[ -f "${flag}" ]]; then
+    if [[ "$(readlink "${gpg_agent_conf}")" == *extended* ]]; then
       "$0" off
     else
       "$0" on
