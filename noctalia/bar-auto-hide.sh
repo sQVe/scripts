@@ -33,7 +33,11 @@ saved_auto_hide() {
 
 current=""
 if [[ -f "${state_file}" ]]; then
-  # A truncated file must fall through to the saved setting, not abort.
+  # A truncated or unreadable file must fall through to the saved setting, not
+  # abort: `|| true` covers a failing read, the empty defaults cover a failing
+  # redirect, which skips the read entirely.
+  state_pid=""
+  state_mode=""
   read -r state_pid state_mode < "${state_file}" || true
 
   if [[ "${state_pid}" == "${noctalia_pid}" ]]; then
