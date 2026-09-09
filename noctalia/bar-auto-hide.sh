@@ -9,10 +9,12 @@ set -euo pipefail
 
 # Noctalia only sets auto-hide, never toggles it, and reports the mode nowhere:
 # bar-auto-hide-set leaves settings.toml untouched, and msg status carries only
-# barVisible, which also flips on hover. So this file carries the live mode, and
-# XDG_RUNTIME_DIR wipes it at logout, exactly when Noctalia goes back to the
-# saved setting.
+# barVisible, which also flips on hover. So this file carries the live mode as
+# "<pid> <mode>". The pid pins it to one Noctalia run, because a restart drops
+# the runtime mode back to the saved setting while the file would outlive it.
 state_file="${XDG_RUNTIME_DIR}/noctalia-bar-auto-hide"
+
+noctalia_pid="$(pgrep -x noctalia)"
 
 # The first press flips the saved setting, so it is read rather than assumed.
 # `full` earns its place: a bar that never had auto_hide written is answered by
@@ -24,12 +26,24 @@ saved_auto_hide() {
   taplo get -- "bar.${bar_id}.auto_hide" <<< "${config}"
 }
 
+current=""
 if [[ -f "${state_file}" ]]; then
-  current="$(< "${state_file}")"
-elif [[ "$(saved_auto_hide)" == "true" ]]; then
-  current="on"
-else
-  current="off"
+  read -r state_pid state_mode < "${state_file}"
+
+  if [[ "${state_pid}" == "${noctalia_pid}" ]]; then
+    current="${state_mode}"
+  fi
+fi
+
+# Assigned before the test so a failing export aborts instead of reading as off.
+if [[ -z "${current}" ]]; then
+  saved="$(saved_auto_hide)"
+
+  if [[ "${saved}" == "true" ]]; then
+    current="on"
+  else
+    current="off"
+  fi
 fi
 
 if [[ "${current}" == "on" ]]; then
@@ -39,4 +53,4 @@ else
 fi
 
 noctalia msg bar-auto-hide-set "${next}"
-echo "${next}" > "${state_file}"
+echo "${noctalia_pid} ${next}" > "${state_file}"
