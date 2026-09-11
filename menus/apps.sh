@@ -9,9 +9,10 @@ set -euo pipefail
 # High priority apps.
 apps=(
   "qutebrowser"
-  "yazi"
   "term"
   "nvim"
+  "herdr"
+  "yazi"
 )
 
 # Medium priority apps.
@@ -19,6 +20,7 @@ apps+=(
   "btop"
   "chrome"
   "claude"
+  "dash"
   "float"
   "lazydocker"
   "onshape"
@@ -26,7 +28,6 @@ apps+=(
   "spotify"
   "steam"
   "zathura"
-  "weekly pdf"
 
   # Ordered by frequency of use.
   "screen-record"
@@ -59,7 +60,7 @@ case "${choice}" in
   bc)
     term --class bc --detach bc
     ;;
-  btop | lazydocker | node | nvim | yazi)
+  btop | herdr | lazydocker | node | nvim | yazi)
     term --title "${choice}" "${choice}"
     ;;
   beekeeper)
@@ -70,6 +71,9 @@ case "${choice}" in
     ;;
   claude)
     claude-desktop
+    ;;
+  dash)
+    term --title "dash" "gh dash"
     ;;
   discord)
     vesktop
