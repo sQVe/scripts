@@ -22,6 +22,7 @@ apps+=(
   "claude"
   "dash"
   "float"
+  "gpt"
   "lazydocker"
   "onshape"
   "slack"
@@ -88,6 +89,9 @@ case "${choice}" in
         "${SCRIPTS}/qutebrowser/float.sh" "${url}"
       fi
     fi
+    ;;
+  gpt)
+    chatgpt
     ;;
   mullvad)
     mullvad-vpn
