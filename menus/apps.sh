@@ -68,7 +68,7 @@ case "${choice}" in
     /opt/Beekeeper\ Studio/beekeeper-studio
     ;;
   chrome)
-    google-chrome-stable
+    google-chrome-stable --profile-directory=Default
     ;;
   claude)
     claude-desktop
@@ -97,7 +97,7 @@ case "${choice}" in
     mullvad-vpn
     ;;
   onshape)
-    google-chrome-stable --app="https://cad.onshape.com"
+    google-chrome-stable --profile-directory=Default --app="https://cad.onshape.com"
     ;;
   orca)
     stably-orca --ozone-platform=x11

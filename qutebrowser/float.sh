@@ -42,7 +42,7 @@ fi
 
 existing_ids=$(niri msg --json windows | jq -r '.[].id' | sort)
 
-google-chrome-stable --app="${1}" &
+google-chrome-stable --profile-directory=Default --app="${1}" &
 
 # Wait for new window to appear.
 chrome_id=""
