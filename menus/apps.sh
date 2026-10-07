@@ -19,16 +19,11 @@ apps=(
 apps+=(
   "btop"
   "chrome"
-  "claude"
   "dash"
   "float"
-  "gpt"
-  "lazydocker"
-  "onshape"
   "slack"
   "spotify"
   "steam"
-  "zathura"
 
   # Ordered by frequency of use.
   "screen-record"
@@ -43,6 +38,8 @@ apps+=(
   "bc"
   "beekeeper"
   "bruno"
+  "chatgpt"
+  "claude"
   "discord"
   "easyeffects"
   "gimp"
@@ -50,9 +47,11 @@ apps+=(
   "kicad"
   "meshlab"
   "mullvad"
+  "onshape"
   "pavucontrol"
   "qbittorrent"
   "wdisplays"
+  "zathura"
 )
 
 choice="$(printf '%s\n' "${apps[@]}" | rofi -dmenu -p 'app')"
@@ -89,9 +88,6 @@ case "${choice}" in
         "${SCRIPTS}/qutebrowser/float.sh" "${url}"
       fi
     fi
-    ;;
-  gpt)
-    chatgpt
     ;;
   mullvad)
     mullvad-vpn
