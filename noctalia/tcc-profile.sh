@@ -8,11 +8,11 @@
 #   tcc-profile.sh next   Switch to the next profile in CYCLE.
 #   tcc-profile.sh prev   Switch to the previous profile in CYCLE.
 # The switch is tccd's temporary profile: plugging in or unplugging returns to the state profile
-# (AC: Max, battery: Eco).
+# (AC: Work, battery: Eco).
 
 set -euo pipefail
 
-CYCLE=("Max" "Eco" "Quiet")
+CYCLE=("Max" "Work" "Eco" "Quiet")
 
 tccd() {
   busctl --system --json=short call com.tuxedocomputers.tccd /com/tuxedocomputers/tccd \
