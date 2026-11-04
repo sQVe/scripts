@@ -25,6 +25,11 @@ fail() {
   exit 1
 }
 
+# Signs locally through the agent, so a GitHub outage cannot fail the check.
+sign_with_ssh_key() {
+  echo "test" | ssh-keygen -Y sign -f "$1" -n file > /dev/null 2>&1
+}
+
 case "${1:-}" in
   on)
     extended_conf="${DOTFILES}/gnupg/gpg-agent-extended.conf"
@@ -51,9 +56,18 @@ case "${1:-}" in
       fail "GPG encryption failed"
     fi
 
-    ssh_output=$("${SCRIPTS}/ssh-pass-retry.sh" -T git@github.com 2>&1 || true)
-    if [[ ! "${ssh_output}" =~ "successfully authenticated" ]]; then
-      fail "SSH authentication failed"
+    ssh_public_key="$(mktemp)"
+    trap 'rm -f "${ssh_public_key}"' EXIT
+    if ! ssh-add -L 2> /dev/null | head -n 1 > "${ssh_public_key}"; then
+      fail "No SSH key in agent"
+    fi
+
+    if ! "${SCRIPTS}/ssh-unlock.sh" 2> /dev/null; then
+      fail "SSH key unlock from pass failed"
+    fi
+
+    if ! sign_with_ssh_key "${ssh_public_key}"; then
+      fail "SSH signing failed"
     fi
 
     notify-send -a "Credentials" -i "${icon_ok}" "Credentials extended" "24h cache, survives lock"
@@ -64,6 +78,13 @@ case "${1:-}" in
     notify-send -a "Credentials" -i "${icon_off}" "Credentials reset" "Lock clears cache again"
     ;;
   toggle)
+    # A second click while the first still waits on a prompt would see the
+    # extended config and switch it off again.
+    exec {lock_fd}> "${XDG_RUNTIME_DIR}/keep-creds.lock"
+    if ! flock --nonblock "${lock_fd}"; then
+      exit 0
+    fi
+
     if [[ "$(readlink "${gpg_agent_conf}")" == *extended* ]]; then
       "$0" off
     else
