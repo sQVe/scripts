@@ -60,7 +60,7 @@ case "${choice}" in
   bc)
     term --class bc --detach bc
     ;;
-  btop | herdr | lazydocker | node | nvim | yazi)
+  btop | lazydocker | node | nvim | yazi)
     term --title "${choice}" "${choice}"
     ;;
   beekeeper)
@@ -88,6 +88,9 @@ case "${choice}" in
         "${SCRIPTS}/qutebrowser/float.sh" "${url}"
       fi
     fi
+    ;;
+  herdr)
+    herdr-app
     ;;
   mullvad)
     mullvad-vpn
